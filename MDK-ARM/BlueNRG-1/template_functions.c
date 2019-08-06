@@ -1,6 +1,0 @@
-
-void SendDataOverAttribute(void)
-{
-	
-}
-//
