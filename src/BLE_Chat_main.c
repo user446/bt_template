@@ -217,21 +217,20 @@ NOTES:
 #include "bluenrg1_stack.h"
 #include "gp_timer.h"
 #include "app_state.h"
-#include "template.h"
+#include "chat.h"
 #include "SDK_EVAL_Config.h"
-#include "Template_config.h"
+#include "Chat_config.h"
+#include "OTA_btl.h"
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
 #define BLE_CHAT_VERSION_STRING "1.0.0" 
 
+
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
 struct timer t_second_counter;
-struct timer t_update_freq;
 int time;
-uint32_t updateFreq;
-BOOL update_freq;
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
 
@@ -251,7 +250,7 @@ int main(void)
   /* Configure I/O communication channel:
        It requires the void IO_Receive_Data(uint8_t * rx_data, uint16_t data_size) function
        where user received data should be processed */
-  SdkEvalComIOConfig(Process_InputData);
+  //SdkEvalComIOConfig(Process_InputData);
 
   /* BlueNRG-1 stack init */
   ret = BlueNRG_Stack_Initialization(&BlueNRG_Stack_Init_params);
@@ -261,46 +260,64 @@ int main(void)
   }
   
 #if SERVER
-  printf("BlueNRG-1 BLE Template Server Application (version: %s)\r\n", BLE_CHAT_VERSION_STRING);
+  printf("BlueNRG-1 BLE Chat Server Application (version: %s)\r\n", BLE_CHAT_VERSION_STRING);
 #else
-  printf("BlueNRG-1 BLE Template Client Application (version: %s)\r\n", BLE_CHAT_VERSION_STRING); 
+  printf("BlueNRG-1 BLE Chat Client Application (version: %s)\r\n", BLE_CHAT_VERSION_STRING); 
 #endif
 
   /* Init Chat Device */
-  ret = Template_DeviceInit();
+  ret = CHAT_DeviceInit();
   if (ret != BLE_STATUS_SUCCESS) {
-    printf("Template_DeviceInit()--> Failed 0x%02x\r\n", ret);
+    printf("CHAT_DeviceInit()--> Failed 0x%02x\r\n", ret);
     while(1);
   }
   
+  printf("BLE Stack Initialized \n");
+	
 #if SERVER
 	Timer_Set(&t_second_counter, CLOCK_SECOND/200);
-	Timer_Set(&t_update_freq, CLOCK_SECOND);
-	updateFreq = 0;
 	time = 0;
 #endif
-  printf("BLE Stack Initialized \n");
+	
+#if ST_USE_OTA_SERVICE_MANAGER_APPLICATION
+  /* Initialize the button */
+  SdkEvalPushButtonInit(USER_BUTTON); 
+#endif /* ST_USE_OTA_SERVICE_MANAGER_APPLICATION */
   
   while(1) {
+    
     /* BlueNRG-1 stack tick */
     BTLE_StackTick();
     
     /* Application tick */
     APP_Tick();
 		
+		
 #if SERVER
 		if(Timer_Expired(&t_second_counter))
 		{
 			time++;
+			if(time == 120000)
+				time = 0;
 			Timer_Restart(&t_second_counter);
 		}
-		if(Timer_Expired(&t_update_freq))
-		{
-			updateFreq = 0;
-			Timer_Restart(&t_update_freq);
-			update_freq = TRUE;
-		}
 #endif
+		
+#if ST_OTA_FIRMWARE_UPGRADE_SUPPORT
+    /* Check if the OTA firmware upgrade session has been completed */
+    if (OTA_Tick() == 1)
+    {
+      /* Jump to the new application */
+      OTA_Jump_To_New_Application();
+    }
+#endif  /* ST_OTA_FIRMWARE_UPGRADE_SUPPORT */
+
+#if ST_USE_OTA_SERVICE_MANAGER_APPLICATION
+    if (SdkEvalPushButtonGetState(USER_BUTTON) == RESET)
+    {
+      OTA_Jump_To_Service_Manager_Application();
+    }
+#endif /* ST_USE_OTA_SERVICE_MANAGER_APPLICATION */
   }
   
 } /* end main() */

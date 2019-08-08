@@ -29,7 +29,7 @@
 #define NUM_APP_GATT_SERVICES (1 + 1) /* 1 Chat service + 1 OTA service */
 
 /* Number of attributes requests from the chat demo */
-#define NUM_APP_GATT_ATTRIBUTES (9 + 9) /* 9 attributes x BLE Chat service characteristics + 9 for OTA Service characteristics */
+#define NUM_APP_GATT_ATTRIBUTES (5 + 9) /* 5 attributes x BLE Chat service characteristics + 9 for OTA Service characteristics */
 
 /**
  * Set the number of 16-bytes units used on an OTA FW data packet for matching OTA client MAX ATT_MTU
@@ -45,7 +45,7 @@
 #define NUM_APP_GATT_SERVICES 1  /* 1 Chat service */
 
 /* Number of attributes requests from the chat demo */
-#define NUM_APP_GATT_ATTRIBUTES 9 /* 5 attributes x BLE Chat service characteristics */
+#define NUM_APP_GATT_ATTRIBUTES 5 /* 5 attributes x BLE Chat service characteristics */
 
 /* OTA characteristics maximum lenght */
 #define OTA_MAX_ATT_SIZE (0) 
@@ -83,9 +83,9 @@
 
 /* Array size for the attribute value */
 #if CLIENT
-#define ATT_VALUE_ARRAY_SIZE    (119) //(GATT + GAP Services Characteristics)
+#define ATT_VALUE_ARRAY_SIZE    (44) //(GATT + GAP Services Characteristics)
 #elif SERVER
-#define ATT_VALUE_ARRAY_SIZE    (119 + 80 + OTA_ATT_VALUE_ARRAY_SIZE) //(GATT + GAP) = 44 + Chat  (TX (41) + RX (39) characteristics)   Services
+#define ATT_VALUE_ARRAY_SIZE    (44 + 80 + OTA_ATT_VALUE_ARRAY_SIZE) //(GATT + GAP) = 44 + Chat  (TX (41) + RX (39) characteristics)   Services
 #endif 
 
 /* Flash security database size */
