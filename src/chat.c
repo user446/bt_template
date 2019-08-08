@@ -22,14 +22,13 @@
 #include "app_state.h"
 #include "osal.h"
 #include "gatt_db.h"
-#include "template.h"
+#include "chat.h"
 #include "SDK_EVAL_Config.h"
 #include "OTA_btl.h"
 
 /* External variables --------------------------------------------------------*/
 extern int time;
-extern uint32_t updateFreq;
-extern BOOL update_freq;
+
 /* Private typedef -----------------------------------------------------------*/
 /* Private defines -----------------------------------------------------------*/
 
@@ -63,12 +62,12 @@ static uint16_t cmd_buff_end = 0, cmd_buff_start = 0;
 /* Private functions ---------------------------------------------------------*/
 
 /*******************************************************************************
-* Function Name  : Template_DeviceInit.
-* Description    : Init the Template device.
+* Function Name  : CHAT_DeviceInit.
+* Description    : Init the Chat device.
 * Input          : none.
 * Return         : Status.
 *******************************************************************************/
-uint8_t Template_DeviceInit(void)
+uint8_t CHAT_DeviceInit(void)
 {
   uint8_t ret;
   uint16_t service_handle;
@@ -123,16 +122,52 @@ uint8_t Template_DeviceInit(void)
   }
 
 #if  SERVER
-  ret = Add_Template_Service();
+  ret = Add_Chat_Service();
   if (ret != BLE_STATUS_SUCCESS) {
-    printf("Error in Add_Template_Service 0x%02x\r\n", ret);
+    printf("Error in Add_Chat_Service 0x%02x\r\n", ret);
     return ret;
   } else {
     printf("Add_Chat_Service() --> SUCCESS\r\n");
   }
+  
+#if ST_OTA_FIRMWARE_UPGRADE_SUPPORT     
+  ret = OTA_Add_Btl_Service();
+  if(ret == BLE_STATUS_SUCCESS)
+    printf("OTA service added successfully.\n");
+  else
+    printf("Error while adding OTA service.\n");
+#endif /* ST_OTA_FIRMWARE_UPGRADE_SUPPORT */ 
+  
 #endif
   
   return BLE_STATUS_SUCCESS;
+}
+
+void Send_Data_Over_BLE(void)
+{
+  if(!APP_FLAG(SEND_DATA) || APP_FLAG(TX_BUFFER_FULL))
+    return;
+  
+  while(cmd_buff_start < cmd_buff_end){
+    uint32_t len = MIN(20, cmd_buff_end - cmd_buff_start);
+    
+#if SERVER
+    if(aci_gatt_update_char_value_ext(connection_handle,chatServHandle,TXCharHandle,1,len,0, len,(uint8_t *)cmd+cmd_buff_start)==BLE_STATUS_INSUFFICIENT_RESOURCES){ 
+#elif CLIENT
+    if(aci_gatt_write_without_resp(connection_handle, rx_handle+1, len, (uint8_t *)cmd+cmd_buff_start)==BLE_STATUS_INSUFFICIENT_RESOURCES){       
+#else
+#error "Define SERVER or CLIENT"
+#endif
+      APP_FLAG_SET(TX_BUFFER_FULL);
+      return;
+    }
+    cmd_buff_start += len;
+  }
+  
+  // All data from buffer have been sent.
+  APP_FLAG_CLEAR(SEND_DATA);
+  cmd_buff_end = 0;
+  NVIC_EnableIRQ(UART_IRQn);
 }
 
 /*******************************************************************************
@@ -199,9 +234,13 @@ void Make_Connection(void)
   
 #else
   
-  uint8_t local_name[] = {AD_TYPE_COMPLETE_LOCAL_NAME,'B','l','u','e','N','R','G','1','_','T','e','m','p'};
-	
+  uint8_t local_name[] = {AD_TYPE_COMPLETE_LOCAL_NAME,'B','l','u','e','N','R','G','1','_','C','h','a','t'};
+  
+#if ST_OTA_FIRMWARE_UPGRADE_SUPPORT
+  hci_le_set_scan_response_data(18,BTLServiceUUID4Scan); 
+#else
   hci_le_set_scan_response_data(0,NULL);
+#endif /* ST_OTA_FIRMWARE_UPGRADE_SUPPORT */ 
   
   ret = aci_gap_set_discoverable(ADV_IND, 0, 0, PUBLIC_ADDR, NO_WHITE_LIST_USE,
                                  sizeof(local_name), local_name, 0, NULL, 0, 0);
@@ -220,14 +259,18 @@ void Make_Connection(void)
 *******************************************************************************/
 void APP_Tick(void)
 {
+//#if CLIENT
   tBleStatus ret;
+//#endif
   
   if(APP_FLAG(SET_CONNECTABLE))
   {
     Make_Connection();
     APP_FLAG_CLEAR(SET_CONNECTABLE);
   }
-  #if SERVER
+  
+  //Send_Data_Over_BLE();
+#if SERVER
 	  if(APP_FLAG(TX_BUFFER_FULL))
 			return;
 		
@@ -238,7 +281,7 @@ void APP_Tick(void)
 		
 		if(APP_FLAG(CONNECTED))
 		{
-			ret = aci_gatt_update_char_value_ext(connection_handle, templateServHandle, TXCharHandle, 1, 4, 0, 4, send_time);
+			ret = aci_gatt_update_char_value_ext(connection_handle, chatServHandle, TXCharHandle, 1, 4, 0, 4, send_time);
 			if(ret ==	BLE_STATUS_INSUFFICIENT_RESOURCES)
 			{
 				APP_FLAG_SET(TX_BUFFER_FULL);
@@ -247,25 +290,6 @@ void APP_Tick(void)
 			if(ret != BLE_STATUS_SUCCESS)
 			{
 				printf("Updating characteristic value failed! 0x%02x\r\n", ret);
-			}
-			if(update_freq)
-			{
-				uint8_t send_freq[4];
-				send_freq[0] = (uint8_t)(0x000000FF&updateFreq);
-				send_freq[1] = (uint8_t)((0x0000FF00&updateFreq)>>8);
-				send_freq[2] = (uint8_t)((0x00FF0000&updateFreq)>>16);
-				send_freq[3] = (uint8_t)((0xFF000000&updateFreq)>>24);
-				update_freq = FALSE;
-				ret = aci_gatt_update_char_value_ext(connection_handle, templateServHandle, timeCharHandle, 1, 4, 0, 4, send_freq);
-				if(ret ==	BLE_STATUS_INSUFFICIENT_RESOURCES)
-				{
-					APP_FLAG_SET(TX_BUFFER_FULL);
-					return;
-				}
-				if(ret != BLE_STATUS_SUCCESS)
-				{
-					printf("Updating characteristic value failed! 0x%02x\r\n", ret);
-				}
 			}
 		}
 	#endif
@@ -386,6 +410,10 @@ void hci_disconnection_complete_event(uint8_t Status,
   APP_FLAG_CLEAR(END_READ_TX_CHAR_HANDLE);
   APP_FLAG_CLEAR(START_READ_RX_CHAR_HANDLE); 
   APP_FLAG_CLEAR(END_READ_RX_CHAR_HANDLE);
+
+#if ST_OTA_FIRMWARE_UPGRADE_SUPPORT
+  OTA_terminate_connection();
+#endif 
   
 }/* end hci_disconnection_complete_event() */
 
@@ -403,6 +431,10 @@ void aci_gatt_attribute_modified_event(uint16_t Connection_Handle,
                                        uint16_t Attr_Data_Length,
                                        uint8_t Attr_Data[])
 {
+#if ST_OTA_FIRMWARE_UPGRADE_SUPPORT
+  OTA_Write_Request_CB(Connection_Handle, Attr_Handle, Attr_Data_Length, Attr_Data);
+#endif /* ST_OTA_FIRMWARE_UPGRADE_SUPPORT */ 
+  
   Attribute_Modified_CB(Attr_Handle, Attr_Data_Length, Attr_Data);      
 }
 
@@ -507,10 +539,20 @@ void aci_gatt_read_permit_req_event(uint16_t Connection_Handle,
                                     uint16_t Attribute_Handle,
                                     uint16_t Offset)
 {
+#if ST_OTA_FIRMWARE_UPGRADE_SUPPORT   
+  /* Lower/Higher Applications with OTA Service */
+  aci_gatt_allow_read(Connection_Handle);
+#endif /* ST_OTA_FIRMWARE_UPGRADE_SUPPORT */ 
 }
 
 void aci_hal_end_of_radio_activity_event(uint8_t Last_State,
                                          uint8_t Next_State,
                                          uint32_t Next_State_SysTime)
 {
+#if ST_OTA_FIRMWARE_UPGRADE_SUPPORT
+  if (Next_State == 0x02) /* 0x02: Connection event slave */
+  {
+    OTA_Radio_Activity(Next_State_SysTime);  
+  }
+#endif 
 }

@@ -15,12 +15,12 @@
         <TargetCommonOption>
           <Device>BlueNRG-1</Device>
           <Vendor>STMicroelectronics</Vendor>
-          <PackID>Keil.STBlueNRG_DFP.1.1.1</PackID>
+          <PackID>Keil.STBlueNRG-1_DFP.1.2.0</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
-          <Cpu>IRAM(0x20000000,0x6000) IROM(0x10040000,0x28000) CPUTYPE("Cortex-M0") CLOCK(12000000) ELITTLE</Cpu>
+          <Cpu>IROM(0x10040000,0x28000) IRAM(0x20000000,0x6000) CPUTYPE("Cortex-M0+") CLOCK(12000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile></StartupFile>
-          <FlashDriverDll>UL2CM3(-S0 -C0 -P0 -FD200002CC -FC1000 -FN1 -FF0STBlueNRG1 -FS010040000 -FL028000 -FP0($$Device:BlueNRG-1$Flash\STBlueNRG1.FLM))</FlashDriverDll>
+          <FlashDriverDll>UL2CM3(-S0 -C0 -P0 -FD200002CC -FC1000 -FN1 -FF0STBlueNRG -FS010040000 -FL028000 -FP0($$Device:BlueNRG-1$Flash\STBlueNRG.FLM))</FlashDriverDll>
           <DeviceId>0</DeviceId>
           <RegisterFile></RegisterFile>
           <MemoryEnv></MemoryEnv>
@@ -111,7 +111,7 @@
           <SimDllName>SARMCM3.DLL</SimDllName>
           <SimDllArguments> -REMAP </SimDllArguments>
           <SimDlgDll>DARMCM1.DLL</SimDlgDll>
-          <SimDlgDllArguments>-pCM0</SimDlgDllArguments>
+          <SimDlgDllArguments>-pCM0+</SimDlgDllArguments>
           <TargetDllName>SARMCM3.DLL</TargetDllName>
           <TargetDllArguments> </TargetDllArguments>
           <TargetDlgDll>TARMCM1.DLL</TargetDlgDll>
@@ -137,7 +137,7 @@
           </Flash1>
           <bUseTDR>1</bUseTDR>
           <Flash2>BIN\UL2CM3.DLL</Flash2>
-          <Flash3>"" ()</Flash3>
+          <Flash3></Flash3>
           <Flash4></Flash4>
           <pFcarmOut></pFcarmOut>
           <pFcarmGrp></pFcarmGrp>
@@ -173,7 +173,7 @@
             <AdsLsxf>1</AdsLsxf>
             <RvctClst>0</RvctClst>
             <GenPPlst>0</GenPPlst>
-            <AdsCpuType>"Cortex-M0"</AdsCpuType>
+            <AdsCpuType>"Cortex-M0+"</AdsCpuType>
             <RvctDeviceName></RvctDeviceName>
             <mOS>0</mOS>
             <uocRom>0</uocRom>
@@ -333,9 +333,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>LS_SOURCE=LS_SOURCE_EXTERNAL_32KHZ SMPS_INDUCTOR=SMPS_INDUCTOR_10uH CLIENT=1 BLE_STACK_CONFIGURATION=BLE_STACK_FULL_CONFIGURATION BLUENRG2_DEVICE HS_SPEED_XTAL=HS_SPEED_XTAL_32MHZ USER_BUTTON=BUTTON_1</Define>
+              <Define>LS_SOURCE=LS_SOURCE_EXTERNAL_32KHZ SMPS_INDUCTOR=SMPS_INDUCTOR_10uH CLIENT=1 BLE_STACK_CONFIGURATION=BLE_STACK_FULL_CONFIGURATION BLUENRG1_DEVICE HS_SPEED_XTAL=HS_SPEED_XTAL_16MHZ USER_BUTTON=BUTTON_1</Define>
               <Undefine></Undefine>
-              <IncludePath>..\inc;..\Library\hal\inc;..\Library\BlueNRG1_Periph_Driver\inc;..\Library\CMSIS\Device\ST\BlueNRG1\Include;..\Library\CMSIS\Include;..\Library\Bluetooth_LE\inc;..\Library\BLE_Application\layers_inc;..\Library\BLE_Application\Utils\inc;..\Library\BLE_Application\OTA\inc;..\Library\SDK_Eval_BlueNRG1\inc</IncludePath>
+              <IncludePath>../../inc;..\..\Library\hal\inc;..\..\Library\BlueNRG1_Periph_Driver\inc;..\..\Library\CMSIS\Device\ST\BlueNRG1\Include;..\..\Library\CMSIS\Include;..\..\Library\Bluetooth_LE\inc;..\..\Library\BLE_Application\layers_inc;..\..\Library\BLE_Application\Utils\inc;..\..\Library\BLE_Application\OTA\inc;..\..\Library\SDK_Eval_BlueNRG1\inc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -366,7 +366,7 @@
             <TextAddressRange>0x10040000</TextAddressRange>
             <DataAddressRange>0x20000000</DataAddressRange>
             <pXoBase></pXoBase>
-            <ScatterFile>.\BlueNRG1.sct</ScatterFile>
+            <ScatterFile>BlueNRG1.sct</ScatterFile>
             <IncludeLibs></IncludeLibs>
             <IncludeLibsPath></IncludeLibsPath>
             <Misc></Misc>
@@ -382,27 +382,27 @@
             <File>
               <FileName>clock.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../Library/hal/src/clock.c</FilePath>
+              <FilePath>..\..\Library\hal\src\clock.c</FilePath>
             </File>
             <File>
               <FileName>context_switch.s</FileName>
               <FileType>2</FileType>
-              <FilePath>../Library/hal/src/context_switch.s</FilePath>
+              <FilePath>..\..\Library\hal\src\context_switch.s</FilePath>
             </File>
             <File>
               <FileName>gp_timer.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../Library/hal/src/gp_timer.c</FilePath>
+              <FilePath>..\..\Library\hal\src\gp_timer.c</FilePath>
             </File>
             <File>
               <FileName>miscutil.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../Library/hal/src/miscutil.c</FilePath>
+              <FilePath>..\..\Library\hal\src\miscutil.c</FilePath>
             </File>
             <File>
               <FileName>osal.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../Library/hal/src/osal.c</FilePath>
+              <FilePath>..\..\Library\hal\src\osal.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -412,67 +412,155 @@
             <File>
               <FileName>BlueNRG1_adc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../Library/BlueNRG1_Periph_Driver/src/BlueNRG1_adc.c</FilePath>
+              <FilePath>..\..\Library\BlueNRG1_Periph_Driver\src\BlueNRG1_adc.c</FilePath>
             </File>
             <File>
               <FileName>BlueNRG1_dma.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../Library/BlueNRG1_Periph_Driver/src/BlueNRG1_dma.c</FilePath>
+              <FilePath>..\..\Library\BlueNRG1_Periph_Driver\src\BlueNRG1_dma.c</FilePath>
             </File>
             <File>
               <FileName>BlueNRG1_flash.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../Library/BlueNRG1_Periph_Driver/src/BlueNRG1_flash.c</FilePath>
+              <FilePath>..\..\Library\BlueNRG1_Periph_Driver\src\BlueNRG1_flash.c</FilePath>
             </File>
             <File>
               <FileName>BlueNRG1_gpio.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../Library/BlueNRG1_Periph_Driver/src/BlueNRG1_gpio.c</FilePath>
+              <FilePath>..\..\Library\BlueNRG1_Periph_Driver\src\BlueNRG1_gpio.c</FilePath>
             </File>
             <File>
               <FileName>BlueNRG1_i2c.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../Library/BlueNRG1_Periph_Driver/src/BlueNRG1_i2c.c</FilePath>
+              <FilePath>..\..\Library\BlueNRG1_Periph_Driver\src\BlueNRG1_i2c.c</FilePath>
             </File>
             <File>
               <FileName>BlueNRG1_mft.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../Library/BlueNRG1_Periph_Driver/src/BlueNRG1_mft.c</FilePath>
+              <FilePath>..\..\Library\BlueNRG1_Periph_Driver\src\BlueNRG1_mft.c</FilePath>
             </File>
             <File>
               <FileName>BlueNRG1_pka.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../Library/BlueNRG1_Periph_Driver/src/BlueNRG1_pka.c</FilePath>
+              <FilePath>..\..\Library\BlueNRG1_Periph_Driver\src\BlueNRG1_pka.c</FilePath>
+            </File>
+            <File>
+              <FileName>BlueNRG1_radio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Library\BlueNRG1_Periph_Driver\src\BlueNRG1_radio.c</FilePath>
+            </File>
+            <File>
+              <FileName>BlueNRG1_rng.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Library\BlueNRG1_Periph_Driver\src\BlueNRG1_rng.c</FilePath>
             </File>
             <File>
               <FileName>BlueNRG1_rtc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../Library/BlueNRG1_Periph_Driver/src/BlueNRG1_rtc.c</FilePath>
+              <FilePath>..\..\Library\BlueNRG1_Periph_Driver\src\BlueNRG1_rtc.c</FilePath>
             </File>
             <File>
               <FileName>BlueNRG1_spi.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../Library/BlueNRG1_Periph_Driver/src/BlueNRG1_spi.c</FilePath>
+              <FilePath>..\..\Library\BlueNRG1_Periph_Driver\src\BlueNRG1_spi.c</FilePath>
             </File>
             <File>
               <FileName>BlueNRG1_sysCtrl.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../Library/BlueNRG1_Periph_Driver/src/BlueNRG1_sysCtrl.c</FilePath>
+              <FilePath>..\..\Library\BlueNRG1_Periph_Driver\src\BlueNRG1_sysCtrl.c</FilePath>
             </File>
             <File>
               <FileName>BlueNRG1_uart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../Library/BlueNRG1_Periph_Driver/src/BlueNRG1_uart.c</FilePath>
+              <FilePath>..\..\Library\BlueNRG1_Periph_Driver\src\BlueNRG1_uart.c</FilePath>
             </File>
             <File>
               <FileName>BlueNRG1_wdg.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../Library/BlueNRG1_Periph_Driver/src/BlueNRG1_wdg.c</FilePath>
+              <FilePath>..\..\Library\BlueNRG1_Periph_Driver\src\BlueNRG1_wdg.c</FilePath>
             </File>
             <File>
               <FileName>misc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../Library/BlueNRG1_Periph_Driver/src/misc.c</FilePath>
+              <FilePath>..\..\Library\BlueNRG1_Periph_Driver\src\misc.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>OTA</GroupName>
+          <GroupOption>
+            <CommonProperty>
+              <UseCPPCompiler>0</UseCPPCompiler>
+              <RVCTCodeConst>0</RVCTCodeConst>
+              <RVCTZI>0</RVCTZI>
+              <RVCTOtherData>0</RVCTOtherData>
+              <ModuleSelection>0</ModuleSelection>
+              <IncludeInBuild>0</IncludeInBuild>
+              <AlwaysBuild>0</AlwaysBuild>
+              <GenerateAssemblyFile>0</GenerateAssemblyFile>
+              <AssembleAssemblyFile>0</AssembleAssemblyFile>
+              <PublicsOnly>0</PublicsOnly>
+              <StopOnExitCode>3</StopOnExitCode>
+              <CustomArgument></CustomArgument>
+              <IncludeLibraryModules></IncludeLibraryModules>
+              <ComprImg>0</ComprImg>
+            </CommonProperty>
+            <GroupArmAds>
+              <Cads>
+                <interw>2</interw>
+                <Optim>0</Optim>
+                <oTime>2</oTime>
+                <SplitLS>2</SplitLS>
+                <OneElfS>2</OneElfS>
+                <Strict>2</Strict>
+                <EnumInt>2</EnumInt>
+                <PlainCh>2</PlainCh>
+                <Ropi>2</Ropi>
+                <Rwpi>2</Rwpi>
+                <wLevel>0</wLevel>
+                <uThumb>2</uThumb>
+                <uSurpInc>2</uSurpInc>
+                <uC99>2</uC99>
+                <useXO>2</useXO>
+                <v6Lang>0</v6Lang>
+                <v6LangP>0</v6LangP>
+                <vShortEn>2</vShortEn>
+                <vShortWch>2</vShortWch>
+                <v6Lto>2</v6Lto>
+                <v6WtE>2</v6WtE>
+                <v6Rtti>2</v6Rtti>
+                <VariousControls>
+                  <MiscControls></MiscControls>
+                  <Define></Define>
+                  <Undefine></Undefine>
+                  <IncludePath></IncludePath>
+                </VariousControls>
+              </Cads>
+              <Aads>
+                <interw>2</interw>
+                <Ropi>2</Ropi>
+                <Rwpi>2</Rwpi>
+                <thumb>2</thumb>
+                <SplitLS>2</SplitLS>
+                <SwStkChk>2</SwStkChk>
+                <NoWarn>2</NoWarn>
+                <uSurpInc>2</uSurpInc>
+                <useXO>2</useXO>
+                <uClangAs>2</uClangAs>
+                <VariousControls>
+                  <MiscControls></MiscControls>
+                  <Define></Define>
+                  <Undefine></Undefine>
+                  <IncludePath></IncludePath>
+                </VariousControls>
+              </Aads>
+            </GroupArmAds>
+          </GroupOption>
+          <Files>
+            <File>
+              <FileName>OTA_btl.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Library\BLE_Application\OTA\src\OTA_btl.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -482,22 +570,22 @@
             <File>
               <FileName>SDK_EVAL_Button.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../Library/SDK_Eval_BlueNRG1/src/SDK_EVAL_Button.c</FilePath>
+              <FilePath>..\..\Library\SDK_Eval_BlueNRG1\src\SDK_EVAL_Button.c</FilePath>
             </File>
             <File>
               <FileName>SDK_EVAL_Com.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../Library/SDK_Eval_BlueNRG1/src/SDK_EVAL_Com.c</FilePath>
+              <FilePath>..\..\Library\SDK_Eval_BlueNRG1\src\SDK_EVAL_Com.c</FilePath>
             </File>
             <File>
               <FileName>SDK_EVAL_Config.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../Library/SDK_Eval_BlueNRG1/src/SDK_EVAL_Config.c</FilePath>
+              <FilePath>..\..\Library\SDK_Eval_BlueNRG1\src\SDK_EVAL_Config.c</FilePath>
             </File>
             <File>
               <FileName>SDK_EVAL_Led.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../Library/SDK_Eval_BlueNRG1/src/SDK_EVAL_Led.c</FilePath>
+              <FilePath>..\..\Library\SDK_Eval_BlueNRG1\src\SDK_EVAL_Led.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -507,17 +595,17 @@
             <File>
               <FileName>libbluenrg1_stack.a</FileName>
               <FileType>4</FileType>
-              <FilePath>../Library/Bluetooth_LE/library/libbluenrg1_stack.a</FilePath>
+              <FilePath>..\..\Library\Bluetooth_LE\library\libbluenrg1_stack.a</FilePath>
             </File>
             <File>
               <FileName>libcrypto.a</FileName>
               <FileType>4</FileType>
-              <FilePath>../Library/cryptolib/libcrypto.a</FilePath>
+              <FilePath>..\..\Library\cryptolib\libcrypto.a</FilePath>
             </File>
             <File>
               <FileName>stack_user_cfg.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../Library/Bluetooth_LE/src/stack_user_cfg.c</FilePath>
+              <FilePath>..\..\Library\Bluetooth_LE\src\stack_user_cfg.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -527,7 +615,7 @@
             <File>
               <FileName>system_bluenrg1.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../Library/CMSIS/Device/ST/BlueNRG1/Source/system_bluenrg1.c</FilePath>
+              <FilePath>..\..\Library\CMSIS\Device\ST\BlueNRG1\Source\system_bluenrg1.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -535,22 +623,22 @@
           <GroupName>User</GroupName>
           <Files>
             <File>
+              <FileName>BLE_Chat_main.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../src/BLE_Chat_main.c</FilePath>
+            </File>
+            <File>
               <FileName>BlueNRG1_it.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../src/BlueNRG1_it.c</FilePath>
+              <FilePath>../../src/BlueNRG1_it.c</FilePath>
+            </File>
+            <File>
+              <FileName>chat.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../src/chat.c</FilePath>
             </File>
             <File>
               <FileName>gatt_db.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../src/gatt_db.c</FilePath>
-            </File>
-            <File>
-              <FileName>template_app.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\src\template_app.c</FilePath>
-            </File>
-            <File>
-              <FileName>template_main.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\src\template_main.c</FilePath>
             </File>
@@ -657,12 +745,12 @@
         <TargetCommonOption>
           <Device>BlueNRG-1</Device>
           <Vendor>STMicroelectronics</Vendor>
-          <PackID>Keil.STBlueNRG_DFP.1.1.1</PackID>
+          <PackID>Keil.STBlueNRG-1_DFP.1.2.0</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
-          <Cpu>IRAM(0x20000000,0x6000) IROM(0x10040000,0x28000) CPUTYPE("Cortex-M0") CLOCK(12000000) ELITTLE</Cpu>
+          <Cpu>IROM(0x10040000,0x28000) IRAM(0x20000000,0x6000) CPUTYPE("Cortex-M0+") CLOCK(12000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile></StartupFile>
-          <FlashDriverDll>UL2CM3(-S0 -C0 -P0 -FD200002CC -FC1000 -FN1 -FF0STBlueNRG1 -FS010040000 -FL028000 -FP0($$Device:BlueNRG-1$Flash\STBlueNRG1.FLM))</FlashDriverDll>
+          <FlashDriverDll>UL2CM3(-S0 -C0 -P0 -FD200002CC -FC1000 -FN1 -FF0STBlueNRG -FS010040000 -FL028000 -FP0($$Device:BlueNRG-1$Flash\STBlueNRG.FLM))</FlashDriverDll>
           <DeviceId>0</DeviceId>
           <RegisterFile></RegisterFile>
           <MemoryEnv></MemoryEnv>
@@ -753,7 +841,7 @@
           <SimDllName>SARMCM3.DLL</SimDllName>
           <SimDllArguments> -REMAP </SimDllArguments>
           <SimDlgDll>DARMCM1.DLL</SimDlgDll>
-          <SimDlgDllArguments>-pCM0</SimDlgDllArguments>
+          <SimDlgDllArguments>-pCM0+</SimDlgDllArguments>
           <TargetDllName>SARMCM3.DLL</TargetDllName>
           <TargetDllArguments> </TargetDllArguments>
           <TargetDlgDll>TARMCM1.DLL</TargetDlgDll>
@@ -815,7 +903,7 @@
             <AdsLsxf>1</AdsLsxf>
             <RvctClst>0</RvctClst>
             <GenPPlst>0</GenPPlst>
-            <AdsCpuType>"Cortex-M0"</AdsCpuType>
+            <AdsCpuType>"Cortex-M0+"</AdsCpuType>
             <RvctDeviceName></RvctDeviceName>
             <mOS>0</mOS>
             <uocRom>0</uocRom>
@@ -975,9 +1063,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>LS_SOURCE=LS_SOURCE_EXTERNAL_32KHZ SMPS_INDUCTOR=SMPS_INDUCTOR_10uH SERVER=1 BLUENRG2_DEVICE HS_SPEED_XTAL=HS_SPEED_XTAL_32MHZ USER_BUTTON=BUTTON_1</Define>
+              <Define>LS_SOURCE=LS_SOURCE_EXTERNAL_32KHZ SMPS_INDUCTOR=SMPS_INDUCTOR_10uH SERVER=1 BLUENRG1_DEVICE HS_SPEED_XTAL=HS_SPEED_XTAL_16MHZ USER_BUTTON=BUTTON_1</Define>
               <Undefine></Undefine>
-              <IncludePath>..\inc;..\Library\hal\inc;..\Library\BlueNRG1_Periph_Driver\inc;..\Library\CMSIS\Device\ST\BlueNRG1\Include;..\Library\CMSIS\Include;..\Library\Bluetooth_LE\inc;..\Library\BLE_Application\layers_inc;..\Library\BLE_Application\Utils\inc;..\Library\BLE_Application\OTA\inc;..\Library\SDK_Eval_BlueNRG1\inc</IncludePath>
+              <IncludePath>..\..\inc;..\..\Library\hal\inc;..\..\Library\BlueNRG1_Periph_Driver\inc;..\..\Library\CMSIS\Device\ST\BlueNRG1\Include;..\..\Library\CMSIS\Include;..\..\Library\Bluetooth_LE\inc;..\..\Library\BLE_Application\layers_inc;..\..\Library\BLE_Application\Utils\inc;..\..\Library\BLE_Application\OTA\inc;..\..\Library\SDK_Eval_BlueNRG1\inc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1008,7 +1096,7 @@
             <TextAddressRange>0x10040000</TextAddressRange>
             <DataAddressRange>0x20000000</DataAddressRange>
             <pXoBase></pXoBase>
-            <ScatterFile>.\BlueNRG1.sct</ScatterFile>
+            <ScatterFile>BlueNRG1.sct</ScatterFile>
             <IncludeLibs></IncludeLibs>
             <IncludeLibsPath></IncludeLibsPath>
             <Misc></Misc>
@@ -1024,27 +1112,27 @@
             <File>
               <FileName>clock.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../Library/hal/src/clock.c</FilePath>
+              <FilePath>..\..\Library\hal\src\clock.c</FilePath>
             </File>
             <File>
               <FileName>context_switch.s</FileName>
               <FileType>2</FileType>
-              <FilePath>../Library/hal/src/context_switch.s</FilePath>
+              <FilePath>..\..\Library\hal\src\context_switch.s</FilePath>
             </File>
             <File>
               <FileName>gp_timer.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../Library/hal/src/gp_timer.c</FilePath>
+              <FilePath>..\..\Library\hal\src\gp_timer.c</FilePath>
             </File>
             <File>
               <FileName>miscutil.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../Library/hal/src/miscutil.c</FilePath>
+              <FilePath>..\..\Library\hal\src\miscutil.c</FilePath>
             </File>
             <File>
               <FileName>osal.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../Library/hal/src/osal.c</FilePath>
+              <FilePath>..\..\Library\hal\src\osal.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1054,67 +1142,155 @@
             <File>
               <FileName>BlueNRG1_adc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../Library/BlueNRG1_Periph_Driver/src/BlueNRG1_adc.c</FilePath>
+              <FilePath>..\..\Library\BlueNRG1_Periph_Driver\src\BlueNRG1_adc.c</FilePath>
             </File>
             <File>
               <FileName>BlueNRG1_dma.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../Library/BlueNRG1_Periph_Driver/src/BlueNRG1_dma.c</FilePath>
+              <FilePath>..\..\Library\BlueNRG1_Periph_Driver\src\BlueNRG1_dma.c</FilePath>
             </File>
             <File>
               <FileName>BlueNRG1_flash.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../Library/BlueNRG1_Periph_Driver/src/BlueNRG1_flash.c</FilePath>
+              <FilePath>..\..\Library\BlueNRG1_Periph_Driver\src\BlueNRG1_flash.c</FilePath>
             </File>
             <File>
               <FileName>BlueNRG1_gpio.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../Library/BlueNRG1_Periph_Driver/src/BlueNRG1_gpio.c</FilePath>
+              <FilePath>..\..\Library\BlueNRG1_Periph_Driver\src\BlueNRG1_gpio.c</FilePath>
             </File>
             <File>
               <FileName>BlueNRG1_i2c.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../Library/BlueNRG1_Periph_Driver/src/BlueNRG1_i2c.c</FilePath>
+              <FilePath>..\..\Library\BlueNRG1_Periph_Driver\src\BlueNRG1_i2c.c</FilePath>
             </File>
             <File>
               <FileName>BlueNRG1_mft.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../Library/BlueNRG1_Periph_Driver/src/BlueNRG1_mft.c</FilePath>
+              <FilePath>..\..\Library\BlueNRG1_Periph_Driver\src\BlueNRG1_mft.c</FilePath>
             </File>
             <File>
               <FileName>BlueNRG1_pka.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../Library/BlueNRG1_Periph_Driver/src/BlueNRG1_pka.c</FilePath>
+              <FilePath>..\..\Library\BlueNRG1_Periph_Driver\src\BlueNRG1_pka.c</FilePath>
+            </File>
+            <File>
+              <FileName>BlueNRG1_radio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Library\BlueNRG1_Periph_Driver\src\BlueNRG1_radio.c</FilePath>
+            </File>
+            <File>
+              <FileName>BlueNRG1_rng.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Library\BlueNRG1_Periph_Driver\src\BlueNRG1_rng.c</FilePath>
             </File>
             <File>
               <FileName>BlueNRG1_rtc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../Library/BlueNRG1_Periph_Driver/src/BlueNRG1_rtc.c</FilePath>
+              <FilePath>..\..\Library\BlueNRG1_Periph_Driver\src\BlueNRG1_rtc.c</FilePath>
             </File>
             <File>
               <FileName>BlueNRG1_spi.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../Library/BlueNRG1_Periph_Driver/src/BlueNRG1_spi.c</FilePath>
+              <FilePath>..\..\Library\BlueNRG1_Periph_Driver\src\BlueNRG1_spi.c</FilePath>
             </File>
             <File>
               <FileName>BlueNRG1_sysCtrl.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../Library/BlueNRG1_Periph_Driver/src/BlueNRG1_sysCtrl.c</FilePath>
+              <FilePath>..\..\Library\BlueNRG1_Periph_Driver\src\BlueNRG1_sysCtrl.c</FilePath>
             </File>
             <File>
               <FileName>BlueNRG1_uart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../Library/BlueNRG1_Periph_Driver/src/BlueNRG1_uart.c</FilePath>
+              <FilePath>..\..\Library\BlueNRG1_Periph_Driver\src\BlueNRG1_uart.c</FilePath>
             </File>
             <File>
               <FileName>BlueNRG1_wdg.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../Library/BlueNRG1_Periph_Driver/src/BlueNRG1_wdg.c</FilePath>
+              <FilePath>..\..\Library\BlueNRG1_Periph_Driver\src\BlueNRG1_wdg.c</FilePath>
             </File>
             <File>
               <FileName>misc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../Library/BlueNRG1_Periph_Driver/src/misc.c</FilePath>
+              <FilePath>..\..\Library\BlueNRG1_Periph_Driver\src\misc.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>OTA</GroupName>
+          <GroupOption>
+            <CommonProperty>
+              <UseCPPCompiler>0</UseCPPCompiler>
+              <RVCTCodeConst>0</RVCTCodeConst>
+              <RVCTZI>0</RVCTZI>
+              <RVCTOtherData>0</RVCTOtherData>
+              <ModuleSelection>0</ModuleSelection>
+              <IncludeInBuild>0</IncludeInBuild>
+              <AlwaysBuild>0</AlwaysBuild>
+              <GenerateAssemblyFile>0</GenerateAssemblyFile>
+              <AssembleAssemblyFile>0</AssembleAssemblyFile>
+              <PublicsOnly>0</PublicsOnly>
+              <StopOnExitCode>3</StopOnExitCode>
+              <CustomArgument></CustomArgument>
+              <IncludeLibraryModules></IncludeLibraryModules>
+              <ComprImg>0</ComprImg>
+            </CommonProperty>
+            <GroupArmAds>
+              <Cads>
+                <interw>2</interw>
+                <Optim>0</Optim>
+                <oTime>2</oTime>
+                <SplitLS>2</SplitLS>
+                <OneElfS>2</OneElfS>
+                <Strict>2</Strict>
+                <EnumInt>2</EnumInt>
+                <PlainCh>2</PlainCh>
+                <Ropi>2</Ropi>
+                <Rwpi>2</Rwpi>
+                <wLevel>0</wLevel>
+                <uThumb>2</uThumb>
+                <uSurpInc>2</uSurpInc>
+                <uC99>2</uC99>
+                <useXO>2</useXO>
+                <v6Lang>0</v6Lang>
+                <v6LangP>0</v6LangP>
+                <vShortEn>2</vShortEn>
+                <vShortWch>2</vShortWch>
+                <v6Lto>2</v6Lto>
+                <v6WtE>2</v6WtE>
+                <v6Rtti>2</v6Rtti>
+                <VariousControls>
+                  <MiscControls></MiscControls>
+                  <Define></Define>
+                  <Undefine></Undefine>
+                  <IncludePath></IncludePath>
+                </VariousControls>
+              </Cads>
+              <Aads>
+                <interw>2</interw>
+                <Ropi>2</Ropi>
+                <Rwpi>2</Rwpi>
+                <thumb>2</thumb>
+                <SplitLS>2</SplitLS>
+                <SwStkChk>2</SwStkChk>
+                <NoWarn>2</NoWarn>
+                <uSurpInc>2</uSurpInc>
+                <useXO>2</useXO>
+                <uClangAs>2</uClangAs>
+                <VariousControls>
+                  <MiscControls></MiscControls>
+                  <Define></Define>
+                  <Undefine></Undefine>
+                  <IncludePath></IncludePath>
+                </VariousControls>
+              </Aads>
+            </GroupArmAds>
+          </GroupOption>
+          <Files>
+            <File>
+              <FileName>OTA_btl.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Library\BLE_Application\OTA\src\OTA_btl.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1124,72 +1300,22 @@
             <File>
               <FileName>SDK_EVAL_Button.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../Library/SDK_Eval_BlueNRG1/src/SDK_EVAL_Button.c</FilePath>
+              <FilePath>..\..\Library\SDK_Eval_BlueNRG1\src\SDK_EVAL_Button.c</FilePath>
             </File>
             <File>
               <FileName>SDK_EVAL_Com.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../Library/SDK_Eval_BlueNRG1/src/SDK_EVAL_Com.c</FilePath>
-              <FileOption>
-                <CommonProperty>
-                  <UseCPPCompiler>2</UseCPPCompiler>
-                  <RVCTCodeConst>0</RVCTCodeConst>
-                  <RVCTZI>0</RVCTZI>
-                  <RVCTOtherData>0</RVCTOtherData>
-                  <ModuleSelection>0</ModuleSelection>
-                  <IncludeInBuild>1</IncludeInBuild>
-                  <AlwaysBuild>2</AlwaysBuild>
-                  <GenerateAssemblyFile>2</GenerateAssemblyFile>
-                  <AssembleAssemblyFile>2</AssembleAssemblyFile>
-                  <PublicsOnly>2</PublicsOnly>
-                  <StopOnExitCode>11</StopOnExitCode>
-                  <CustomArgument></CustomArgument>
-                  <IncludeLibraryModules></IncludeLibraryModules>
-                  <ComprImg>1</ComprImg>
-                </CommonProperty>
-                <FileArmAds>
-                  <Cads>
-                    <interw>2</interw>
-                    <Optim>0</Optim>
-                    <oTime>2</oTime>
-                    <SplitLS>2</SplitLS>
-                    <OneElfS>2</OneElfS>
-                    <Strict>2</Strict>
-                    <EnumInt>2</EnumInt>
-                    <PlainCh>2</PlainCh>
-                    <Ropi>2</Ropi>
-                    <Rwpi>2</Rwpi>
-                    <wLevel>0</wLevel>
-                    <uThumb>2</uThumb>
-                    <uSurpInc>2</uSurpInc>
-                    <uC99>2</uC99>
-                    <useXO>2</useXO>
-                    <v6Lang>0</v6Lang>
-                    <v6LangP>0</v6LangP>
-                    <vShortEn>2</vShortEn>
-                    <vShortWch>2</vShortWch>
-                    <v6Lto>2</v6Lto>
-                    <v6WtE>2</v6WtE>
-                    <v6Rtti>2</v6Rtti>
-                    <VariousControls>
-                      <MiscControls></MiscControls>
-                      <Define></Define>
-                      <Undefine></Undefine>
-                      <IncludePath></IncludePath>
-                    </VariousControls>
-                  </Cads>
-                </FileArmAds>
-              </FileOption>
+              <FilePath>..\..\Library\SDK_Eval_BlueNRG1\src\SDK_EVAL_Com.c</FilePath>
             </File>
             <File>
               <FileName>SDK_EVAL_Config.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../Library/SDK_Eval_BlueNRG1/src/SDK_EVAL_Config.c</FilePath>
+              <FilePath>..\..\Library\SDK_Eval_BlueNRG1\src\SDK_EVAL_Config.c</FilePath>
             </File>
             <File>
               <FileName>SDK_EVAL_Led.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../Library/SDK_Eval_BlueNRG1/src/SDK_EVAL_Led.c</FilePath>
+              <FilePath>..\..\Library\SDK_Eval_BlueNRG1\src\SDK_EVAL_Led.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1199,17 +1325,17 @@
             <File>
               <FileName>libbluenrg1_stack.a</FileName>
               <FileType>4</FileType>
-              <FilePath>../Library/Bluetooth_LE/library/libbluenrg1_stack.a</FilePath>
+              <FilePath>..\..\Library\Bluetooth_LE\library\libbluenrg1_stack.a</FilePath>
             </File>
             <File>
               <FileName>libcrypto.a</FileName>
               <FileType>4</FileType>
-              <FilePath>../Library/cryptolib/libcrypto.a</FilePath>
+              <FilePath>..\..\Library\cryptolib\libcrypto.a</FilePath>
             </File>
             <File>
               <FileName>stack_user_cfg.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../Library/Bluetooth_LE/src/stack_user_cfg.c</FilePath>
+              <FilePath>..\..\Library\Bluetooth_LE\src\stack_user_cfg.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1219,7 +1345,7 @@
             <File>
               <FileName>system_bluenrg1.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../Library/CMSIS/Device/ST/BlueNRG1/Source/system_bluenrg1.c</FilePath>
+              <FilePath>..\..\Library\CMSIS\Device\ST\BlueNRG1\Source\system_bluenrg1.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1227,114 +1353,24 @@
           <GroupName>User</GroupName>
           <Files>
             <File>
+              <FileName>BLE_Chat_main.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../src/BLE_Chat_main.c</FilePath>
+            </File>
+            <File>
               <FileName>BlueNRG1_it.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../src/BlueNRG1_it.c</FilePath>
+              <FilePath>../../src/BlueNRG1_it.c</FilePath>
+            </File>
+            <File>
+              <FileName>chat.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../src/chat.c</FilePath>
             </File>
             <File>
               <FileName>gatt_db.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../src/gatt_db.c</FilePath>
-            </File>
-            <File>
-              <FileName>template_app.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\src\template_app.c</FilePath>
-              <FileOption>
-                <CommonProperty>
-                  <UseCPPCompiler>2</UseCPPCompiler>
-                  <RVCTCodeConst>0</RVCTCodeConst>
-                  <RVCTZI>0</RVCTZI>
-                  <RVCTOtherData>0</RVCTOtherData>
-                  <ModuleSelection>0</ModuleSelection>
-                  <IncludeInBuild>0</IncludeInBuild>
-                  <AlwaysBuild>2</AlwaysBuild>
-                  <GenerateAssemblyFile>2</GenerateAssemblyFile>
-                  <AssembleAssemblyFile>2</AssembleAssemblyFile>
-                  <PublicsOnly>2</PublicsOnly>
-                  <StopOnExitCode>11</StopOnExitCode>
-                  <CustomArgument></CustomArgument>
-                  <IncludeLibraryModules></IncludeLibraryModules>
-                  <ComprImg>1</ComprImg>
-                </CommonProperty>
-                <FileArmAds>
-                  <Cads>
-                    <interw>2</interw>
-                    <Optim>0</Optim>
-                    <oTime>2</oTime>
-                    <SplitLS>2</SplitLS>
-                    <OneElfS>2</OneElfS>
-                    <Strict>2</Strict>
-                    <EnumInt>2</EnumInt>
-                    <PlainCh>2</PlainCh>
-                    <Ropi>2</Ropi>
-                    <Rwpi>2</Rwpi>
-                    <wLevel>0</wLevel>
-                    <uThumb>2</uThumb>
-                    <uSurpInc>2</uSurpInc>
-                    <uC99>2</uC99>
-                    <useXO>2</useXO>
-                    <v6Lang>0</v6Lang>
-                    <v6LangP>0</v6LangP>
-                    <vShortEn>2</vShortEn>
-                    <vShortWch>2</vShortWch>
-                    <v6Lto>2</v6Lto>
-                    <v6WtE>2</v6WtE>
-                    <v6Rtti>2</v6Rtti>
-                    <VariousControls>
-                      <MiscControls></MiscControls>
-                      <Define></Define>
-                      <Undefine></Undefine>
-                      <IncludePath></IncludePath>
-                    </VariousControls>
-                  </Cads>
-                </FileArmAds>
-              </FileOption>
-            </File>
-            <File>
-              <FileName>template_main.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\src\template_main.c</FilePath>
-            </File>
-            <File>
-              <FileName>server_app.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\src\server_app.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>Inc</GroupName>
-          <Files>
-            <File>
-              <FileName>app_state.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\inc\app_state.h</FilePath>
-            </File>
-            <File>
-              <FileName>BlueNRG1_conf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\inc\BlueNRG1_conf.h</FilePath>
-            </File>
-            <File>
-              <FileName>BlueNRG1_it.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\inc\BlueNRG1_it.h</FilePath>
-            </File>
-            <File>
-              <FileName>gatt_db.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\inc\gatt_db.h</FilePath>
-            </File>
-            <File>
-              <FileName>template.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\inc\template.h</FilePath>
-            </File>
-            <File>
-              <FileName>Template_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\inc\Template_config.h</FilePath>
+              <FilePath>../../src/gatt_db.c</FilePath>
             </File>
           </Files>
         </Group>
