@@ -286,6 +286,9 @@ int main(void)
 		if(Timer_Expired(&t_second_counter))
 			{
 				time++;
+				
+				if(time%200 == 0)
+					printf("Hello\r\n");
 				if(time == 120000)
 					time = 0;
 				Timer_Restart(&t_second_counter);
