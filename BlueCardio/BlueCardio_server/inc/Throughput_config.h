@@ -20,7 +20,7 @@
 #define NUM_APP_GATT_SERVICES 1  /* 1 throughput service */
 
 /* Number of attributes requests from the throughput demo */
-#define NUM_APP_GATT_ATTRIBUTES 5 /* 5 attributes x BLE throughput service characteristics */
+#define NUM_APP_GATT_ATTRIBUTES 9 /* 5 attributes x BLE throughput service characteristics */
 
 /* Number of links needed for the demo: 1
  * Only 1 the default
@@ -43,7 +43,7 @@
 #if CLIENT
 #define ATT_VALUE_ARRAY_SIZE    (44) //(GATT + GAP Services Characteristics)
 #elif SERVER
-#define ATT_VALUE_ARRAY_SIZE    (44 + 80) //(GATT + GAP) = 44 + Chat  (TX (41) + RX (39) characteristics)   Services
+#define ATT_VALUE_ARRAY_SIZE    (226) //(44 + 80) //(GATT + GAP) = 44 + Chat  (TX (41) + RX (39) characteristics)   Services
 #endif 
 
 /* Flash security database size */
@@ -56,7 +56,7 @@
 #define MAX_ATT_MTU             (DEFAULT_ATT_MTU) 
 
 /* Set supported max value for attribute size: it is the biggest attribute size enabled by the application */
-#define MAX_ATT_SIZE            (20)  
+#define MAX_ATT_SIZE            (80)  
 
 /* Set the minumum number of prepare write requests needed for a long write procedure for a characteristic with len > 20bytes: 
  * 
