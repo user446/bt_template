@@ -178,8 +178,8 @@ void APP_Tick(void)
 				else
 				{
 					printf("Time: %d\r\n", time);
-					send_flag = FALSE;
 				}
+				send_flag = FALSE;
 			}
 		}
 		

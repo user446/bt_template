@@ -44,6 +44,7 @@
 uint8_t connInfo[20];
 volatile int app_flags = SET_CONNECTABLE;
 volatile uint16_t connection_handle = 0;
+struct timer l2cap_req_timer;
 
 /** 
   * @brief  Handle of TX,RX  Characteristics.

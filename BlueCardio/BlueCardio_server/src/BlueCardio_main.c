@@ -274,7 +274,7 @@ int main(void)
   
   printf("BLE Stack Initialized \n");
 	
-	Timer_Set(&t_second_counter, CLOCK_SECOND/400);
+	Timer_Set(&t_second_counter, CLOCK_SECOND/200);
 	time = 0;
   
   while(1) {
