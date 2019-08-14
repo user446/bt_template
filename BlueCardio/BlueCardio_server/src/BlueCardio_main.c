@@ -226,6 +226,7 @@ NOTES:
 #include "throughput.h"
 #include "SDK_EVAL_Config.h"
 #include "Throughput_config.h"
+#include "adc.h"
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
@@ -237,6 +238,8 @@ NOTES:
 struct timer t_second_counter;
 int time;
 BOOL send_flag;
+float send_adc_val;
+
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
 
@@ -274,7 +277,11 @@ int main(void)
   
   printf("BLE Stack Initialized \n");
 	
-	Timer_Set(&t_second_counter, CLOCK_SECOND/200);
+	ADC_Initialize();
+	
+	printf("ADC Initialized \n");
+	
+	Timer_Set(&t_second_counter, CLOCK_SECOND/2);
 	time = 0;
   
   while(1) {
@@ -284,13 +291,20 @@ int main(void)
     /* Application tick */
     APP_Tick();
 		
-		if(Timer_Expired(&t_second_counter) && send_flag == FALSE)
-			{
+		if (ADC_Ready()){
+			ADC_GetData(&send_adc_val,1);
+			send_flag = TRUE;
+			//Timer_Restart(&t_second_counter);
+		}
+		
+		if(Timer_Expired(&t_second_counter)){
+				ADC_Start();
 				time++;
 				if(time == 120000)
 					time = 0;
-				send_flag = TRUE;
+				//send_flag = TRUE;
 				Timer_Restart(&t_second_counter);
+				
 			}
   }
   

@@ -46,6 +46,7 @@ uint8_t connInfo[20];
 volatile int app_flags = SET_CONNECTABLE;
 volatile uint16_t connection_handle = 0;
 uint8_t send_time[4] = {0};
+extern float send_adc_val;
 
 /* UUIDs */
 UUID_t UUID_Tx;
@@ -165,19 +166,22 @@ void APP_Tick(void)
 	send_time[1] = (uint8_t)((0x0000FF00&time)>>8);
 	send_time[2] = (uint8_t)((0x00FF0000&time)>>16);
 	send_time[3] = (uint8_t)((0xFF000000&time)>>24);
+
 	
+
+			
 	if(APP_FLAG(CONNECTED))
 		{
 			if(send_flag == TRUE)
 			{
-				ret = aci_gatt_update_char_value_ext(connection_handle, ServHandle, TXCharHandle, 1, 4, 0, 4, send_time);
+				ret = aci_gatt_update_char_value_ext(connection_handle, ServHandle, TXCharHandle, 1, 4, 0, 4, (void*)&send_adc_val);
 				if(ret != BLE_STATUS_SUCCESS)
 				{
 					printf("Updating characteristic value failed! 0x%02x\r\n", ret);
 				}
 				else
 				{
-					printf("Time: %d\r\n", time);
+					printf("ADC : %f mV\r\n", send_adc_val);
 				}
 				send_flag = FALSE;
 			}

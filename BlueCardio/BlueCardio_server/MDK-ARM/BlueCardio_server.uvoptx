@@ -73,7 +73,7 @@
         <LExpSel>0</LExpSel>
       </OPTXL>
       <OPTFL>
-        <tvExp>1</tvExp>
+        <tvExp>0</tvExp>
         <tvExpOptDlg>0</tvExpOptDlg>
         <IsCurrentTarget>1</IsCurrentTarget>
       </OPTFL>
@@ -138,7 +138,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>ST-LINKIII-KEIL_SWO</Key>
-          <Name>-U55FF70067087534907362467 -O239 -S0 -C0 -A0 -N00("ARM CoreSight SW-DP") -D00(0BB11477) -L00(0) -TO26 -TC10000000 -TP21 -TDS8004 -TDT0 -TDC1F -TIE1 -TIP8 -FO15 -FD200002CC -FC1000 -FN1 -FF0STBlueNRG1.FLM -FS010040000 -FL028000 -FP0($$Device:BlueNRG-1$Flash\STBlueNRG1.FLM)</Name>
+          <Name>-U5&amp;2DD28A37&amp;0&amp;2 -O1263 -S0 -C0 -A0 -N00("ARM CoreSight SW-DP") -D00(0BB11477) -L00(0) -TO26 -TC10000000 -TP21 -TDS8004 -TDT0 -TDC1F -TIE1 -TIP8 -FO15 -FD200002CC -FC1000 -FN1 -FF0STBlueNRG1.FLM -FS010040000 -FL028000 -FP0($$Device:BlueNRG-1$Flash\STBlueNRG1.FLM)</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -153,7 +153,7 @@
       <DebugFlag>
         <trace>0</trace>
         <periodic>1</periodic>
-        <aLwin>0</aLwin>
+        <aLwin>1</aLwin>
         <aCover>0</aCover>
         <aSer1>0</aSer1>
         <aSer2>0</aSer2>
@@ -451,7 +451,7 @@
 
   <Group>
     <GroupName>Platform_Layers</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
@@ -620,6 +620,30 @@
       <bDave2>0</bDave2>
       <PathWithFileName>..\src\BlueCardio_main.c</PathWithFileName>
       <FilenameWithoutPath>BlueCardio_main.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>6</GroupNumber>
+      <FileNumber>33</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\src\adc.c</PathWithFileName>
+      <FilenameWithoutPath>adc.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>6</GroupNumber>
+      <FileNumber>34</FileNumber>
+      <FileType>5</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\src\adc.h</PathWithFileName>
+      <FilenameWithoutPath>adc.h</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>

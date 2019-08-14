@@ -29,6 +29,7 @@
 #include "BlueNRG1_flash.h"
 #include "BlueNRG1_gpio.h"
 #include "BlueNRG1_dma.h"
+#include "BlueNRG1_adc.h"
 /*#include "BlueNRG1_i2c.h"*/
 /*#include "BlueNRG1_watchdog.h"*/
 /*#include "BlueNRG1_spi.h"*/

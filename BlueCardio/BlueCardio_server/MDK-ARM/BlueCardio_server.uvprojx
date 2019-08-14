@@ -15,7 +15,7 @@
         <TargetCommonOption>
           <Device>BlueNRG-1</Device>
           <Vendor>STMicroelectronics</Vendor>
-          <PackID>Keil.STBlueNRG-1_DFP.1.2.0</PackID>
+          <PackID>Keil.STBlueNRG_DFP.1.1.1</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000,0x6000) IROM(0x10040000,0x28000) CPUTYPE("Cortex-M0") CLOCK(12000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -563,6 +563,16 @@
               <FileName>BlueCardio_main.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\src\BlueCardio_main.c</FilePath>
+            </File>
+            <File>
+              <FileName>adc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\src\adc.c</FilePath>
+            </File>
+            <File>
+              <FileName>adc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\src\adc.h</FilePath>
             </File>
           </Files>
         </Group>
