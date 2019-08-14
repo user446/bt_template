@@ -312,14 +312,17 @@ void aci_gatt_notification_event(uint16_t Connection_Handle,
 	temp_rec = rec;
   if(attr_handle == tx_handle+1)
   {
-    for(int i = 0; i < Attribute_Value_Length; i++) 
-		{
-			rec |= (uint32_t)Attribute_Value[i]<<(8*i);
-		}
-		if(temp_rec <= rec - 1)
-			printf("%d\r\n", rec);
-		else
-      printf("%d:warning\r\n", rec);
+//		printf("0x");
+//    for(int i = 0; i < Attribute_Value_Length; i++) 
+//		{
+//			printf("%02X", Attribute_Value[i]);
+//		}
+//		printf("\r\n");
+		rec = Attribute_Value[0];
+		rec |= Attribute_Value[1] << 8;
+		rec |= Attribute_Value[2] << 16;
+		rec |= Attribute_Value[3] << 24;
+		printf("0x%08X :: %d\r\n", rec, rec);
   }
    
 }

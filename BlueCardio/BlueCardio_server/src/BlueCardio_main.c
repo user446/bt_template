@@ -236,6 +236,7 @@ NOTES:
 /* Private variables ---------------------------------------------------------*/
 struct timer t_second_counter;
 int time;
+BOOL send_flag;
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
 
@@ -273,7 +274,7 @@ int main(void)
   
   printf("BLE Stack Initialized \n");
 	
-	Timer_Set(&t_second_counter, CLOCK_SECOND/200);
+	Timer_Set(&t_second_counter, CLOCK_SECOND/400);
 	time = 0;
   
   while(1) {
@@ -283,11 +284,12 @@ int main(void)
     /* Application tick */
     APP_Tick();
 		
-		if(Timer_Expired(&t_second_counter))
+		if(Timer_Expired(&t_second_counter) && send_flag == FALSE)
 			{
 				time++;
 				if(time == 120000)
 					time = 0;
+				send_flag = TRUE;
 				Timer_Restart(&t_second_counter);
 			}
   }

@@ -27,6 +27,7 @@
 
 /* External variables --------------------------------------------------------*/
 extern int time;
+extern BOOL send_flag;
 /* Private typedef -----------------------------------------------------------*/
 /* Private defines -----------------------------------------------------------*/
 
@@ -167,15 +168,18 @@ void APP_Tick(void)
 	
 	if(APP_FLAG(CONNECTED))
 		{
-			ret = aci_gatt_update_char_value_ext(connection_handle, ServHandle, TXCharHandle, 1, 4, 0, 4, send_time);
-			if(ret ==	BLE_STATUS_INSUFFICIENT_RESOURCES)
+			if(send_flag == TRUE)
 			{
-				APP_FLAG_SET(TX_BUFFER_FULL);
-				return;
-			}
-			if(ret != BLE_STATUS_SUCCESS)
-			{
-				printf("Updating characteristic value failed! 0x%02x\r\n", ret);
+				ret = aci_gatt_update_char_value_ext(connection_handle, ServHandle, TXCharHandle, 1, 4, 0, 4, send_time);
+				if(ret != BLE_STATUS_SUCCESS)
+				{
+					printf("Updating characteristic value failed! 0x%02x\r\n", ret);
+				}
+				else
+				{
+					printf("Time: %d\r\n", time);
+					send_flag = FALSE;
+				}
 			}
 		}
 		
