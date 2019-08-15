@@ -33,7 +33,7 @@ void ADC_Configuration(void)
   xADC_InitType.ADC_Input = ADC_Input_AdcPin1; //ADC_Input_AdcPin12;
   xADC_InitType.ADC_ConversionMode = ADC_ConversionMode_Continuous;
   xADC_InitType.ADC_ReferenceVoltage = ADC_ReferenceVoltage_0V6; //ADC_ReferenceVoltage_0V6;
-  xADC_InitType.ADC_Attenuation = ADC_Attenuation_9dB54;
+  xADC_InitType.ADC_Attenuation = ADC_Attenuation_0dB;
     
   ADC_Init(&xADC_InitType);
   
@@ -117,9 +117,8 @@ int	ADC_GetData(float *buf, int max_size){
       DMA_Cmd(ADC_DMA_CH0, DISABLE);
       
       
-      for(i=0; i<ADC_DMA_BUFFER_LEN && i<max_size; i++) {
-        //printf("ADC value: %.0f mV\r\n", ADC_ConvertDifferentialVoltage(buffer_adc[i], xADC_InitType.ADC_Attenuation)*1000.0);
-				buf[i]=ADC_ConvertDifferentialVoltage(buffer_adc[i], xADC_InitType.ADC_Attenuation)*1000.0;
+      for(i=0; i< ADC_DMA_BUFFER_LEN && i<max_size; i++) {
+				buf[i] = (ADC_ConvertSingleEndedVoltage(buffer_adc[i], ADC_Input_AdcPin1, xADC_InitType.ADC_ReferenceVoltage, xADC_InitType.ADC_Attenuation))*1000;
       }
 		 return i;
     } 

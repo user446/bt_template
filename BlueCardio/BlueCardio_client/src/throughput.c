@@ -134,7 +134,6 @@ void Make_Connection(void)
   
 
   ret = aci_gap_create_connection(0x4000, 0x4000, PUBLIC_ADDR, bdaddr, PUBLIC_ADDR, 40, 40, 0, 60, 2000 , 2000); 
-	//aci_gap_create_connection(
   if (ret != BLE_STATUS_SUCCESS)
   {
     printf("Error while starting connection: 0x%04x\r\n", ret);
@@ -298,7 +297,14 @@ void aci_gatt_attribute_modified_event(uint16_t Connection_Handle,
  * Output         : See file bluenrg1_events.h
  * Return         : See file bluenrg1_events.h
  *******************************************************************************/
-uint32_t temp_rec = 0;
+union
+{
+	float f;
+	uint32_t u32;
+	uint8_t a4[4];
+	uint16_t a2[2];
+}conv;
+
 void aci_gatt_notification_event(uint16_t Connection_Handle,
                                  uint16_t Attribute_Handle,
                                  uint8_t Attribute_Value_Length,
@@ -306,11 +312,9 @@ void aci_gatt_notification_event(uint16_t Connection_Handle,
 { 
   uint16_t attr_handle;
   uint8_t * attr_value = Attribute_Value;
-	uint32_t rec;
   
   attr_handle = Attribute_Handle;
 	
-	temp_rec = rec;
   if(attr_handle == tx_handle+1)
   {
 //		printf("0x");
@@ -318,12 +322,9 @@ void aci_gatt_notification_event(uint16_t Connection_Handle,
 //		{
 //			printf("%02X", Attribute_Value[i]);
 //		}
-//		printf("\r\n");
-		rec = Attribute_Value[0];
-		rec |= Attribute_Value[1] << 8;
-		rec |= Attribute_Value[2] << 16;
-		rec |= Attribute_Value[3] << 24;
-		printf("0x%08X :: %d\r\n", rec, rec);
+
+		Osal_MemCpy(conv.a4, Attribute_Value, 4);
+		printf("%f\r\n", conv.f);
   }
    
 }

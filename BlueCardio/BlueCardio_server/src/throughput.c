@@ -26,7 +26,6 @@
 #include "SDK_EVAL_Config.h"
 
 /* External variables --------------------------------------------------------*/
-extern int time;
 extern BOOL send_flag;
 /* Private typedef -----------------------------------------------------------*/
 /* Private defines -----------------------------------------------------------*/
@@ -45,7 +44,6 @@ extern BOOL send_flag;
 uint8_t connInfo[20];
 volatile int app_flags = SET_CONNECTABLE;
 volatile uint16_t connection_handle = 0;
-uint8_t send_time[4] = {0};
 extern float send_adc_val;
 
 /* UUIDs */
@@ -161,14 +159,6 @@ void APP_Tick(void)
   }
 	if(APP_FLAG(TX_BUFFER_FULL))
 		return;
-	
-	send_time[0] = (uint8_t)(0x000000FF&time);
-	send_time[1] = (uint8_t)((0x0000FF00&time)>>8);
-	send_time[2] = (uint8_t)((0x00FF0000&time)>>16);
-	send_time[3] = (uint8_t)((0xFF000000&time)>>24);
-
-	
-
 			
 	if(APP_FLAG(CONNECTED))
 		{

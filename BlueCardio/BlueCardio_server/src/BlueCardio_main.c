@@ -299,9 +299,6 @@ int main(void)
 		
 		if(Timer_Expired(&t_second_counter)){
 				ADC_Start();
-				time++;
-				if(time == 120000)
-					time = 0;
 				//send_flag = TRUE;
 				Timer_Restart(&t_second_counter);
 				
