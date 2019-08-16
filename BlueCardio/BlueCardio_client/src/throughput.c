@@ -299,20 +299,21 @@ void aci_gatt_attribute_modified_event(uint16_t Connection_Handle,
  *******************************************************************************/
 union
 {
-	float f;
-	uint32_t u32;
-	uint8_t a4[4];
-	uint16_t a2[2];
-}conv;
-
+	float f[8];
+	uint32_t u32[8];
+	uint8_t u8[32];
+}conv_update;
+uint16_t conv_counter;
+uint8_t * attr_value;
+uint8_t length;
 void aci_gatt_notification_event(uint16_t Connection_Handle,
                                  uint16_t Attribute_Handle,
                                  uint8_t Attribute_Value_Length,
                                  uint8_t Attribute_Value[])
 { 
   uint16_t attr_handle;
-  uint8_t * attr_value = Attribute_Value;
-  
+  attr_value = Attribute_Value;
+  length = Attribute_Value_Length;
   attr_handle = Attribute_Handle;
 	
   if(attr_handle == tx_handle+1)
@@ -323,8 +324,10 @@ void aci_gatt_notification_event(uint16_t Connection_Handle,
 //			printf("%02X", Attribute_Value[i]);
 //		}
 
-		Osal_MemCpy(conv.a4, Attribute_Value, 4);
-		printf("%f\r\n", conv.f);
+		Osal_MemCpy(conv_update.u8, Attribute_Value, 16);
+		Osal_MemCpy(&conv_counter, Attribute_Value+16, 2);
+		for(int i = 0; i < 4; i++)
+			printf("%d :: %f\r\n", conv_counter, conv_update.f[i]);
   }
    
 }

@@ -238,7 +238,8 @@ NOTES:
 struct timer t_second_counter;
 int time;
 BOOL send_flag;
-float send_adc_val;
+
+update_value uv;
 
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
@@ -281,7 +282,7 @@ int main(void)
 	
 	printf("ADC Initialized \n");
 	
-	Timer_Set(&t_second_counter, CLOCK_SECOND/2);
+	Timer_Set(&t_second_counter, CLOCK_SECOND/64);
 	time = 0;
   
   while(1) {
@@ -292,7 +293,7 @@ int main(void)
     APP_Tick();
 		
 		if (ADC_Ready()){
-			ADC_GetData(&send_adc_val,1);
+			ADC_GetData(uv.update_buffer_f, CONVERSION_NUM);
 			send_flag = TRUE;
 			//Timer_Restart(&t_second_counter);
 		}

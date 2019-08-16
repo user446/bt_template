@@ -49,7 +49,7 @@ uint8_t Add_Throughput_Service(void)
   if (ret != BLE_STATUS_SUCCESS) goto fail;    
 
   Osal_MemCpy(&char_uuid.Char_UUID_128, charUuidTX, 16);
-  ret =  aci_gatt_add_char(ServHandle, UUID_TYPE_128, &char_uuid, 20, CHAR_PROP_NOTIFY, ATTR_PERMISSION_NONE, 0,
+  ret =  aci_gatt_add_char(ServHandle, UUID_TYPE_128, &char_uuid, 40, CHAR_PROP_NOTIFY, ATTR_PERMISSION_NONE, 0,
                 16, 1, &TXCharHandle);
   if (ret != BLE_STATUS_SUCCESS) goto fail;
 

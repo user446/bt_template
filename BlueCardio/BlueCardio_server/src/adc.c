@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+uint16_t conv_counter = 0;
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
 #define ADC_OUT_ADDRESS         (ADC_BASE + 0x16)
@@ -33,7 +34,7 @@ void ADC_Configuration(void)
   xADC_InitType.ADC_Input = ADC_Input_AdcPin1; //ADC_Input_AdcPin12;
   xADC_InitType.ADC_ConversionMode = ADC_ConversionMode_Continuous;
   xADC_InitType.ADC_ReferenceVoltage = ADC_ReferenceVoltage_0V6; //ADC_ReferenceVoltage_0V6;
-  xADC_InitType.ADC_Attenuation = ADC_Attenuation_0dB;
+  xADC_InitType.ADC_Attenuation = ADC_Attenuation_9dB54;
     
   ADC_Init(&xADC_InitType);
   
@@ -117,9 +118,10 @@ int	ADC_GetData(float *buf, int max_size){
       DMA_Cmd(ADC_DMA_CH0, DISABLE);
       
       
-      for(i=0; i< ADC_DMA_BUFFER_LEN && i<max_size; i++) {
+      for(i = 0; i < ADC_DMA_BUFFER_LEN && i < max_size; i++) {
 				buf[i] = (ADC_ConvertSingleEndedVoltage(buffer_adc[i], ADC_Input_AdcPin1, xADC_InitType.ADC_ReferenceVoltage, xADC_InitType.ADC_Attenuation))*1000;
       }
+			conv_counter++;
 		 return i;
     } 
 		return 0;

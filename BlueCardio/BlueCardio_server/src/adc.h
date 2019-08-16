@@ -1,7 +1,7 @@
 #ifndef __ADC_H__ 
 #define __ADC_H__
 
-#define ADC_DMA_BUFFER_LEN      (2)
+#define ADC_DMA_BUFFER_LEN      (256)
 
 void ADC_Initialize(void);
 int ADC_Ready(void);

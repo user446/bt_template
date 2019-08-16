@@ -27,6 +27,8 @@
 
 /* External variables --------------------------------------------------------*/
 extern BOOL send_flag;
+extern uint16_t conv_counter;
+extern update_value uv;
 /* Private typedef -----------------------------------------------------------*/
 /* Private defines -----------------------------------------------------------*/
 
@@ -44,8 +46,7 @@ extern BOOL send_flag;
 uint8_t connInfo[20];
 volatile int app_flags = SET_CONNECTABLE;
 volatile uint16_t connection_handle = 0;
-extern float send_adc_val;
-
+uint8_t send_buffer[32+2];
 /* UUIDs */
 UUID_t UUID_Tx;
 UUID_t UUID_Rx;
@@ -164,14 +165,18 @@ void APP_Tick(void)
 		{
 			if(send_flag == TRUE)
 			{
-				ret = aci_gatt_update_char_value_ext(connection_handle, ServHandle, TXCharHandle, 1, 4, 0, 4, (void*)&send_adc_val);
+				Osal_MemCpy(send_buffer, uv.update_buff_u8, CONVERSION_NUM*4);
+				Osal_MemCpy(send_buffer+CONVERSION_NUM*4, (void*)&conv_counter, 2);
+				ret = aci_gatt_update_char_value_ext(connection_handle, ServHandle, TXCharHandle, 1, 18, 0, 18, send_buffer);
+				//ret = aci_gatt_write_long_char_value(connection_handle, TXCharHandle, 0, 34, send_buffer);
 				if(ret != BLE_STATUS_SUCCESS)
 				{
 					printf("Updating characteristic value failed! 0x%02x\r\n", ret);
 				}
 				else
 				{
-					printf("ADC : %f mV\r\n", send_adc_val);
+					for(int i = 0; i < CONVERSION_NUM; i++)
+						printf("%d :: %f\r\n", conv_counter, uv.update_buffer_f[i]);
 				}
 				send_flag = FALSE;
 			}
