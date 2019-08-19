@@ -234,6 +234,9 @@ NOTES:
 
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
+int elapsed_time;
+struct timer elapsed_count_timer;
+
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
 
@@ -270,7 +273,7 @@ int main(void)
   }
   
   printf("BLE Stack Initialized \n");
-  
+  Timer_Set(&elapsed_count_timer, CLOCK_SECOND);	//таймер измерения времени с последней нотификации
   while(1) {
     /* BlueNRG-1 stack tick */
     BTLE_StackTick();

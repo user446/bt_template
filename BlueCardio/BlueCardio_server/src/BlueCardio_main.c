@@ -236,8 +236,15 @@ NOTES:
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
 struct timer t_second_counter;
+int elapsed_time_conv;
+struct timer t_elapsed_time;
 int time;
+
+struct timer t_elapsed_send;
+int elapsed_time_send;
+
 BOOL send_flag;
+BOOL ready_flag;
 
 update_value uv;
 
@@ -283,25 +290,35 @@ int main(void)
 	printf("ADC Initialized \n");
 	
 	Timer_Set(&t_second_counter, CLOCK_SECOND/64);
+	Timer_Set(&t_elapsed_time, CLOCK_SECOND);
+	Timer_Set(&t_elapsed_send, CLOCK_SECOND);
+	
 	time = 0;
   
   while(1) {
     /* BlueNRG-1 stack tick */
     BTLE_StackTick();
-    
+		
+		if (ADC_Ready())
+			{
+				//измеряем время конверсии
+				elapsed_time_conv = CLOCK_SECOND - Timer_Remaining(&t_elapsed_time);
+				Timer_Restart(&t_elapsed_time);
+				
+				ADC_GetData(uv.update_buffer_f, CONVERSION_NUM);
+				ready_flag = TRUE;
+				ADC_Start();
+			}
+		
+		if(Timer_Expired(&t_second_counter))
+			{
+				send_flag = TRUE;
+				Timer_Restart(&t_second_counter);				
+			}
+			
     /* Application tick */
     APP_Tick();
 		
-		if (ADC_Ready()){
-			ADC_GetData(uv.update_buffer_f, CONVERSION_NUM);
-			send_flag = TRUE;
-		}
-		
-		if(Timer_Expired(&t_second_counter)){
-				ADC_Start();
-				Timer_Restart(&t_second_counter);
-				
-			}
   }
   
 } /* end main() */

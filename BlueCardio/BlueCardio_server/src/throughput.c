@@ -29,6 +29,10 @@
 extern BOOL send_flag;
 extern uint16_t conv_counter;
 extern update_value uv;
+extern int elapsed_time_conv;
+
+extern struct timer t_elapsed_send;
+extern int elapsed_time_send;
 /* Private typedef -----------------------------------------------------------*/
 /* Private defines -----------------------------------------------------------*/
 
@@ -174,8 +178,16 @@ void APP_Tick(void)
 				}
 				else
 				{
+					//измер€ем врем€ начала исполнени€ команды изменени€ атрибута
+					elapsed_time_send = CLOCK_SECOND - Timer_Remaining(&t_elapsed_send);
+					Timer_Restart(&t_elapsed_send);
+					
+					printf("%d :: ", conv_counter);
 					for(int i = 0; i < CONVERSION_NUM; i++)
-						printf("%d :: %f\r\n", conv_counter, uv.update_buffer_f[i]);
+						printf("%f ", uv.update_buffer_f[i]);
+					printf(":: ETc: %d(ms) ", elapsed_time_conv);	//врем€ с последнего измерени€ ј÷ѕ
+					printf("ETs: %d(ms) ", elapsed_time_send);	//врем€ с последней команды изменени€ атрибута
+					printf("\r\n");
 				}
 				send_flag = FALSE;
 			}
@@ -260,7 +272,7 @@ void aci_gatt_attribute_modified_event(uint16_t Connection_Handle,
                                        uint16_t Attr_Data_Length,
                                        uint8_t Attr_Data[])
 {
-  Attribute_Modified_CB(Attr_Handle, Attr_Data_Length, Attr_Data);      
+  Attribute_Modified_CB(Attr_Handle, Attr_Data_Length, Attr_Data);  
 }
 
 /*******************************************************************************

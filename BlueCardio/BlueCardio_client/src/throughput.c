@@ -26,6 +26,8 @@
 #include "SDK_EVAL_Config.h"
 
 /* External variables --------------------------------------------------------*/
+extern int elapsed_time;
+extern struct timer elapsed_count_timer;
 /* Private typedef -----------------------------------------------------------*/
 /* Private defines -----------------------------------------------------------*/
 
@@ -53,9 +55,15 @@ union
 	uint8_t u8[32];
 }conv_update;
 uint16_t conv_counter;
+uint16_t conv_counter_temp;
 uint8_t* attr_value;
 uint8_t length;
+
+float mean_time;
+float mean_time_temp;
+int mean_time_count;
 const int CONVERSION_NUM = 4;
+const int MEAN_TIME_MAX = 100;
 
 /** 
   * @brief  Handle of TX,RX  Characteristics.
@@ -320,10 +328,32 @@ void aci_gatt_notification_event(uint16_t Connection_Handle,
 	
   if(attr_handle == tx_handle+1)
   {
+		//измеряем время с последней полученной нотификации
+		elapsed_time = CLOCK_SECOND - Timer_Remaining(&elapsed_count_timer);
+		Timer_Restart(&elapsed_count_timer);
+		
+		mean_time_temp += elapsed_time;
+		mean_time_count++;
+		if(mean_time_count == MEAN_TIME_MAX)
+		{
+			mean_time = mean_time_temp/mean_time_count;
+			mean_time_count = 0;
+			mean_time_temp = 0;
+			printf("Average Elapsed time: %f\r\n", mean_time);
+		}
+		
 		Osal_MemCpy(conv_update.u8, Attribute_Value, CONVERSION_NUM*4);
 		Osal_MemCpy(&conv_counter, Attribute_Value+CONVERSION_NUM*4, 2);
+		
+		if(conv_counter != conv_counter_temp + 1 
+			&& conv_counter != 0)
+		printf("Err:: ");
+		conv_counter_temp = conv_counter;
+		
+		printf("%d :: ", conv_counter);
 		for(int i = 0; i < CONVERSION_NUM; i++)
-			printf("%d :: %f\r\n", conv_counter, conv_update.f[i]);
+			printf("%f ", conv_update.f[i]);
+		printf(":: ET: %d(ms)\r\n", elapsed_time);
   }
    
 }

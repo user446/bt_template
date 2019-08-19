@@ -29,7 +29,7 @@ void ADC_Configuration(void)
   /* ADC_Input_AdcPin1 == ADC1 */
   /* ADC_Input_AdcPin2 == ADC2 */
   /* ADC_Input_AdcPin12 == ADC1 - ADC2 */
-  xADC_InitType.ADC_OSR = ADC_OSR_200;
+  xADC_InitType.ADC_OSR = ADC_OSR_32;
     //ADC_Input_BattSensor; //ADC_Input_TempSensor;// ADC_Input_AdcPin1 // ADC_Input_AdcPin12 // ADC_Input_AdcPin2
   xADC_InitType.ADC_Input = ADC_Input_AdcPin1; //ADC_Input_AdcPin12;
   xADC_InitType.ADC_ConversionMode = ADC_ConversionMode_Continuous;
@@ -111,11 +111,11 @@ void ADC_Start(void){
 /* Return size of data pushed to buf */
 int	ADC_GetData(float *buf, int max_size){
 	uint16_t i=0;
-	if(DMA_GetFlagStatus(DMA_FLAG_TC0)) {     
-      DMA_ClearFlag(DMA_FLAG_TC0);
-      
-      /* ADC_DMA_CH0 disable */
-      DMA_Cmd(ADC_DMA_CH0, DISABLE);
+	if(DMA_GetFlagStatus(DMA_FLAG_TC0)) 
+		{
+			DMA_ClearFlag(DMA_FLAG_TC0);
+			/* ADC_DMA_CH0 disable */
+			DMA_Cmd(ADC_DMA_CH0, DISABLE);
       
       
       for(i = 0; i < ADC_DMA_BUFFER_LEN && i < max_size; i++) {
