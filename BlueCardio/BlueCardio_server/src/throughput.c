@@ -167,8 +167,7 @@ void APP_Tick(void)
 			{
 				Osal_MemCpy(send_buffer, uv.update_buff_u8, CONVERSION_NUM*4);
 				Osal_MemCpy(send_buffer+CONVERSION_NUM*4, (void*)&conv_counter, 2);
-				ret = aci_gatt_update_char_value_ext(connection_handle, ServHandle, TXCharHandle, 1, 18, 0, 18, send_buffer);
-				//ret = aci_gatt_write_long_char_value(connection_handle, TXCharHandle, 0, 34, send_buffer);
+				ret = aci_gatt_update_char_value_ext(connection_handle, ServHandle, TXCharHandle, 1, CONVERSION_NUM*4+2, 0, CONVERSION_NUM*4+2, send_buffer);
 				if(ret != BLE_STATUS_SUCCESS)
 				{
 					printf("Updating characteristic value failed! 0x%02x\r\n", ret);

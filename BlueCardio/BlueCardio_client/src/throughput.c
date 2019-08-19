@@ -46,6 +46,17 @@ volatile int app_flags = SET_CONNECTABLE;
 volatile uint16_t connection_handle = 0;
 struct timer l2cap_req_timer;
 
+union
+{
+	float f[8];
+	uint32_t u32[8];
+	uint8_t u8[32];
+}conv_update;
+uint16_t conv_counter;
+uint8_t* attr_value;
+uint8_t length;
+const int CONVERSION_NUM = 4;
+
 /** 
   * @brief  Handle of TX,RX  Characteristics.
   */ 
@@ -297,15 +308,6 @@ void aci_gatt_attribute_modified_event(uint16_t Connection_Handle,
  * Output         : See file bluenrg1_events.h
  * Return         : See file bluenrg1_events.h
  *******************************************************************************/
-union
-{
-	float f[8];
-	uint32_t u32[8];
-	uint8_t u8[32];
-}conv_update;
-uint16_t conv_counter;
-uint8_t * attr_value;
-uint8_t length;
 void aci_gatt_notification_event(uint16_t Connection_Handle,
                                  uint16_t Attribute_Handle,
                                  uint8_t Attribute_Value_Length,
@@ -318,15 +320,9 @@ void aci_gatt_notification_event(uint16_t Connection_Handle,
 	
   if(attr_handle == tx_handle+1)
   {
-//		printf("0x");
-//    for(int i = 0; i < Attribute_Value_Length; i++) 
-//		{
-//			printf("%02X", Attribute_Value[i]);
-//		}
-
-		Osal_MemCpy(conv_update.u8, Attribute_Value, 16);
-		Osal_MemCpy(&conv_counter, Attribute_Value+16, 2);
-		for(int i = 0; i < 4; i++)
+		Osal_MemCpy(conv_update.u8, Attribute_Value, CONVERSION_NUM*4);
+		Osal_MemCpy(&conv_counter, Attribute_Value+CONVERSION_NUM*4, 2);
+		for(int i = 0; i < CONVERSION_NUM; i++)
 			printf("%d :: %f\r\n", conv_counter, conv_update.f[i]);
   }
    

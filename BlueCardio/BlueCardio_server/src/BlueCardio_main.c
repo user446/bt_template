@@ -295,12 +295,10 @@ int main(void)
 		if (ADC_Ready()){
 			ADC_GetData(uv.update_buffer_f, CONVERSION_NUM);
 			send_flag = TRUE;
-			//Timer_Restart(&t_second_counter);
 		}
 		
 		if(Timer_Expired(&t_second_counter)){
 				ADC_Start();
-				//send_flag = TRUE;
 				Timer_Restart(&t_second_counter);
 				
 			}
