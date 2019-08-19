@@ -26,13 +26,6 @@
 #include "SDK_EVAL_Config.h"
 
 /* External variables --------------------------------------------------------*/
-extern BOOL send_flag;
-extern uint16_t conv_counter;
-extern update_value uv;
-extern int elapsed_time_conv;
-
-extern struct timer t_elapsed_send;
-extern int elapsed_time_send;
 /* Private typedef -----------------------------------------------------------*/
 /* Private defines -----------------------------------------------------------*/
 
@@ -50,7 +43,7 @@ extern int elapsed_time_send;
 uint8_t connInfo[20];
 volatile int app_flags = SET_CONNECTABLE;
 volatile uint16_t connection_handle = 0;
-uint8_t send_buffer[32+2];
+
 /* UUIDs */
 UUID_t UUID_Tx;
 UUID_t UUID_Rx;
@@ -153,45 +146,26 @@ void Make_Connection(void)
 * Input          : none.
 * Return         : none.
 *******************************************************************************/
-void APP_Tick(void)
+void APP_Tick( void (*fptr_while_connected)(void))
 {
-  tBleStatus ret;
+  //tBleStatus ret;
   
   if(APP_FLAG(SET_CONNECTABLE))
   {
     Make_Connection();
     APP_FLAG_CLEAR(SET_CONNECTABLE);
   }
-	if(APP_FLAG(TX_BUFFER_FULL))
+	if(APP_FLAG(TX_BUFFER_FULL)){
+		printf("tx buffer is full!\n");
 		return;
+	}
 			
 	if(APP_FLAG(CONNECTED))
-		{
-			if(send_flag == TRUE)
-			{
-				Osal_MemCpy(send_buffer, uv.update_buff_u8, CONVERSION_NUM*4);
-				Osal_MemCpy(send_buffer+CONVERSION_NUM*4, (void*)&conv_counter, 2);
-				ret = aci_gatt_update_char_value_ext(connection_handle, ServHandle, TXCharHandle, 1, CONVERSION_NUM*4+2, 0, CONVERSION_NUM*4+2, send_buffer);
-				if(ret != BLE_STATUS_SUCCESS)
-				{
-					printf("Updating characteristic value failed! 0x%02x\r\n", ret);
-				}
-				else
-				{
-					//измер€ем врем€ начала исполнени€ команды изменени€ атрибута
-					elapsed_time_send = CLOCK_SECOND - Timer_Remaining(&t_elapsed_send);
-					Timer_Restart(&t_elapsed_send);
-					
-					printf("%d :: ", conv_counter);
-					for(int i = 0; i < CONVERSION_NUM; i++)
-						printf("%f ", uv.update_buffer_f[i]);
-					printf(":: ETc: %d(ms) ", elapsed_time_conv);	//врем€ с последнего измерени€ ј÷ѕ
-					printf("ETs: %d(ms) ", elapsed_time_send);	//врем€ с последней команды изменени€ атрибута
-					printf("\r\n");
-				}
-				send_flag = FALSE;
-			}
-		}
+	{
+			if (fptr_while_connected)
+				fptr_while_connected();
+	
+	}
 		
 #if REQUEST_CONN_PARAM_UPDATE    
   if(APP_FLAG(CONNECTED) && !APP_FLAG(L2CAP_PARAM_UPD_SENT) && Timer_Expired(&l2cap_req_timer))
@@ -202,6 +176,34 @@ void APP_Tick(void)
 #endif
   
 }/* end APP_Tick() */
+
+
+
+int8_t APP_UpdateTX(uint8_t *sendbuf, uint8_t size)
+{
+	if(APP_FLAG(CONNECTED))	{
+		tBleStatus ret = aci_gatt_update_char_value_ext( 
+													connection_handle, 
+													ServHandle, 
+													TXCharHandle, 
+													1,  // 0x01: Notification
+													size, // Char_Length Total length
+													0, //Value_Offset
+													size, //length 
+													sendbuf);
+	
+		if(ret != BLE_STATUS_SUCCESS){
+			printf("Updating characteristic value failed! 0x%02x\r\n", ret);
+			return 0;
+		}
+	}
+	return 1;
+}
+
+
+
+
+
 
 
 /* ***************** BlueNRG-1 Stack Callbacks ********************************/

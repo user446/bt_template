@@ -45,6 +45,8 @@
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
 static volatile tClockTime sys_tick_count;
+
+// SSB Why don't you use SYSCLK_FREQ
 const tClockTime CLOCK_SECOND = 1000;
 
 /*---------------------------------------------------------------------------*/

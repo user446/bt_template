@@ -5,13 +5,15 @@
 #define NUM_PACKETS 500 
 #define CONVERSION_NUM 4
 
-typedef union {
-	float update_buffer_f[CONVERSION_NUM];
-	uint32_t update_buff_u32[CONVERSION_NUM];
-	uint8_t update_buff_u8[CONVERSION_NUM*4];
-}update_value;
+#include <stdio.h>
+
+
 
 uint8_t THROUGHPUT_DeviceInit(void);
-void APP_Tick(void);
+
+void APP_Tick( void (*fptr_while_connected)(void));
+
+int8_t APP_UpdateTX(uint8_t *sendbuf, uint8_t size);
+
 
 #endif // _THROUGHPUT_H_

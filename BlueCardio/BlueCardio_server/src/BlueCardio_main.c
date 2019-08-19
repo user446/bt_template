@@ -244,9 +244,19 @@ struct timer t_elapsed_send;
 int elapsed_time_send;
 
 BOOL send_flag;
-BOOL ready_flag;
+
+
+
+
+typedef union {
+	float update_buffer_f[CONVERSION_NUM];
+	uint32_t update_buff_u32[CONVERSION_NUM];
+	uint8_t update_buff_u8[CONVERSION_NUM*4];
+}update_value;
 
 update_value uv;
+uint8_t send_buffer[32+2];
+uint16_t conv_counter=0;
 
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
@@ -299,6 +309,9 @@ int main(void)
     /* BlueNRG-1 stack tick */
     BTLE_StackTick();
 		
+		/* Application tick */
+    APP_Tick(NULL);
+		
 		if (ADC_Ready())
 			{
 				//измер€ем врем€ конверсии
@@ -306,18 +319,26 @@ int main(void)
 				Timer_Restart(&t_elapsed_time);
 				
 				ADC_GetData(uv.update_buffer_f, CONVERSION_NUM);
-				ready_flag = TRUE;
+				conv_counter+=1;
+				memcpy(send_buffer, uv.update_buff_u8, CONVERSION_NUM*4);
+				memcpy(send_buffer+CONVERSION_NUM*4, (void*)&conv_counter, 2);
+				if ( APP_UpdateTX(send_buffer, CONVERSION_NUM*4+2) )
+				{
+					//измер€ем врем€ начала исполнени€ команды изменени€ атрибута
+					elapsed_time_send = CLOCK_SECOND - Timer_Remaining(&t_elapsed_send);
+					Timer_Restart(&t_elapsed_send);
+					
+					printf("%d :: ", conv_counter);
+					for(int i = 0; i < CONVERSION_NUM; i++)
+					printf("%f ", uv.update_buffer_f[i]);
+					printf(":: ETc: %d(ms) ", elapsed_time_conv);	//врем€ с последнего измерени€ ј÷ѕ
+					printf("ETs: %d(ms) ", elapsed_time_send);	//врем€ с последней команды изменени€ атрибута
+					printf("\r\n");
+				}
 				ADC_Start();
 			}
 		
-		if(Timer_Expired(&t_second_counter))
-			{
-				send_flag = TRUE;
-				Timer_Restart(&t_second_counter);				
-			}
-			
-    /* Application tick */
-    APP_Tick();
+
 		
   }
   

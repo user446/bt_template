@@ -5,12 +5,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-uint16_t conv_counter = 0;
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
 #define ADC_OUT_ADDRESS         (ADC_BASE + 0x16)
 #define ADC_DMA_CH0             (DMA_CH0)
-
 
 /* Private variables ---------------------------------------------------------*/ 
 ADC_InitType xADC_InitType;
@@ -26,21 +24,15 @@ void ADC_Configuration(void)
   SysCtrl_PeripheralClockCmd(CLOCK_PERIPH_ADC, ENABLE);
   
   /* Configure ADC */
-  /* ADC_Input_AdcPin1 == ADC1 */
-  /* ADC_Input_AdcPin2 == ADC2 */
-  /* ADC_Input_AdcPin12 == ADC1 - ADC2 */
+
   xADC_InitType.ADC_OSR = ADC_OSR_32;
-    //ADC_Input_BattSensor; //ADC_Input_TempSensor;// ADC_Input_AdcPin1 // ADC_Input_AdcPin12 // ADC_Input_AdcPin2
-  xADC_InitType.ADC_Input = ADC_Input_AdcPin1; //ADC_Input_AdcPin12;
+  xADC_InitType.ADC_Input = ADC_Input_AdcPin1; 
   xADC_InitType.ADC_ConversionMode = ADC_ConversionMode_Continuous;
-  xADC_InitType.ADC_ReferenceVoltage = ADC_ReferenceVoltage_0V6; //ADC_ReferenceVoltage_0V6;
+  xADC_InitType.ADC_ReferenceVoltage = ADC_ReferenceVoltage_0V6; 
   xADC_InitType.ADC_Attenuation = ADC_Attenuation_9dB54;
-    
+  
   ADC_Init(&xADC_InitType);
   
-  /* Enable auto offset correction */
-  ADC_AutoOffsetUpdate(ENABLE);
-  ADC_Calibration(ENABLE);
 }
 
 /**
@@ -89,6 +81,11 @@ void ADC_Initialize(void){
   
   /* ADC Initialization */
   ADC_DmaCmd(ENABLE);
+	
+	 /* It is always advisable to set the register fields CALEN and AUTO_OFFSET 
+	in order to perform automatic calibration for each measurement */
+  ADC_AutoOffsetUpdate(ENABLE);
+  ADC_Calibration(ENABLE);
   
   /* Start new conversion */
   ADC_Cmd(ENABLE);
@@ -111,19 +108,14 @@ void ADC_Start(void){
 /* Return size of data pushed to buf */
 int	ADC_GetData(float *buf, int max_size){
 	uint16_t i=0;
-	if(DMA_GetFlagStatus(DMA_FLAG_TC0)) 
-		{
+	if(DMA_GetFlagStatus(DMA_FLAG_TC0)){
 			DMA_ClearFlag(DMA_FLAG_TC0);
-			/* ADC_DMA_CH0 disable */
 			DMA_Cmd(ADC_DMA_CH0, DISABLE);
-      
-      
       for(i = 0; i < ADC_DMA_BUFFER_LEN && i < max_size; i++) {
 				buf[i] = (ADC_ConvertSingleEndedVoltage(buffer_adc[i], ADC_Input_AdcPin1, xADC_InitType.ADC_ReferenceVoltage, xADC_InitType.ADC_Attenuation))*1000;
       }
-			conv_counter++;
 		 return i;
-    } 
-		return 0;
+  } 
+	return 0;
 }
 
