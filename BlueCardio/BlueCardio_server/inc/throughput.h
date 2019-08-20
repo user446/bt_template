@@ -13,7 +13,7 @@ uint8_t THROUGHPUT_DeviceInit(void);
 
 void APP_Tick( void (*fptr_while_connected)(void));
 
-int8_t APP_UpdateTX(uint8_t *sendbuf, uint8_t size);
+_Bool APP_UpdateTX(uint8_t *sendbuf, uint8_t size);
 
 
 #endif // _THROUGHPUT_H_

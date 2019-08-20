@@ -59,11 +59,23 @@ uint16_t conv_counter_temp;
 uint8_t* attr_value;
 uint8_t length;
 
-float mean_time;
-float mean_time_temp;
-int mean_time_count;
+int mean_time;
 const int CONVERSION_NUM = 4;
 const int MEAN_TIME_MAX = 100;
+
+int sample_array[MEAN_TIME_MAX];
+long sum = 0;
+volatile int pos = 0;
+int MovingAverage(int *ptrArrNumbers, long *ptrSum, int pos, int nextNum)
+{
+  //Subtract the oldest number from the prev sum, add the new number
+  *ptrSum = *ptrSum - ptrArrNumbers[pos] + nextNum;
+  //Assign the nextNum to the position in the array
+  ptrArrNumbers[pos] = nextNum;
+  //return the average
+  return *ptrSum / MEAN_TIME_MAX;
+}
+
 
 /** 
   * @brief  Handle of TX,RX  Characteristics.
@@ -332,15 +344,11 @@ void aci_gatt_notification_event(uint16_t Connection_Handle,
 		elapsed_time = CLOCK_SECOND - Timer_Remaining(&elapsed_count_timer);
 		Timer_Restart(&elapsed_count_timer);
 		
-		mean_time_temp += elapsed_time;
-		mean_time_count++;
-		if(mean_time_count == MEAN_TIME_MAX)
-		{
-			mean_time = mean_time_temp/mean_time_count;
-			mean_time_count = 0;
-			mean_time_temp = 0;
-			printf("Average Elapsed time: %f\r\n", mean_time);
-		}
+		mean_time = MovingAverage(sample_array, &sum, pos, elapsed_time);
+    pos++;
+    if (pos >= MEAN_TIME_MAX){
+      pos = 0;
+    }
 		
 		Osal_MemCpy(conv_update.u8, Attribute_Value, CONVERSION_NUM*4);
 		Osal_MemCpy(&conv_counter, Attribute_Value+CONVERSION_NUM*4, 2);
@@ -353,7 +361,8 @@ void aci_gatt_notification_event(uint16_t Connection_Handle,
 		printf("%d :: ", conv_counter);
 		for(int i = 0; i < CONVERSION_NUM; i++)
 			printf("%f ", conv_update.f[i]);
-		printf(":: ET: %d(ms)\r\n", elapsed_time);
+		printf(":: ET: %d(ms) ", elapsed_time);
+		printf("MT: %d(ms)\r\n", mean_time);
   }
    
 }

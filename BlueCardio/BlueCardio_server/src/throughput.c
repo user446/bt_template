@@ -179,25 +179,25 @@ void APP_Tick( void (*fptr_while_connected)(void))
 
 
 
-int8_t APP_UpdateTX(uint8_t *sendbuf, uint8_t size)
+_Bool APP_UpdateTX(uint8_t *sendbuf, uint8_t size)
 {
 	if(APP_FLAG(CONNECTED))	{
 		tBleStatus ret = aci_gatt_update_char_value_ext( 
 													connection_handle, 
 													ServHandle, 
 													TXCharHandle, 
-													1,  // 0x01: Notification
+													1,		// 0x01: Notification
 													size, // Char_Length Total length
-													0, //Value_Offset
+													0,		//Value_Offset
 													size, //length 
 													sendbuf);
 	
 		if(ret != BLE_STATUS_SUCCESS){
 			printf("Updating characteristic value failed! 0x%02x\r\n", ret);
-			return 0;
+			return FALSE;
 		}
 	}
-	return 1;
+	return TRUE;
 }
 
 
