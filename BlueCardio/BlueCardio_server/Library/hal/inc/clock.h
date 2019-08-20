@@ -64,5 +64,8 @@ void Clock_Wait(uint32_t i);
  */
 void SysCount_Handler(void);
 
+
+
+
 #endif /* __CLOCK_H__ */
 

@@ -196,8 +196,9 @@ _Bool APP_UpdateTX(uint8_t *sendbuf, uint8_t size)
 			printf("Updating characteristic value failed! 0x%02x\r\n", ret);
 			return FALSE;
 		}
+		return TRUE;
 	}
-	return TRUE;
+	return FALSE; // Yes, If we have not sent data - we says that false! it's logical
 }
 
 

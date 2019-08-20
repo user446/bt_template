@@ -22,41 +22,6 @@
  * bidirectional (server notification to client side and write without response from client to server side).
  * 
 
-* \section ATOLLIC_project ATOLLIC project
-  To use the project with ATOLLIC TrueSTUDIO for ARM, please follow the instructions below:
-  -# Open the ATOLLIC TrueSTUDIO for ARM and select File->Import... Project menu. 
-  -# Select Existing Projects into Workspace. 
-  -# Select the ATOLLIC project
-  -# Select desired configuration to build from Project->Manage Configurations
-  -# Select Project->Rebuild Project. This will recompile and link the entire application
-  -# To download the binary image, please connect STLink to JTAG connector in your board (if available).
-  -# Select Project->Download to download the related binary image.
-  -# Alternatively, open the BlueNRG1 GUI, put the board in bootloader mode and download the built binary image.
-
-* \section KEIL_project KEIL project
-  To use the project with KEIL uVision 5 for ARM, please follow the instructions below:
-  -# Open the KEIL uVision 5 for ARM and select Project->Open Project menu. 
-  -# Open the KEIL project
-     <tt> ...\\Project\\BLE_Examples\\BLE_Throughput\\MDK-ARM\\BlueNRG-1\\BLE_Throughput.uvprojx </tt> or
-     <tt> ...\\Project\\BLE_Examples\\BLE_Throughput\\MDK-ARM\\BlueNRG-2\\BLE_Throughput.uvprojx </tt>
-  -# Select desired configuration to build
-  -# Select Project->Rebuild all target files. This will recompile and link the entire application
-  -# To download the binary image, please connect STLink to JTAG connector in your board (if available).
-  -# Select Project->Download to download the related binary image.
-  -# Alternatively, open the BlueNRG1 GUI, put the board in bootloader mode and download the built binary image.
-
-* \section IAR_project IAR project
-  To use the project with IAR Embedded Workbench for ARM, please follow the instructions below:
-  -# Open the Embedded Workbench for ARM and select File->Open->Workspace menu. 
-  -# Open the IAR project
-     <tt> ...\\Project\\BLE_Examples\\BLE_Throughput\\EWARM\\BlueNRG-1\\BLE_Throughput.eww </tt> or
-     <tt> ...\\Project\\BLE_Examples\\BLE_Throughput\\EWARM\\BlueNRG-2\\BLE_Throughput.eww </tt>
-  -# Select desired configuration to build
-  -# Select Project->Rebuild All. This will recompile and link the entire application
-  -# To download the binary image, please connect STLink to JTAG connector in your board (if available).
-  -# Select Project->Download and Debug to download the related binary image.
-  -# Alternatively, open the BlueNRG1 GUI, put the board in bootloader mode and download the built binary image.
-
 * \subsection Project_configurations Project configurations
 - \c Client_bidirectional - Client role configuration for bidirectional throughput test
 - \c Client_unidirectional - Client role configuration for unidirectional throughput test
@@ -235,23 +200,26 @@ NOTES:
 
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
-int elapsed_time_conv;
-struct timer t_elapsed_time;
 
-struct timer t_elapsed_send;
-int elapsed_time_send;
 
 BOOL send_flag;
 
 typedef union {
 	float update_buffer_f[CONVERSION_NUM];
-	uint32_t update_buff_u32[CONVERSION_NUM];
-	uint8_t update_buff_u8[CONVERSION_NUM*4];
+	uint32_t update_buff_u32[CONVERSION_NUM+1];
+	uint8_t update_buff_u8[CONVERSION_NUM*4+sizeof(int)];
 }update_value;
 
-update_value uv;
-uint8_t send_buffer[32+2];
-uint16_t conv_counter=0;
+
+uint32_t Timer_Elapsed(struct timer *t)
+{
+	uint32_t ct = Clock_Time() ;
+	if ( ct > t->start )
+		return Clock_Time() - t->start;
+	else 
+		return 0xFFFFFFFF - t->start + ct;
+}
+
 
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
@@ -259,6 +227,16 @@ uint16_t conv_counter=0;
 int main(void) 
 {
   uint8_t ret;
+	update_value uv;
+	//uint8_t send_buffer[32+2];
+	uint32_t conv_counter=0;
+	int elapsed_time_conv = 0;
+	int elapsed_time_send = 0;
+	struct timer t_elapsed_time; // bad name
+	Timer_Restart(&t_elapsed_time);
+	struct timer t_elapsed_send; 
+	Timer_Restart(&t_elapsed_send);
+	
 
   /* System Init */
   SystemInit();
@@ -294,8 +272,8 @@ int main(void)
 	
 	printf("ADC Initialized \n");
 	
-	Timer_Set(&t_elapsed_time, CLOCK_SECOND);
-	Timer_Set(&t_elapsed_send, CLOCK_SECOND);
+	Timer_Set(&t_elapsed_time, 0);
+	Timer_Set(&t_elapsed_send, 0);
   
   while(1) {
     /* BlueNRG-1 stack tick */
@@ -306,32 +284,37 @@ int main(void)
 		
 		if (ADC_Ready())
 			{
+				conv_counter+=1;	
 				ADC_GetData(uv.update_buffer_f, CONVERSION_NUM);
 				ADC_Start();
-				//измер€ем врем€ конверсии
-				elapsed_time_conv = CLOCK_SECOND - Timer_Remaining(&t_elapsed_time);
+				//memcpy(send_buffer, uv.update_buff_u8, CONVERSION_NUM*4);
+				//memcpy(send_buffer+CONVERSION_NUM*4, (void*)&conv_counter, 2);		
+				uv.update_buff_u32[CONVERSION_NUM]=conv_counter;
+				
+	
+				//измер€ем период конверсии
+				elapsed_time_conv = Timer_Elapsed(&t_elapsed_time);
 				Timer_Restart(&t_elapsed_time);
 				
-				conv_counter+=1;
-				memcpy(send_buffer, uv.update_buff_u8, CONVERSION_NUM*4);
-				memcpy(send_buffer+CONVERSION_NUM*4, (void*)&conv_counter, 2);
-				if ( APP_UpdateTX(send_buffer, CONVERSION_NUM*4+2) )
+				
+				/*	Commented for check real ADC rate without sending noise
+				
+				if ( APP_UpdateTX(uv.update_buff_u8, CONVERSION_NUM*4+sizeof(conv_counter)) )
 				{
-					//измер€ем врем€ начала исполнени€ команды изменени€ атрибута
-					elapsed_time_send = CLOCK_SECOND - Timer_Remaining(&t_elapsed_send);
+					//измер€ем период исполнени€ команды изменени€ атрибута
+					elapsed_time_send = Timer_Elapsed(&t_elapsed_send);
 					Timer_Restart(&t_elapsed_send);
 					
-					printf("%d :: ", conv_counter);
-					for(int i = 0; i < CONVERSION_NUM; i++)
-					printf("%f ", uv.update_buffer_f[i]);
-					printf(":: ETc: %d(ms) ", elapsed_time_conv);	//врем€ с последнего измерени€ ј÷ѕ
-					printf("ETs: %d(ms) ", elapsed_time_send);	//врем€ с последней команды изменени€ атрибута
-					printf("\r\n");
 				}
+				*/
+				
+				printf("%d :: ", conv_counter);
+				for(int i = 0; i < CONVERSION_NUM; i++)
+						printf("%f ", uv.update_buffer_f[i]);
+				printf(":: ETc: %d(ms) ", elapsed_time_conv);	//врем€ с последнего измерени€ ј÷ѕ
+				printf("ETs: %d(ms) ", elapsed_time_send);	//врем€ с последней команды изменени€ атрибута
+				printf("\r\n");
 			}
-		
-
-		
   }
   
 } /* end main() */
