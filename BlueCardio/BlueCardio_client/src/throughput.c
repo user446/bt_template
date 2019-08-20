@@ -355,14 +355,13 @@ void aci_gatt_notification_event(uint16_t Connection_Handle,
 		
 		if(conv_counter != conv_counter_temp + 1 
 			&& conv_counter != 0)
-		printf("Err:: ");
+			printf("e::");
 		conv_counter_temp = conv_counter;
 		
-		printf("%d :: ", conv_counter);
+		printf("%d::", conv_counter);
 		for(int i = 0; i < CONVERSION_NUM; i++)
 			printf("%f ", conv_update.f[i]);
-		printf(":: ET: %d(ms) ", elapsed_time);
-		printf("MT: %d(ms)\r\n", mean_time);
+		printf("::%d:%d\r\n", elapsed_time, mean_time);
   }
    
 }
