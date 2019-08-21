@@ -220,24 +220,47 @@ uint32_t Timer_Elapsed(struct timer *t)
 		return 0xFFFFFFFF - t->start + ct;
 }
 
+  uint8_t ret;
+	update_value uv;
+	uint8_t send_buffer[32+2];
+	float save_conv_buff[CONVERSION_NUM];
+	uint32_t conv_counter=0;
+	int elapsed_time_conv = 0;
+	int elapsed_time_send = 0;
+	float sum_conversion;
+	float mean_conversion;
+	int buf_c;
+	_Bool flag_buf_full;
+	
+	struct timer t_elapsed_conv; // bad name
+	struct timer t_elapsed_send; 
+	
+	struct timer t_converter;
 
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
 
 int main(void) 
 {
-  uint8_t ret;
+	uint8_t ret;
 	update_value uv;
-	//uint8_t send_buffer[32+2];
+	uint8_t send_buffer[32+2];
+	float save_conv_buff[CONVERSION_NUM];
 	uint32_t conv_counter=0;
 	int elapsed_time_conv = 0;
 	int elapsed_time_send = 0;
-	struct timer t_elapsed_time; // bad name
-	Timer_Restart(&t_elapsed_time);
-	struct timer t_elapsed_send; 
-	Timer_Restart(&t_elapsed_send);
+	float sum_conversion;
+	float mean_conversion;
+	int buf_c;
+	_Bool flag_buf_full;
 	
-
+	struct timer t_elapsed_conv; // bad name
+	struct timer t_elapsed_send; 
+	
+	struct timer t_converter;
+	
+	Timer_Restart(&t_elapsed_conv);
+	Timer_Restart(&t_elapsed_send);
   /* System Init */
   SystemInit();
   
@@ -272,9 +295,10 @@ int main(void)
 	
 	printf("ADC Initialized \n");
 	
-	Timer_Set(&t_elapsed_time, 0);
+	Timer_Set(&t_elapsed_conv, 0);
 	Timer_Set(&t_elapsed_send, 0);
-  
+	Timer_Set(&t_converter, CLOCK_SECOND/250);
+	
   while(1) {
     /* BlueNRG-1 stack tick */
     BTLE_StackTick();
@@ -282,38 +306,52 @@ int main(void)
 		/* Application tick */
     APP_Tick(NULL);
 		
-		if (ADC_Ready())
+		if(ADC_Ready() && Timer_Expired(&t_converter))
+		{
+			ADC_GetData(save_conv_buff, CONVERSION_NUM);
+			ADC_Start();
+			Timer_Restart(&t_converter);
+			
+			elapsed_time_conv = Timer_Elapsed(&t_elapsed_conv);
+			Timer_Restart(&t_elapsed_conv);
+			
+			for(int i = 0; i < CONVERSION_NUM; i++)
+				sum_conversion += save_conv_buff[i];
+			mean_conversion = sum_conversion/CONVERSION_NUM;
+			sum_conversion = 0;
+			
+			uv.update_buffer_f[buf_c++] = mean_conversion;
+			if(buf_c >= CONVERSION_NUM)
 			{
-				conv_counter+=1;	
-				ADC_GetData(uv.update_buffer_f, CONVERSION_NUM);
-				ADC_Start();
-				//memcpy(send_buffer, uv.update_buff_u8, CONVERSION_NUM*4);
-				//memcpy(send_buffer+CONVERSION_NUM*4, (void*)&conv_counter, 2);		
-				uv.update_buff_u32[CONVERSION_NUM]=conv_counter;
+				buf_c = 0;
+				flag_buf_full = TRUE;
+			}
+		}
+		
+		if (flag_buf_full == TRUE)
+			{
+				conv_counter+=1;
+				memcpy(send_buffer, uv.update_buff_u8, CONVERSION_NUM*4);
+				memcpy(send_buffer+CONVERSION_NUM*4, (void*)&conv_counter, 2);		
+				uv.update_buff_u32[CONVERSION_NUM] = conv_counter;
 				
-	
-				//измеряем период конверсии
-				elapsed_time_conv = Timer_Elapsed(&t_elapsed_time);
-				Timer_Restart(&t_elapsed_time);
-				
-				
-				/*	Commented for check real ADC rate without sending noise
-				
+				//	Commented to check real ADC rate without sending noise
 				if ( APP_UpdateTX(uv.update_buff_u8, CONVERSION_NUM*4+sizeof(conv_counter)) )
 				{
 					//измеряем период исполнения команды изменения атрибута
-					elapsed_time_send = Timer_Elapsed(&t_elapsed_send);
-					Timer_Restart(&t_elapsed_send);
+//					elapsed_time_send = Timer_Elapsed(&t_elapsed_send);
+//					Timer_Restart(&t_elapsed_send);
+					flag_buf_full = FALSE;
 					
 				}
-				*/
 				
-				printf("%d :: ", conv_counter);
-				for(int i = 0; i < CONVERSION_NUM; i++)
-						printf("%f ", uv.update_buffer_f[i]);
-				printf(":: ETc: %d(ms) ", elapsed_time_conv);	//время с последнего измерения АЦП
-				printf("ETs: %d(ms) ", elapsed_time_send);	//время с последней команды изменения атрибута
-				printf("\r\n");
+				
+//				printf("%d :: ", conv_counter);
+//				for(int i = 0; i < CONVERSION_NUM; i++)
+//						printf("%f ", uv.update_buffer_f[i]);
+//				printf(":: ETc: %d(ms) ", elapsed_time_conv);	//время с последнего измерения АЦП
+//				printf("ETs: %d(ms) ", elapsed_time_send);	//время с последней команды изменения атрибута
+//				printf("\r\n");
 			}
   }
   

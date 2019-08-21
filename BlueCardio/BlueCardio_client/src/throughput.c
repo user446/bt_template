@@ -361,7 +361,7 @@ void aci_gatt_notification_event(uint16_t Connection_Handle,
 		printf("%d::", conv_counter);
 		for(int i = 0; i < CONVERSION_NUM; i++)
 			printf("%f ", conv_update.f[i]);
-		printf("::%d:%d\r\n", elapsed_time, mean_time);
+		printf("::%d %d\r\n", elapsed_time, mean_time);
   }
    
 }
