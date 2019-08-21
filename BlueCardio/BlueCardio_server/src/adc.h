@@ -2,7 +2,7 @@
 #define __ADC_H__
 
 #define ADC_DMA_BUFFER_LEN      (256)
-
+// Тест
 void ADC_Initialize(void);
 int ADC_Ready(void);
 void ADC_Start(void);
