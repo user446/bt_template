@@ -205,7 +205,7 @@ NOTES:
 BOOL send_flag;
 
 typedef union {
-	float update_buffer_f[CONVERSION_NUM];
+	float update_buff_f[CONVERSION_NUM];
 	uint32_t update_buff_u32[CONVERSION_NUM+1];
 	uint8_t update_buff_u8[CONVERSION_NUM*4+sizeof(int)];
 }update_value;
@@ -220,23 +220,6 @@ uint32_t Timer_Elapsed(struct timer *t)
 		return 0xFFFFFFFF - t->start + ct;
 }
 
-  uint8_t ret;
-	update_value uv;
-	uint8_t send_buffer[32+2];
-	float save_conv_buff[CONVERSION_NUM];
-	uint32_t conv_counter=0;
-	int elapsed_time_conv = 0;
-	int elapsed_time_send = 0;
-	float sum_conversion;
-	float mean_conversion;
-	int buf_c;
-	_Bool flag_buf_full;
-	
-	struct timer t_elapsed_conv; // bad name
-	struct timer t_elapsed_send; 
-	
-	struct timer t_converter;
-
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
 
@@ -244,15 +227,12 @@ int main(void)
 {
 	uint8_t ret;
 	update_value uv;
-	uint8_t send_buffer[32+2];
-	float save_conv_buff[CONVERSION_NUM];
-	uint32_t conv_counter=0;
+	uint32_t msg_counter	=	0;
 	int elapsed_time_conv = 0;
 	int elapsed_time_send = 0;
-	float sum_conversion;
-	float mean_conversion;
-	int buf_c;
-	_Bool flag_buf_full;
+	
+	int buf_c = 0;
+	_Bool processed	= FALSE;
 	
 	struct timer t_elapsed_conv; // bad name
 	struct timer t_elapsed_send; 
@@ -306,52 +286,41 @@ int main(void)
 		/* Application tick */
     APP_Tick(NULL);
 		
-		if(ADC_Ready() && Timer_Expired(&t_converter))
+		if(Timer_Expired(&t_converter))
 		{
-			ADC_GetData(save_conv_buff, CONVERSION_NUM);
 			ADC_Start();
+			processed = FALSE;
 			Timer_Restart(&t_converter);
-			
-			elapsed_time_conv = Timer_Elapsed(&t_elapsed_conv);
-			Timer_Restart(&t_elapsed_conv);
-			
-			for(int i = 0; i < CONVERSION_NUM; i++)
-				sum_conversion += save_conv_buff[i];
-			mean_conversion = sum_conversion/CONVERSION_NUM;
-			sum_conversion = 0;
-			
-			uv.update_buffer_f[buf_c++] = mean_conversion;
-			if(buf_c >= CONVERSION_NUM)
-			{
-				buf_c = 0;
-				flag_buf_full = TRUE;
-			}
 		}
 		
-		if (flag_buf_full == TRUE)
+		if (ADC_Ready() && processed == FALSE)
 			{
-				conv_counter+=1;
-				memcpy(send_buffer, uv.update_buff_u8, CONVERSION_NUM*4);
-				memcpy(send_buffer+CONVERSION_NUM*4, (void*)&conv_counter, 2);		
-				uv.update_buff_u32[CONVERSION_NUM] = conv_counter;
+				elapsed_time_conv = Timer_Elapsed(&t_elapsed_conv);
+				Timer_Restart(&t_elapsed_conv);
 				
-				//	Commented to check real ADC rate without sending noise
-				if ( APP_UpdateTX(uv.update_buff_u8, CONVERSION_NUM*4+sizeof(conv_counter)) )
+				ADC_GetData(&uv.update_buff_f[buf_c++], 1);
+				processed = TRUE;
+				
+				if(buf_c >= 4)
 				{
-					//измеряем период исполнения команды изменения атрибута
+					buf_c = 0;	
+					uv.update_buff_u32[CONVERSION_NUM] = msg_counter;
+					msg_counter+=1;
+//					Commented to check real ADC rate without sending noise
+					if ( APP_UpdateTX(uv.update_buff_u8, CONVERSION_NUM*4+sizeof(msg_counter)) )
+					{
+//					измеряем период исполнения команды изменения атрибута
 //					elapsed_time_send = Timer_Elapsed(&t_elapsed_send);
 //					Timer_Restart(&t_elapsed_send);
-					flag_buf_full = FALSE;
 					
-				}
-				
-				
+					}
 //				printf("%d :: ", conv_counter);
 //				for(int i = 0; i < CONVERSION_NUM; i++)
 //						printf("%f ", uv.update_buffer_f[i]);
 //				printf(":: ETc: %d(ms) ", elapsed_time_conv);	//время с последнего измерения АЦП
 //				printf("ETs: %d(ms) ", elapsed_time_send);	//время с последней команды изменения атрибута
 //				printf("\r\n");
+				}
 			}
   }
   

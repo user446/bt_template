@@ -32,7 +32,7 @@ void ADC_Configuration(void)
   xADC_InitType.ADC_Attenuation = ADC_Attenuation_9dB54;
   
   ADC_Init(&xADC_InitType);
-  
+  ADC_Filter(ENABLE);
 }
 
 /**
