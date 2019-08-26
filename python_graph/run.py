@@ -1,3 +1,10 @@
+#команды необходимые для сборки проекта
+#py -m venv venv
+#cd ./venv/Scripts
+#activate
+#pip install PyQt5
+#pip install pyqtgraph
+#pip install pyserial
 from PyQt5 import QtCore, QtWidgets
 import pyqtgraph as pg
 import serial
@@ -40,17 +47,17 @@ class MyWidget(pg.GraphicsWindow):
 
     def onNewData(self):
         ser_data = ser.read_until(terminator=serial.LF).decode(
-            'utf-8')  # считываем сообщение из порта до конца
+            'utf-8')        # считываем сообщение из порта до конца
         data = ser_data.split("::")  # разделяем на составляющие
-        if len(data) < 3:  # если сообщение не было принято целиком, то
-            return  # сбрасываем
-        f.write(ser_data)  # записываем сообщение в файл
+        if len(data) < 3:   # если сообщение не было принято целиком, то
+            return          # сбрасываем
+        f.write(ser_data)   # записываем сообщение в файл
         print(ser_data)
-        # разедяем числа по пробелам, выкидываем пустые элементы листа
+        # разделяем числа по пробелам, выкидываем пустые элементы листа
         new_list = list(filter(None, data[1].split(" ")))
         if len(new_list) != 4:  # если принято не 4 числа, то что-то не так
             return
-        
+
         t_list = [0]*4
         i = 0
         global t
@@ -69,8 +76,8 @@ class MyWidget(pg.GraphicsWindow):
         y = np.append(y, np.array(new_list).astype(np.float))
 
         if len(x) > 512:
-            x = np.delete(x, [0,1,2,3])
-            y = np.delete(y, [0,1,2,3])
+            x = np.delete(x, [0, 1, 2, 3])
+            y = np.delete(y, [0, 1, 2, 3])
         self.setData(x, y)
 
 
