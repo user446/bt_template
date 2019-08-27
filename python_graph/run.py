@@ -12,13 +12,7 @@ import serial, argparse, logging, sys
 import numpy as np
 
 
-# открытие файла логов и его очистка
-logging.basicConfig(filename="log.log", 
-                    format='%(asctime)s %(message)s', 
-                    filemode='w') 
-logger=logging.getLogger()
-logger.setLevel(logging.DEBUG) 
-logger.addHandler(logging.StreamHandler(sys.stdout))
+
 
 t = 0 #глобальная переменная для хранения времни в милисекундах
 class MyWidget(pg.GraphicsWindow):
@@ -27,7 +21,7 @@ class MyWidget(pg.GraphicsWindow):
         super().__init__(parent=parent)
         
         self.serial = serial
-        self.showlen = int(showlen)
+        self.showlen = showlen
         self.xData = np.array([])
         self.yData = np.array([])
         self.maxY = 0
@@ -151,8 +145,16 @@ def main(args):
     logger.info("info: Abort action received from user")
 
 if __name__ == "__main__":
+
+    logging.basicConfig(filename="log.log", 
+                        format='%(asctime)s %(message)s', 
+                        filemode='w') 
+    logger=logging.getLogger()
+    logger.setLevel(logging.DEBUG) 
+    logger.addHandler(logging.StreamHandler(sys.stdout))
+
     parser = argparse.ArgumentParser(description='Script to show BlueCardio realtime output')
-    parser.add_argument('-com', action='store', dest='comport', help='Enter the name of your COM port')
-    parser.add_argument('-len', action='store', dest='length', help='Enter max length of stored values')
+    parser.add_argument('-com', action='store', dest='comport', default='COM4', help='Enter the name of your COM port')
+    parser.add_argument('-len', action='store', dest='length', type=int, default=4096, help='Enter max length of stored values')
     args = parser.parse_args()
     main(args)
