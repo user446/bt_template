@@ -8,7 +8,7 @@
 #pip install argparse
 from PyQt5 import QtCore, QtWidgets
 import pyqtgraph as pg
-import serial, argparse, collections, logging, io, sys
+import serial, argparse, logging, sys
 import numpy as np
 
 
@@ -41,7 +41,7 @@ class MyWidget(pg.GraphicsWindow):
         self.data_timer.timeout.connect(self.onNewData)
         
         self.show_timer = QtCore.QTimer(self)
-        self.show_timer.setInterval(500)  # in milliseconds
+        self.show_timer.setInterval(100)  # in milliseconds
         self.show_timer.start()
         self.show_timer.timeout.connect(self.onFixView)
         
@@ -49,7 +49,7 @@ class MyWidget(pg.GraphicsWindow):
 
         self.plotDataItem = self.plotItem.plot([], pen=pg.mkPen('b', width=5),
                                                symbolBrush=(255, 0, 0), symbolSize=5, symbolPen=None)
-
+    
     def setData(self, x, y):
         self.plotDataItem.setData(x, y)
         
@@ -62,22 +62,27 @@ class MyWidget(pg.GraphicsWindow):
             ser_data = self.serial.read_until(terminator=serial.LF).decode(
                 'utf-8')        # считываем сообщение из порта до конца
         except OSError as e:
-            logger.error("OS error %s", e)
+            logger.critical("OS critical error: %s", e)
+            self.close()
             return None
         except TypeError as e:
-            logger.error("Type error %s", e)
+            logger.error("Type error: %s", e)
+            self.serial.close()
+            return None
+        if not ser_data:
+            logger.error("Empty line received error: %s", ser_data)
             self.serial.close()
             return None
         data = ser_data.split("::")  # разделяем на составляющие
         if len(data) < 3:   # если сообщение не было принято целиком, то
-            logger.error("Message wasn't completely received: %s", data)
+            logger.warning("Message wasn't completely received error: %s", data)
             return None         # сбрасываем
         logger.info(ser_data)   # записываем сообщение в файл
 
         # разделяем числа по пробелам, выкидываем пустые элементы листа
         new_list = data[1].split()
         if len(new_list) != 4:  # если принято не 4 числа, то что-то не так
-            logger.error("Wrong amount of received parameters: %s", new_list)
+            logger.warning("Wrong amount of received parameters error: %s", new_list)
             return None
 
         global t
@@ -104,37 +109,37 @@ class MyWidget(pg.GraphicsWindow):
 
 
 def main(args):
-    logger.info("Starting BlueCardio graph application")
-    logger.info("BlueCardio started with arguments: %s", args)
-    logger.info("Trying to open port %s...", args.comport)
+    logger.info("info: Starting BlueCardio graph application")
+    logger.info("info: BlueCardio started with arguments: %s", args)
+    logger.info("info: Trying to open port %s...", args.comport)
 
     # инициализация COM порта
     try:
         ser = serial.Serial(port=args.comport, baudrate=115200,
                         bytesize=8, timeout=2, stopbits=serial.STOPBITS_ONE, parity=serial.PARITY_NONE)
     except serial.serialutil.SerialException:
-        logger.error("Port can not be configured with these parameters of do not exist")
+        logger.critical("critical: Port can not be configured with these parameters or do not exist")
         return None
     
     # попытка открыть порт
     try:
         ser.open()
     except IOError:  # скорее всего уже открыт, а значит переоткрываем
-        logger.error("Port %s is already open, retry...", args.comport)
+        logger.error("error: Port %s is already open, retry...", args.comport)
         ser.close()
         ser.open()
     except OSError:
-        logger.error("Port %s not found, please insert the device in port %s", args.comport, args.comport)
+        logger.critical("critical: Port %s not found, please insert the device in port %s", args.comport, args.comport)
         return None
     
-    logger.info("Port %s is opened!", args.comport)
+    logger.info("info: Port %s is opened!", args.comport)
 
     app = QtWidgets.QApplication([])
 
     pg.setConfigOptions(antialias=False)  # True seems to work as well
     pg.setConfigOption('background', 'w')
     pg.setConfigOption('foreground', 'k')
-    logger.info("QtWidget initialised!")
+    logger.info("info: QtWidget initialised!")
     
 
     win = MyWidget(ser, args.length)
@@ -143,7 +148,7 @@ def main(args):
     win.raise_()
     app.exec_()
     ser.close()
-    logger.info("Abort action received from user")
+    logger.info("info: Abort action received from user")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Script to show BlueCardio realtime output')
