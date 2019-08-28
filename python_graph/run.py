@@ -11,10 +11,6 @@ import pyqtgraph as pg
 import serial, argparse, logging, sys
 import numpy as np
 
-
-
-
-t = 0 #глобальная переменная для хранения времни в милисекундах
 class MyWidget(pg.GraphicsWindow):
 
     def __init__(self, serial, showlen, parent=None):
@@ -24,8 +20,8 @@ class MyWidget(pg.GraphicsWindow):
         self.showlen = showlen
         self.xData = np.array([])
         self.yData = np.array([])
-        self.maxY = 0
-        self.minY = 0
+        self.meanY = 0
+        self.time_data = 0
         self.mainLayout = QtWidgets.QVBoxLayout()
         self.setLayout(self.mainLayout)
 
@@ -49,27 +45,25 @@ class MyWidget(pg.GraphicsWindow):
         
     def onFixView(self):
         #подправляем вид графика, чтобы не выходил за границы видимости
-        self.plotItem.setYRange(self.minY - 20, self.maxY + 20, padding=0)
+        if self.yData.any():
+            self.meanY = np.mean(self.yData)
+            self.plotItem.setYRange(self.meanY - 20, self.meanY + 20, padding=0)
 
     def onNewData(self):
         try:
             ser_data = self.serial.read_until(terminator=serial.LF).decode(
                 'utf-8')        # считываем сообщение из порта до конца
-        except OSError as e:
-            logger.critical("OS critical error: %s", e)
-            self.close()
+        except serial.serialutil.SerialException as e:
+            logger.warning("warning: %s", e)
             return None
-        except TypeError as e:
-            logger.error("Type error: %s", e)
-            self.serial.close()
-            return None
+        
         if not ser_data:
-            logger.error("Empty line received error: %s", ser_data)
-            self.serial.close()
+            logger.error("Empty line received: %s", ser_data)
             return None
+        
         data = ser_data.split("::")  # разделяем на составляющие
         if len(data) < 3:   # если сообщение не было принято целиком, то
-            logger.warning("Message wasn't completely received error: %s", data)
+            logger.warning("Message wasn't completely received: %s", data)
             return None         # сбрасываем
         logger.info(ser_data)   # записываем сообщение в файл
 
@@ -78,13 +72,12 @@ class MyWidget(pg.GraphicsWindow):
         if len(new_list) != 4:  # если принято не 4 числа, то что-то не так
             logger.warning("Wrong amount of received parameters error: %s", new_list)
             return None
-
-        global t
+        
         t_list = [0]*4
         i = 0
         while i < 4:
-            t_list[i] = t
-            t += 4
+            t_list[i] = self.time_data
+            self.time_data += 4
             i += 1
 
         try:
@@ -93,12 +86,10 @@ class MyWidget(pg.GraphicsWindow):
             return None
         # преобразуем лист в float и записываем его в данные оси y
         self.yData = np.append(self.yData, np.array(new_list).astype(np.float))
-
-        if len(self.xData) > self.showlen:
+        
+        if self.xData[-1] > self.showlen and self.showlen >= 4:
             self.xData = np.delete(self.xData, [0, 1, 2, 3])
             self.yData = np.delete(self.yData, [0, 1, 2, 3])
-            self.maxY = np.amax(self.yData)
-            self.minY = np.amin(self.yData)
         self.setData(self.xData, self.yData)
 
 
@@ -111,20 +102,22 @@ def main(args):
     try:
         ser = serial.Serial(port=args.comport, baudrate=115200,
                         bytesize=8, timeout=2, stopbits=serial.STOPBITS_ONE, parity=serial.PARITY_NONE)
-    except serial.serialutil.SerialException:
-        logger.critical("critical: Port can not be configured with these parameters or do not exist")
+    except serial.serialutil.SerialException as e:
+        logger.critical("error: %s", e)
         return None
     
+    logger.info("info: Port entity initialised for %s", args.comport)
     # попытка открыть порт
     try:
         ser.open()
-    except IOError:  # скорее всего уже открыт, а значит переоткрываем
-        logger.error("error: Port %s is already open, retry...", args.comport)
-        ser.close()
-        ser.open()
-    except OSError:
-        logger.critical("critical: Port %s not found, please insert the device in port %s", args.comport, args.comport)
-        return None
+    except serial.serialutil.SerialException as e:
+        logger.error("error: %s, trying to open again...", e)
+        try:
+            ser.close()
+            ser.open()
+        except serial.serialutil.SerialException as e:
+            logger.error("error: %s, abort!", e)
+            return None
     
     logger.info("info: Port %s is opened!", args.comport)
 
@@ -135,7 +128,9 @@ def main(args):
     pg.setConfigOption('foreground', 'k')
     logger.info("info: QtWidget initialised!")
     
-
+    if args.logging:
+        logging.disable(logging.INFO)
+    
     win = MyWidget(ser, args.length)
     win.show()
     win.resize(800, 600)
@@ -145,16 +140,17 @@ def main(args):
     logger.info("info: Abort action received from user")
 
 if __name__ == "__main__":
-
+    
     logging.basicConfig(filename="log.log", 
                         format='%(asctime)s %(message)s', 
                         filemode='w') 
     logger=logging.getLogger()
     logger.setLevel(logging.DEBUG) 
     logger.addHandler(logging.StreamHandler(sys.stdout))
-
+    
     parser = argparse.ArgumentParser(description='Script to show BlueCardio realtime output')
-    parser.add_argument('-com', action='store', dest='comport', default='COM4', help='Enter the name of your COM port')
-    parser.add_argument('-len', action='store', dest='length', type=int, default=4096, help='Enter max length of stored values')
+    parser.add_argument('-com', action='store', dest='comport', default='COM7', help='Enter the name of your COM port')
+    parser.add_argument('-len', action='store', dest='length', type=int, default=4096, help='Enter max length of stored values, if < 4 then all values will be shown')
+    parser.add_argument('-log', action='store', dest='logging', type=bool, default=False, help='Activate or disactivate logger')
     args = parser.parse_args()
     main(args)
