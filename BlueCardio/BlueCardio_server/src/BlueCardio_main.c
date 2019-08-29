@@ -187,11 +187,13 @@ NOTES:
 #include "ble_const.h" 
 #include "bluenrg1_stack.h"
 #include "gp_timer.h"
+#include "sleep.h"
 #include "app_state.h"
 #include "throughput.h"
 #include "SDK_EVAL_Config.h"
 #include "Throughput_config.h"
 #include "adc.h"
+#include "gpio.h"
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
@@ -203,6 +205,7 @@ NOTES:
 
 
 BOOL send_flag;
+volatile _Bool on_sleep = FALSE;
 
 typedef union {
 	float update_buff_f[CONVERSION_NUM];
@@ -252,6 +255,7 @@ int main(void)
 
   /* Init the UART peripheral */
   SdkEvalComUartInit(UART_BAUDRATE); 
+	WUP_Initialize();
 
   /* BlueNRG-1 stack init */
   ret = BlueNRG_Stack_Initialization(&BlueNRG_Stack_Init_params);
@@ -321,6 +325,12 @@ int main(void)
 //				printf("ETs: %d(ms) ", elapsed_time_send);	//время с последней команды изменения атрибута
 //				printf("\r\n");
 				}
+			}
+			if(on_sleep)
+			{
+				while(aci_gap_set_non_discoverable()!= 0x00);
+				if(BlueNRG_Sleep(SLEEPMODE_NOTIMER, WAKEUP_IO11, WAKEUP_IOx_HIGH << WAKEUP_IO11_SHIFT_MASK) == SUCCESS)
+					on_sleep = FALSE;
 			}
   }
   

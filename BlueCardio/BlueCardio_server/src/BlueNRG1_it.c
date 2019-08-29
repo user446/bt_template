@@ -29,6 +29,7 @@
 #include "SDK_EVAL_Com.h"
 #include "clock.h"
 
+extern volatile _Bool on_sleep;
 /** @addtogroup BlueNRG1_StdPeriph_Examples
   * @{
   */
@@ -91,8 +92,18 @@ void SysTick_Handler(void)
   SysCount_Handler();
 }
 
+/**
+  * @brief  This function handles GPIO interrupt request.
+  * @param  None
+  * @retval None
+  */
 void GPIO_Handler(void)
 {
+  if(GPIO_GetITPendingBit(GPIO_Pin_11) == SET) {
+    /* Clear USER_BUTTON pending interrupt */
+    GPIO_ClearITPendingBit(GPIO_Pin_11);
+		on_sleep = TRUE;
+  }
 }
 /******************************************************************************/
 /*                 BlueNRG-1 Peripherals Interrupt Handlers                   */

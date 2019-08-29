@@ -404,6 +404,11 @@
               <FileType>1</FileType>
               <FilePath>..\Library\hal\src\osal.c</FilePath>
             </File>
+            <File>
+              <FileName>sleep.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Library\hal\src\sleep.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -573,6 +578,11 @@
               <FileName>adc.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\src\adc.h</FilePath>
+            </File>
+            <File>
+              <FileName>gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\src\gpio.c</FilePath>
             </File>
           </Files>
         </Group>
