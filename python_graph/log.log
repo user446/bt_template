@@ -1,8 +1,11 @@
-2019-08-28 16:00:53,343 info: Starting BlueCardio graph application
-2019-08-28 16:00:53,344 info: BlueCardio started with arguments: Namespace(comport='COM7', length=0, logging=True)
-2019-08-28 16:00:53,344 info: Trying to open port COM7...
-2019-08-28 16:00:53,370 info: Port entity initialised for COM7
-2019-08-28 16:00:53,370 error: Port is already open., trying to open again...
-2019-08-28 16:00:53,398 info: Port COM7 is opened!
-2019-08-28 16:00:53,407 info: QtWidget initialised!
-2019-08-28 16:00:53,649 Message wasn't completely received: ['52.573551 56.882786 55.159199 55.590141 ', '10 15\r\n']
+2019-08-30 11:06:57,331 info: Starting BlueCardio graph application
+2019-08-30 11:06:57,331 info: BlueCardio started with arguments: Namespace(comport='COM7', length=1024, logging=True)
+2019-08-30 11:06:57,332 info: Trying to open port COM7...
+2019-08-30 11:06:57,357 info: Port entity initialised for COM7
+2019-08-30 11:06:57,357 error: Port is already open., trying to open again...
+2019-08-30 11:06:57,385 info: Port COM7 is opened!
+2019-08-30 11:06:57,403 info: QtWidget initialised!
+2019-08-30 11:06:59,616 Empty line received: 
+2019-08-30 11:07:01,644 Empty line received: 
+2019-08-30 11:07:03,649 Empty line received: 
+2019-08-30 11:07:05,658 Empty line received: 
