@@ -128,7 +128,7 @@ def main(args):
     pg.setConfigOption('foreground', 'k')
     logger.info("info: QtWidget initialised!")
     
-    if args.logging:
+    if args.logging == 'n':
         logging.disable(logging.INFO)
     
     win = MyWidget(ser, args.length)
@@ -151,6 +151,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Script to show BlueCardio realtime output')
     parser.add_argument('-com', action='store', dest='comport', default='COM7', help='Enter the name of your COM port')
     parser.add_argument('-len', action='store', dest='length', type=int, default=4096, help='Enter max length of stored values, if < 4 then all values will be shown')
-    parser.add_argument('-log', action='store', dest='logging', type=bool, default=False, help='Activate or disactivate logger')
+    parser.add_argument('-log', action='store', dest='logging', default='y', help='Activate logger [y/n]')
     args = parser.parse_args()
     main(args)
