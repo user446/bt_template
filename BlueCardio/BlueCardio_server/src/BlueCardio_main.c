@@ -201,6 +201,7 @@ NOTES:
 
 
 /* Private macro -------------------------------------------------------------*/
+extern uint16_t connection_handle;
 /* Private variables ---------------------------------------------------------*/
 
 
@@ -234,6 +235,9 @@ int main(void)
 	int elapsed_time_conv = 0;
 	int elapsed_time_send = 0;
 	
+	uint8_t wakeup_source = 0;
+	uint8_t wakeup_level = 0;
+	
 	int buf_c = 0;
 	_Bool processed	= FALSE;
 	
@@ -255,7 +259,7 @@ int main(void)
 
   /* Init the UART peripheral */
   SdkEvalComUartInit(UART_BAUDRATE); 
-	WUP_Initialize();
+	USR_Initialize();
 
   /* BlueNRG-1 stack init */
   ret = BlueNRG_Stack_Initialization(&BlueNRG_Stack_Init_params);
@@ -328,9 +332,14 @@ int main(void)
 			}
 			if(on_sleep)
 			{
-				while(aci_gap_set_non_discoverable()!= 0x00);
-				if(BlueNRG_Sleep(SLEEPMODE_NOTIMER, WAKEUP_IO11, WAKEUP_IOx_HIGH << WAKEUP_IO11_SHIFT_MASK) == SUCCESS)
-					on_sleep = FALSE;
+				wakeup_source = WAKEUP_IO11;
+				wakeup_level = (WAKEUP_IOx_LOW << WAKEUP_IO11_SHIFT_MASK);
+				BlueNRG_Sleep(SLEEPMODE_NOTIMER, wakeup_source, wakeup_level);
+				if (ret != BLE_STATUS_SUCCESS) {
+					printf("BlueNRG_Sleep() error 0x%02x\r\n", ret);
+					while(1);
+				}
+				on_sleep = FALSE;
 			}
   }
   

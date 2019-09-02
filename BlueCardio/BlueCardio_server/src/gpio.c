@@ -2,11 +2,16 @@
 #include "BlueNRG1_conf.h"
 #include "SDK_EVAL_Config.h"
 
-void WUP_Initialize(void)
+#define USR_BUTT GPIO_Pin_11
+
+GPIO_InitType GPIO_InitStructure;
+NVIC_InitType NVIC_InitStructure;
+GPIO_EXTIConfigType GPIO_EXTIStructure;
+
+void USR_Initialize(void)
 {
 	/* Configure USER_BUTTON as interrupt sources */
-	GPIO_InitType GPIO_InitStructure;
-  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_11;
+  GPIO_InitStructure.GPIO_Pin = USR_BUTT;
   GPIO_InitStructure.GPIO_Mode = GPIO_Input;
   GPIO_InitStructure.GPIO_Pull = DISABLE;
   GPIO_InitStructure.GPIO_HighPwr = DISABLE;
@@ -20,14 +25,26 @@ void WUP_Initialize(void)
   NVIC_Init(&NVIC_InitStructure);
   
   /* Configures EXTI line */
-  GPIO_EXTIConfigType GPIO_EXTIStructure;
-  GPIO_EXTIStructure.GPIO_Pin = GPIO_Pin_11;
+  GPIO_EXTIStructure.GPIO_Pin = USR_BUTT;
   GPIO_EXTIStructure.GPIO_IrqSense = GPIO_IrqSense_Edge;
   GPIO_EXTIStructure.GPIO_Event = IRQ_ON_BOTH_EDGE;
   GPIO_EXTIConfig(&GPIO_EXTIStructure);
 	
-  GPIO_ClearITPendingBit(GPIO_Pin_11);
+  GPIO_ClearITPendingBit(USR_BUTT);
   
   /* Enable the interrupt */
-  GPIO_EXTICmd(GPIO_Pin_11, ENABLE);
+  GPIO_EXTICmd(USR_BUTT, ENABLE);
 }
+//
+
+void USRB_EXTI_Reset(void)
+{
+	GPIO_EXTICmd(USR_BUTT, DISABLE);
+}
+//
+
+void USRB_EXTI_Set(void)
+{
+	GPIO_EXTICmd(USR_BUTT, ENABLE);
+}
+//

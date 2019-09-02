@@ -24,6 +24,7 @@
 #include "osal.h"
 #include "gatt_db.h"
 #include "SDK_EVAL_Config.h"
+#include "gpio.h"
 
 /* External variables --------------------------------------------------------*/
 /* Private typedef -----------------------------------------------------------*/
@@ -153,6 +154,7 @@ void APP_Tick( void (*fptr_while_connected)(void))
   if(APP_FLAG(SET_CONNECTABLE))
   {
     Make_Connection();
+		USRB_EXTI_Set();
     APP_FLAG_CLEAR(SET_CONNECTABLE);
   }
 	if(APP_FLAG(TX_BUFFER_FULL)){
