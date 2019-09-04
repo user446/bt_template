@@ -99,9 +99,9 @@ void SysTick_Handler(void)
   */
 void GPIO_Handler(void)
 {
-  if(GPIO_GetITPendingBit(GPIO_Pin_11) == SET) {
+  if(GPIO_GetITPendingBit(GPIO_Pin_12) == SET) {
     /* Clear USER_BUTTON pending interrupt */
-    GPIO_ClearITPendingBit(GPIO_Pin_11);
+    GPIO_ClearITPendingBit(GPIO_Pin_12);
 		on_sleep = TRUE;
   }
 }

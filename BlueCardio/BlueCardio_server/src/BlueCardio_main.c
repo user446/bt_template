@@ -333,12 +333,13 @@ int main(void)
 			if(on_sleep)
 			{
 				wakeup_source = WAKEUP_IO11;
-				wakeup_level = (WAKEUP_IOx_LOW << WAKEUP_IO11_SHIFT_MASK);
+				wakeup_level = (WAKEUP_IOx_HIGH << WAKEUP_IO11_SHIFT_MASK);
 				BlueNRG_Sleep(SLEEPMODE_NOTIMER, wakeup_source, wakeup_level);
 				if (ret != BLE_STATUS_SUCCESS) {
 					printf("BlueNRG_Sleep() error 0x%02x\r\n", ret);
 					while(1);
 				}
+				APP_FLAG_SET(SET_CONNECTABLE);
 				on_sleep = FALSE;
 			}
   }

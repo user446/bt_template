@@ -2,7 +2,7 @@
 #include "BlueNRG1_conf.h"
 #include "SDK_EVAL_Config.h"
 
-#define USR_BUTT GPIO_Pin_11
+#define USR_BUTT GPIO_Pin_12
 
 GPIO_InitType GPIO_InitStructure;
 NVIC_InitType NVIC_InitStructure;
