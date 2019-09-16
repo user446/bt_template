@@ -23,33 +23,33 @@ def integrate(ecg, length):
         integrate_ecg[i] = np.sum(ecg[i:i+length])/length #интеграл по формуле трапеций 
     return integrate_ecg
 
-
-def find_peak(data, ws):
+#нахождение пиков
+def find_peak(data, length):
     lgth = data.shape[0]
     true_peaks = list()
-    for i in range(lgth-ws+1):
-        temp = data[i:i+ws]
+    for i in range(lgth-length+1):
+        temp = data[i:i+length]
         if np.var(temp) < 5:
             continue
-        index = int((ws-1)/2)
+        index = int((length-1)/2)
         peak = True
         for j in range(index):
             if temp[index-j] <= temp[index-j-1] or temp[index+j] <= temp[index+j+1]:
                 peak = False
                 break
-            if peak is True:
-                true_peaks.append(int(i+(ws-1)/2))
+        if peak is True:
+            true_peaks.append(int(i+(length-1)/2))
     return np.asarray(true_peaks)
 
 
-def find_R_peaks(ecg, peaks, ws):
+def find_R_peaks(ecg, peaks, length):
     num_peak = peaks.shape[0]
     R_peaks = list()
     for index in range(num_peak):
         i = peaks[index]
-        if i-2*ws > 0 and i < ecg.shape[0]:
-            temp_ecg = ecg[i-2*ws:i]
-            R_peaks.append(int(np.argmax(temp_ecg)+i-2*ws))
+        if i-2*length > 0 and i < ecg.shape[0]:
+            temp_ecg = ecg[i-2*length:i]
+            R_peaks.append(int(np.argmax(temp_ecg)+i-2*length))
     return np.asarray(R_peaks)
 
 
@@ -89,14 +89,14 @@ def ECG_QRS_detect(ecg, fs):
     ecg = ecg - np.mean(ecg)
     ecg_length_transform = length_transform(ecg, int(fs/20))
 
-    ws = int(fs/8)
-    ecg_integrate = integrate(ecg_length_transform, ws)/ws
-    ws = int(fs/6)
-    ecg_integrate = integrate(ecg_integrate, ws)
-    ws = int(fs/36)
-    ecg_integrate = integrate(ecg_integrate, ws)
-    ws = int(fs/72)
-    ecg_integrate = integrate(ecg_integrate, ws)
+    length = int(fs/8)
+    ecg_integrate = integrate(ecg_length_transform, length)/length
+    length = int(fs/6)
+    ecg_integrate = integrate(ecg_integrate, length)
+    length = int(fs/36)
+    ecg_integrate = integrate(ecg_integrate, length)
+    length = int(fs/72)
+    ecg_integrate = integrate(ecg_integrate, length)
 
     peaks = find_peak(ecg_integrate, int(fs/10))
     R_peaks = find_R_peaks(ecg, peaks, int(fs/40))
