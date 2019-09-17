@@ -1,0 +1,6 @@
+2019-09-17 14:25:55,441 info: Starting BlueCardio graph application
+2019-09-17 14:25:55,442 info: BlueCardio started with arguments: Namespace(communication='TCP:127.0.0.1:5005', length=4096, logging='y')
+2019-09-17 14:25:55,446 Trying to connect to 127.0.0.1:5005
+2019-09-17 14:25:55,447 Connected!
+2019-09-17 14:25:55,458 info: QtWidget initialised!
+2019-09-17 14:28:42,785 info: Abort action received from user

@@ -70,7 +70,11 @@ def main(args):
     elif cm is not None:
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         logger.info("Trying to connect to %s:%s", IP, PORT)
-        sock.connect((IP, PORT))
+        try:
+            sock.connect((IP, int(PORT)))
+        except:
+            logger.info("Server unavailable!")
+            return None
         logger.info("Connected!")
 
     app = QtGui.QApplication([])
@@ -80,12 +84,16 @@ def main(args):
     pg.setConfigOption('foreground', 'k')
     logger.info("info: QtWidget initialised!")
 
+    qrs_compute = False
     if args.logging == 'n':
         logging.disable(logging.INFO)
+    if args.qrs == 'y':
+        qrs_compute = True
+
 
     #win = QtGui.QMainWindow()
     win = MainWindow()
-    plot = BlueCardioGraph(ser, ble, sock, False, args.length, logger)
+    plot = BlueCardioGraph(ser, ble, sock, qrs_compute, args.length, logger)
 
     bt_stopupdate = QtWidgets.QPushButton('Stop')
     bt_stopupdate.setToolTip('Stop updating data on a plot')
@@ -118,7 +126,9 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description='Script to show BlueCardio realtime output')
     parser.add_argument('-comm', action='store', dest='communication',
-                        default='TCP:127.0.0.1:5005', help='Enter the name of your COM port or enter BLE to communicate directly via BLE device')
+                        default='TCP:127.0.0.1:5005', help='Enter the name of your COM%N% port, enter BLE or TCP:%IP%:%PORT%')
+    parser.add_argument('-qrs', action='store', dest='qrs',
+                        default='y', help='Activate QRS computation [y/n]')
     parser.add_argument('-len', action='store', dest='length', type=int, default=4096,
                         help='Enter max length of stored values, if < 4 then all values will be shown')
     parser.add_argument('-log', action='store', dest='logging',

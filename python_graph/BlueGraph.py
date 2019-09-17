@@ -1,4 +1,6 @@
-import logging, struct, serial
+import logging
+import struct
+import serial
 import numpy as np
 from PyQt5 import QtCore, QtWidgets, QtGui
 import pyqtgraph as pg
@@ -40,6 +42,12 @@ class BlueCardioGraph(pg.GraphicsWindow):
         self.show_timer.setInterval(100)  # in milliseconds
         self.show_timer.start()
         self.show_timer.timeout.connect(self.onFixView)
+        
+        if self.qrs_compute:
+            self.qrs_timer = QtCore.QTimer(self)
+            self.qrs_timer.setInterval(2000)
+            self.qrs_timer.start()
+            self.qrs_timer.timeout.connect(self.OnQRSCompute)
 
         self.plotItem = self.addPlot(title="BlueCardio Output")
 
@@ -47,11 +55,11 @@ class BlueCardioGraph(pg.GraphicsWindow):
                                                symbolBrush=(255, 0, 0), symbolSize=1, symbolPen=None)
 
         self.plotDataQ = self.plotItem.plot(
-            [], pen=None, symbol='o', symbolBrush='d', symbolSize=5)
+            [], pen=None, symbol='o', symbolBrush='c', symbolSize=5)
         self.plotDataR = self.plotItem.plot(
             [], pen=None, symbol='o', symbolBrush='r', symbolSize=5)
         self.plotDataS = self.plotItem.plot(
-            [], pen=None, symbol='o', symbolBrush='s', symbolSize=5)
+            [], pen=None, symbol='o', symbolBrush='y', symbolSize=5)
         if(showlen >= 4):
             self.plotItem.setXRange(0, showlen)
 
@@ -67,11 +75,17 @@ class BlueCardioGraph(pg.GraphicsWindow):
             self.data_timer.start()
             self.show_timer.start()
             self.data_switch = True
+            
+    def OnQRSCompute(self):
+        if self.qrs_compute is True:
+            R_peaks, S_point, Q_point = ECG_QRS_detect(self.y_data, 360)
+            if R_peaks.any():
+                self.setQRS(self.x_data, Q_point, R_peaks, S_point)
 
     def setQRS(self, x, Q, R, S):
-        self.plotDataQ.setData(x, Q)
-        self.plotDataR.setData(x, R)
-        self.plotDataS.setData(x, S)
+        self.plotDataQ.setData(x[Q], self.y_data[Q])
+        self.plotDataR.setData(x[R], self.y_data[R])
+        self.plotDataS.setData(x[S], self.y_data[S])
 
     def setData(self, x, y):
         self.plotDataItem.setData(x, y)
@@ -82,10 +96,10 @@ class BlueCardioGraph(pg.GraphicsWindow):
             self.max_y = np.amax(self.y_data)
             self.min_y = np.amin(self.y_data)
             self.plotItem.setYRange(
-                self.min_y - 10, self.max_y + 10, padding=0)
+                self.min_y - self.min_y/10, self.max_y + self.max_y/10)
 
     def onNewData_fromTCP(self):
-        data = struct.unpack('ffff',self.tcp.recv(16))
+        data = struct.unpack('ffff', self.tcp.recv(16))
         t_list = [0]*4
         i = 0
         while i < 4:
@@ -103,10 +117,6 @@ class BlueCardioGraph(pg.GraphicsWindow):
             self.y_data = np.delete(self.y_data, [0, 1, 2, 3])
             self.plotItem.setXRange(
                 self.x_data[-1] - self.showlen, self.x_data[-1])
-            if self.qrs_compute is True:
-                R_peaks, S_point, Q_point = ECG_QRS_detect(self.y_data, 360)
-                if R_peaks.any():
-                    self.setQRS(self.x_data, Q_point, R_peaks, S_point)
         self.setData(self.x_data, self.y_data)
 
     def onNewData_fromBLE(self):
@@ -129,10 +139,6 @@ class BlueCardioGraph(pg.GraphicsWindow):
             self.y_data = np.delete(self.y_data, [0, 1, 2, 3])
             self.plotItem.setXRange(
                 self.x_data[-1] - self.showlen, self.x_data[-1])
-            if self.qrs_compute is True:
-                R_peaks, S_point, Q_point = ECG_QRS_detect(self.y_data, 360)
-                if R_peaks.any():
-                    self.setQRS(self.x_data, Q_point, R_peaks, S_point)
         self.setData(self.x_data, self.y_data)
 
     def onNewData(self):
@@ -175,8 +181,4 @@ class BlueCardioGraph(pg.GraphicsWindow):
             self.y_data = np.delete(self.y_data, [0, 1, 2, 3])
             self.plotItem.setXRange(
                 self.x_data[-1] - self.showlen, self.x_data[-1])
-            if self.qrs_compute is True:
-                R_peaks, S_point, Q_point = ECG_QRS_detect(self.y_data, 360)
-                if R_peaks.any():
-                    self.setQRS(self.x_data, Q_point, R_peaks, S_point)
         self.setData(self.x_data, self.y_data)
