@@ -42,7 +42,7 @@ class BlueCardioGraph(pg.GraphicsWindow):
         self.show_timer.setInterval(100)  # in milliseconds
         self.show_timer.start()
         self.show_timer.timeout.connect(self.onFixView)
-        
+
         if self.qrs_compute:
             self.qrs_timer = QtCore.QTimer(self)
             self.qrs_timer.setInterval(2000)
@@ -75,7 +75,7 @@ class BlueCardioGraph(pg.GraphicsWindow):
             self.data_timer.start()
             self.show_timer.start()
             self.data_switch = True
-            
+
     def OnQRSCompute(self):
         if self.qrs_compute is True:
             R_peaks, S_point, Q_point = ECG_QRS_detect(self.y_data, 360)

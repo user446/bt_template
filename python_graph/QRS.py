@@ -1,29 +1,38 @@
 import numpy as np
 import math
 
-#преобразование длинны отрезка с сигналом ЭКГ
+# преобразование длинны отрезка с сигналом ЭКГ
+
+
 def length_transform(ecg, length):
-    lgth = ecg.shape[0] #возвращает длину массива ЭКГ
+    lgth = ecg.shape[0]  # возвращает длину массива ЭКГ
     diff = np.zeros(lgth)
-    ecg = np.pad(ecg, length, 'edge')   #добавляет слева и справа массива его значения на границах
+    # добавляет слева и справа массива его значения на границах
+    ecg = np.pad(ecg, length, 'edge')
     for i in range(lgth):
         temp = ecg[i:i+length*2+1]
         left = temp[length] - temp[0]
         right = temp[length] - temp[-1]
-        diff[i] = min(left, right) 
-        diff[diff < 0] = 0 #если значения в массиве меньше нуля, то просто приравниваем к нулю
+        diff[i] = min(left, right)
+        # если значения в массиве меньше нуля, то просто приравниваем к нулю
+        diff[diff < 0] = 0
     return np.multiply(diff, diff)
 
-#интегрирование сигнала ЭКГ заданной длинны
+# интегрирование сигнала ЭКГ заданной длинны
+
+
 def integrate(ecg, length):
     lgth = ecg.shape[0]
     integrate_ecg = np.zeros(lgth)
     ecg = np.pad(ecg, math.ceil(length/2), 'symmetric')
     for i in range(lgth):
-        integrate_ecg[i] = np.sum(ecg[i:i+length])/length #интеграл по формуле трапеций 
+        # интеграл по формуле трапеций
+        integrate_ecg[i] = np.sum(ecg[i:i+length])/length
     return integrate_ecg
 
-#нахождение пиков
+# нахождение пиков
+
+
 def find_peak(data, length):
     lgth = data.shape[0]
     true_peaks = list()

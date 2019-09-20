@@ -1,5 +1,6 @@
 import struct
 
+
 class BLEPort():
     def __init__(self, logger):
         self.data = []
@@ -17,5 +18,4 @@ class BLEPort():
         self.data = struct.unpack('ffff', bytearray(value[0:16]))
         self.datacount = struct.unpack('i', bytearray(value[16:20]))
         self.logger.info("Received data: %s, length: %s, count: %s",
-                    self.data, len(self.data), self.datacount)
-        
+                         self.data, len(self.data), self.datacount)

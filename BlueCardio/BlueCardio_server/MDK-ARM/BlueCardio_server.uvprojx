@@ -335,7 +335,7 @@
               <MiscControls></MiscControls>
               <Define>LS_SOURCE=LS_SOURCE_EXTERNAL_32KHZ SMPS_INDUCTOR=SMPS_INDUCTOR_10uH UART_BAUDRATE=115200 BLUENRG1_DEVICE HS_SPEED_XTAL=HS_SPEED_XTAL_16MHZ USER_BUTTON=BUTTON_1 SERVER=1</Define>
               <Undefine></Undefine>
-              <IncludePath>..\inc;..\Library\hal\inc;..\Library\BlueNRG1_Periph_Driver\inc;..\Library\CMSIS\Device\ST\BlueNRG1\Include;..\Library\CMSIS\Include;..\Library\Bluetooth_LE\inc;..\Library\BLE_Application\layers_inc;..\Library\BLE_Application\Utils\inc;..\Library\BLE_Application\OTA\inc;..\Library\SDK_Eval_BlueNRG1\inc</IncludePath>
+              <IncludePath>..\inc;..\Library\hal\inc;..\Library\BlueNRG1_Periph_Driver\inc;..\Library\CMSIS\Device\ST\BlueNRG1\Include;..\Library\CMSIS\Include;..\Library\Bluetooth_LE\inc;..\Library\BLE_Application\layers_inc;..\Library\BLE_Application\Utils\inc;..\Library\BLE_Application\OTA\inc;..\Library\SDK_Eval_BlueNRG1\inc;..\src\s25fl256lib;..\src\s25fl256lib\targets</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -543,6 +543,21 @@
               <FileName>system_bluenrg1.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Library\CMSIS\Device\ST\BlueNRG1\Source\system_bluenrg1.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>s25fl256lib</GroupName>
+          <Files>
+            <File>
+              <FileName>slld.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\src\s25fl256lib\slld.c</FilePath>
+            </File>
+            <File>
+              <FileName>slld_hal.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\src\s25fl256lib\slld_hal.c</FilePath>
             </File>
           </Files>
         </Group>
