@@ -72,8 +72,8 @@ def main(args):
         logger.info("Trying to connect to %s:%s", IP, PORT)
         try:
             sock.connect((IP, int(PORT)))
-        except:
-            logger.info("Server unavailable!")
+        except socket.error as msg:
+            logger.info("Caught exception socket.error : %s", msg)
             return None
         logger.info("Connected!")
 

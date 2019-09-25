@@ -1,6 +1,7 @@
 import logging
 import struct
 import serial
+import socket
 import numpy as np
 from PyQt5 import QtCore, QtWidgets, QtGui
 import pyqtgraph as pg
@@ -99,7 +100,12 @@ class BlueCardioGraph(pg.GraphicsWindow):
                 self.min_y - 10, self.max_y + 10)
 
     def onNewData_fromTCP(self):
-        data = struct.unpack('ffff', self.tcp.recv(16))
+        try:
+            dt = self.tcp.recv(16)
+        except socket.error as msg:
+            self.logger.info("Caught exception socket.error : %s", msg)
+        
+        data = struct.unpack('ffff', dt)
         t_list = [0]*4
         i = 0
         while i < 4:
