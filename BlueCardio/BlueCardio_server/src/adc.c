@@ -29,7 +29,7 @@ void ADC_Configuration(void)
   xADC_InitType.ADC_Input = ADC_Input_AdcPin1; 
   xADC_InitType.ADC_ConversionMode = ADC_ConversionMode_Continuous;
   xADC_InitType.ADC_ReferenceVoltage = ADC_ReferenceVoltage_0V6; 
-  xADC_InitType.ADC_Attenuation = ADC_Attenuation_9dB54;
+  xADC_InitType.ADC_Attenuation = ADC_Attenuation_0dB;
   
   ADC_Init(&xADC_InitType);
   ADC_Filter(ENABLE);

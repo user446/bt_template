@@ -1,6 +1,42 @@
-2019-09-19 17:54:48,780 info: Starting BlueCardio graph application
-2019-09-19 17:54:48,780 info: BlueCardio started with arguments: Namespace(communication='TCP:127.0.0.1:5005', length=4096, logging='y', qrs='y')
-2019-09-19 17:54:48,784 Trying to connect to 127.0.0.1:5005
-2019-09-19 17:54:48,785 Connected!
-2019-09-19 17:54:48,793 info: QtWidget initialised!
-2019-09-19 17:58:18,272 info: Abort action received from user
+2019-09-24 20:10:01,789 Initialized new BGAPI backend
+2019-09-24 20:10:01,789 info: Starting BlueCardio graph application
+2019-09-24 20:10:01,789 info: BlueCardio started with arguments: Namespace(communication='BLE', length=4096, logging='n', qrs='n')
+2019-09-24 20:10:01,790 info: Trying to initialize communication via BLE device...
+2019-09-24 20:10:01,790 Trying to install connection with BLE device
+2019-09-24 20:10:01,790 Auto-detecting serial port for BLED112
+2019-09-24 20:10:01,798 Found BLED112 on serial port COM2
+2019-09-24 20:10:01,798 Resetting and reconnecting to device for a clean environment
+2019-09-24 20:10:01,798 Auto-detecting serial port for BLED112
+2019-09-24 20:10:01,803 Found BLED112 on serial port COM2
+2019-09-24 20:10:02,581 Auto-detecting serial port for BLED112
+2019-09-24 20:10:02,838 Auto-detecting serial port for BLED112
+2019-09-24 20:10:03,095 Auto-detecting serial port for BLED112
+2019-09-24 20:10:03,101 Found BLED112 on serial port COM2
+2019-09-24 20:10:03,378 Running receiver
+2019-09-24 20:10:03,379 Disabling advertising
+2019-09-24 20:10:03,386 Connecting to device at address 92:80:e1:03:00:bb (timeout 5s)
+2019-09-24 20:10:03,494 Connection status: handle=0x0, flags=5, address=0xb'bb0003e18092', connection interval=75.000000ms, timeout=1000, latency=0 intervals, bonding=0xff
+2019-09-24 20:10:03,495 Connected to 92:80:e1:03:00:bb
+2019-09-24 20:10:03,496 Fetching characteristics for connection 0
+2019-09-24 20:10:03,643 Found approved characteristic 00002a05-0000-1000-8000-00805f9b34fb
+2019-09-24 20:10:03,792 Found approved characteristic 00002a00-0000-1000-8000-00805f9b34fb
+2019-09-24 20:10:03,794 Found approved characteristic 00002a01-0000-1000-8000-00805f9b34fb
+2019-09-24 20:10:03,941 Found approved characteristic 00002a04-0000-1000-8000-00805f9b34fb
+2019-09-24 20:10:04,093 Found custom characteristic d973f2e1-b19e-11e2-9e96-0800200c9a66
+2019-09-24 20:10:04,468 Found custom characteristic d973f2e2-b19e-11e2-9e96-0800200c9a66
+2019-09-24 20:10:04,617 Characteristic 0x00002a05-0000-1000-8000-00805f9b34fb is handle 0x3
+2019-09-24 20:10:04,618 Characteristic descriptor 0x00002902-0000-1000-8000-00805f9b34fb is handle 0x4
+2019-09-24 20:10:04,619 Characteristic 0x00002a00-0000-1000-8000-00805f9b34fb is handle 0x7
+2019-09-24 20:10:04,620 Characteristic 0x00002a01-0000-1000-8000-00805f9b34fb is handle 0x9
+2019-09-24 20:10:04,620 Characteristic 0x00002a04-0000-1000-8000-00805f9b34fb is handle 0xb
+2019-09-24 20:10:04,621 Characteristic 0xd973f2e1-b19e-11e2-9e96-0800200c9a66 is handle 0xe
+2019-09-24 20:10:04,622 Characteristic descriptor 0x00002902-0000-1000-8000-00805f9b34fb is handle 0xf
+2019-09-24 20:10:04,622 Characteristic 0xd973f2e2-b19e-11e2-9e96-0800200c9a66 is handle 0x11
+2019-09-24 20:10:04,769 Subscribed to uuid=d973f2e1-b19e-11e2-9e96-0800200c9a66
+2019-09-24 20:10:04,771 Received notification on handle=0xe, value=0xb'beeccb45f155ca455b6999c4bf52e1c4ec0f0000'
+2019-09-24 20:10:04,772 Received data: (6525.5927734375, 6474.74267578125, -1227.2923583984375, -1802.5858154296875), length: 4, count: (4076,)
+2019-09-24 20:10:04,774 Received notification on handle=0xe, value=0xb'a94e184516f7cb453586ca4588b29cc4ed0f0000'
+2019-09-24 20:10:04,775 Received data: (2436.916259765625, 6526.8857421875, 6480.77587890625, -1253.5791015625), length: 4, count: (4077,)
+2019-09-24 20:10:04,777 Received notification on handle=0xe, value=0xb'1b7ce1c473e10e45f4decb45dd7bca45ee0f0000'
+2019-09-24 20:10:04,777 Received data: (-1803.8782958984375, 2286.090576171875, 6523.869140625, 6479.48291015625), length: 4, count: (4078,)
+2019-09-24 20:10:04,788 info: QtWidget initialised!

@@ -96,7 +96,7 @@ class BlueCardioGraph(pg.GraphicsWindow):
             self.max_y = np.amax(self.y_data)
             self.min_y = np.amin(self.y_data)
             self.plotItem.setYRange(
-                self.min_y - self.min_y/10, self.max_y + self.max_y/10)
+                self.min_y - 10, self.max_y + 10)
 
     def onNewData_fromTCP(self):
         data = struct.unpack('ffff', self.tcp.recv(16))
