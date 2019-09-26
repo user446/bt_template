@@ -28,6 +28,7 @@ class BlueCardioGraph(pg.GraphicsWindow):
         self.qrs_compute = qrs
         #self.mainLayout = self.addLayout(row=1, col=0)
         # self.setLayout(self.mainLayout)
+        self.counter = 0
 
         self.data_timer = QtCore.QTimer(self)
         self.data_timer.setInterval(10)  # in milliseconds
@@ -104,6 +105,7 @@ class BlueCardioGraph(pg.GraphicsWindow):
             dt = self.tcp.recv(16)
         except socket.error as msg:
             self.logger.info("Caught exception socket.error : %s", msg)
+            return None
         
         data = struct.unpack('ffff', dt)
         t_list = [0]*4
@@ -126,9 +128,13 @@ class BlueCardioGraph(pg.GraphicsWindow):
         self.setData(self.x_data, self.y_data)
 
     def onNewData_fromBLE(self):
-        data = self.ble.GetParsedData()
+        counter, data = self.ble.GetParsedData()
         t_list = [0]*4
         i = 0
+        if (self.counter+1) != counter:
+            self.logger.warning(
+                "Seems like previous packet was lost: %s", counter)
+        self.counter = counter   
         while i < 4:
             t_list[i] = self.time_data
             self.time_data += 4
@@ -168,6 +174,10 @@ class BlueCardioGraph(pg.GraphicsWindow):
             self.logger.warning(
                 "Wrong amount of received parameters error: %s", new_list)
             return None
+        if (self.counter+1) != int(data[0]):
+            self.logger.warning(
+                "Seems like previous packet was lost: %s", data[0])
+        self.counter = int(data[0])
         t_list = [0]*4
         i = 0
         while i < 4:

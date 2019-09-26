@@ -8,7 +8,7 @@ class BLEPort():
         self.logger = logger
 
     def GetParsedData(self):
-        return self.data
+        return self.datacount, self.data
 
     def handle_data(self, handle, value):
         """
@@ -16,6 +16,6 @@ class BLEPort():
         value -- bytearray, the data returned in the notification
         """
         self.data = struct.unpack('ffff', bytearray(value[0:16]))
-        self.datacount = struct.unpack('i', bytearray(value[16:20]))
+        self.datacount = struct.unpack('i', bytearray(value[16:20]))[0]
         self.logger.info("Received data: %s, length: %s, count: %s",
                          self.data, len(self.data), self.datacount)
