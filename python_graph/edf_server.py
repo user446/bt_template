@@ -57,15 +57,17 @@ def edfserver(edfpath, args):
     logger.info('File to open: %s', name)
     data = mne.io.read_raw_edf(name)
     raw_data = data.get_data()
+    datacount = 0
 
     conn, addr = connect(TCP_IP, TCP_PORT)
     while True:
         for rec in windowed(zip(data.times, raw_data[CHANNEL])):
             sleep(rec[-1][0]-rec[0][0])
             data = [d[1] for d in rec]
-            var = struct.pack('4f', *data)
+            var = struct.pack('4fi', *data, datacount)
             try:
                 conn.sendall(var)
+                datacount = datacount + 1
             except socket.error as msg:
                 logger.info("Caught exception socket.error : %s", msg)
                 conn.close()

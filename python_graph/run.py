@@ -18,7 +18,7 @@ import numpy as np
 import pygatt
 from PyQt5 import QtCore, QtWidgets, QtGui
 from BlueGraph import BlueCardioGraph
-from ble import BLEPort
+from datahandle import BLEPort, TCPPort, SerialPort
 from mainwindow import MainWindow
 import pyqtgraph as pg
 
@@ -27,9 +27,7 @@ def main(args):
     logger.info("info: Starting BlueCardio graph application")
     logger.info("info: BlueCardio started with arguments: %s", args)
 
-    ser = None
-    ble = None
-    sock = None
+    comm = None
 
     if args.communication != 'BLE' and cm is None:
         logger.info("info: Trying to open port %s...", args.communication)
@@ -38,6 +36,7 @@ def main(args):
                                 bytesize=8, timeout=2, stopbits=serial.STOPBITS_ONE, parity=serial.PARITY_NONE)
             logger.info("info: Port entity initialised for %s",
                         args.communication)
+            comm = SerialPort(logger, ser)
         except serial.serialutil.SerialException as e:
             logger.critical("error: %s", e)
         try:
@@ -56,12 +55,12 @@ def main(args):
         logger.info(
             "info: Trying to initialize communication via BLE device...")
         try:
-            ble = BLEPort(logger)
+            comm = BLEPort(logger)
             logger.info("Trying to install connection with BLE device")
             adapter.start()
             device = adapter.connect('92:80:e1:03:00:bb')
             device.subscribe("d973f2e1-b19e-11e2-9e96-0800200c9a66",
-                             callback=ble.handle_data)
+                             callback=comm.handle_data)
         except:
             logger.info(
                 "Unable to install connection with BLE device for unknown reason")
@@ -70,6 +69,7 @@ def main(args):
     elif cm is not None:
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         logger.info("Trying to connect to %s:%s", IP, PORT)
+        comm = TCPPort(logger, sock)
         try:
             sock.connect((IP, int(PORT)))
         except socket.error as msg:
@@ -92,7 +92,7 @@ def main(args):
 
     #win = QtGui.QMainWindow()
     win = MainWindow()
-    plot = BlueCardioGraph(ser, ble, sock, qrs_compute, args.length, logger)
+    plot = BlueCardioGraph(comm, qrs_compute, args.length, logger)
 
     bt_stopupdate = QtWidgets.QPushButton('Stop')
     bt_stopupdate.setToolTip('Stop updating data on a plot')
@@ -104,11 +104,11 @@ def main(args):
     win.resize(800, 600)
     win.raise_()
     app.exec_()
-    if ser is not None:
+    if args.communication != 'BLE' and cm is None:
         ser.close()
-    if ble is not None:
+    elif args.communication == 'BLE':
         adapter.stop()
-    if sock is not None:
+    elif cm is not None:
         sock.close()
     logger.info("info: Abort action received from user")
 

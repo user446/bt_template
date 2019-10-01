@@ -1,22 +1,20 @@
 import logging
 import struct
 import serial
+import threading
 import socket
 import numpy as np
 from PyQt5 import QtCore, QtWidgets, QtGui
 import pyqtgraph as pg
-import ble
+import datahandle
 from QRS import ECG_QRS_detect
 
-
+#https://kushaldas.in/posts/pyqt5-thread-example.html
 class BlueCardioGraph(pg.GraphicsWindow):
-
-    def __init__(self, serial, ble, socket, qrs, showlen, logger, parent=None):
+    def __init__(self, communication, qrs, showlen, logger, parent = None):
         pg.GraphicsWindow.__init__(self)
 
-        self.serial = serial
-        self.ble = ble
-        self.tcp = socket
+        self.comm = communication
         self.logger = logger
         self.showlen = showlen
         self.x_data = np.array([])
@@ -26,19 +24,12 @@ class BlueCardioGraph(pg.GraphicsWindow):
         self.time_data = 0
         self.data_switch = True
         self.qrs_compute = qrs
-        #self.mainLayout = self.addLayout(row=1, col=0)
-        # self.setLayout(self.mainLayout)
         self.counter = 0
 
-        self.data_timer = QtCore.QTimer(self)
-        self.data_timer.setInterval(10)  # in milliseconds
-        self.data_timer.start()
-        if serial:
-            self.data_timer.timeout.connect(self.onNewData)
-        elif ble:
-            self.data_timer.timeout.connect(self.onNewData_fromBLE)
-        elif socket:
-            self.data_timer.timeout.connect(self.onNewData_fromTCP)
+        # self.data_timer = QtCore.QTimer(self)
+        # self.data_timer.setInterval(5)  # in milliseconds
+        # self.data_timer.start()
+        # self.data_timer.timeout.connect(self.onNewData)
 
         self.show_timer = QtCore.QTimer(self)
         self.show_timer.setInterval(100)  # in milliseconds
@@ -64,7 +55,11 @@ class BlueCardioGraph(pg.GraphicsWindow):
             [], pen=None, symbol='o', symbolBrush='y', symbolSize=5)
         if(showlen >= 4):
             self.plotItem.setXRange(0, showlen)
-
+        
+        self.comm.signal.connect(self.OnNewDataT)
+        if self.comm.start() is not None:
+            self.comm.start()
+        
     def DataUpdSwitch(self):
         #pen = pg.mkPen('g', width=2)
         if self.data_switch:
@@ -99,85 +94,12 @@ class BlueCardioGraph(pg.GraphicsWindow):
             self.min_y = np.amin(self.y_data)
             self.plotItem.setYRange(
                 self.min_y - 10, self.max_y + 10)
-
-    def onNewData_fromTCP(self):
+            
+    def OnNewDataT(self, result):
         try:
-            dt = self.tcp.recv(16)
-        except socket.error as msg:
-            self.logger.info("Caught exception socket.error : %s", msg)
+            counter, data = result
+        except:
             return None
-        
-        data = struct.unpack('ffff', dt)
-        t_list = [0]*4
-        i = 0
-        while i < 4:
-            t_list[i] = self.time_data
-            self.time_data += 4
-            i += 1
-        try:
-            self.x_data = np.append(
-                self.x_data, np.array(t_list).astype(np.int))
-        except ValueError:
-            return None
-        self.y_data = np.append(self.y_data, data)
-        if self.x_data[-1] > self.showlen and self.showlen >= 4:
-            self.x_data = np.delete(self.x_data, [0, 1, 2, 3])
-            self.y_data = np.delete(self.y_data, [0, 1, 2, 3])
-            self.plotItem.setXRange(
-                self.x_data[-1] - self.showlen, self.x_data[-1])
-        self.setData(self.x_data, self.y_data)
-
-    def onNewData_fromBLE(self):
-        counter, data = self.ble.GetParsedData()
-        t_list = [0]*4
-        i = 0
-        if (self.counter+1) != counter:
-            self.logger.warning(
-                "Seems like previous packet was lost: %s", counter)
-        self.counter = counter   
-        while i < 4:
-            t_list[i] = self.time_data
-            self.time_data += 4
-            i += 1
-        try:
-            self.x_data = np.append(
-                self.x_data, np.array(t_list).astype(np.int))
-        except ValueError:
-            return None
-        # преобразуем лист в float и записываем его в данные оси y
-        self.y_data = np.append(self.y_data, data)
-        if self.x_data[-1] > self.showlen and self.showlen >= 4:
-            self.x_data = np.delete(self.x_data, [0, 1, 2, 3])
-            self.y_data = np.delete(self.y_data, [0, 1, 2, 3])
-            self.plotItem.setXRange(
-                self.x_data[-1] - self.showlen, self.x_data[-1])
-        self.setData(self.x_data, self.y_data)
-
-    def onNewData(self):
-        try:
-            ser_data = self.serial.read_until(terminator=serial.LF).decode(
-                'utf-8')        # считываем сообщение из порта до конца
-        except serial.serialutil.SerialException as e:
-            self.logger.warning("warning: %s", e)
-            return None
-        if not ser_data:
-            self.logger.error("Empty line received: %s", ser_data)
-            return None
-        data = ser_data.split("::")  # разделяем на составляющие
-        if len(data) < 3:   # если сообщение не было принято целиком, то
-            self.logger.warning("Message wasn't completely received: %s", data)
-            return None         # сбрасываем
-        self.logger.info(ser_data)   # записываем сообщение в файл
-        # разделяем числа по пробелам, выкидываем пустые элементы листа
-        new_list = data[1].split()
-        if len(new_list) != 4:  # если принято не 4 числа, то что-то не так
-            self.logger.warning(
-                "Wrong amount of received parameters error: %s", new_list)
-            return None
-        if (self.counter+1) != int(data[0]):
-            self.logger.warning(
-                "Seems like previous packet was lost: %s", data[0])
-        self.counter = int(data[0])
         t_list = [0]*4
         i = 0
         while i < 4:
@@ -191,7 +113,33 @@ class BlueCardioGraph(pg.GraphicsWindow):
             return None
         # преобразуем лист в float и записываем его в данные оси y
         self.y_data = np.append(
-            self.y_data, np.array(new_list).astype(np.float))
+            self.y_data, data)
+        if self.x_data[-1] > self.showlen and self.showlen >= 4:
+            self.x_data = np.delete(self.x_data, [0, 1, 2, 3])
+            self.y_data = np.delete(self.y_data, [0, 1, 2, 3])
+            self.plotItem.setXRange(
+                self.x_data[-1] - self.showlen, self.x_data[-1])
+        self.setData(self.x_data, self.y_data)
+        
+    def onNewData(self):
+        try:
+            counter, data = self.comm.GetParsedData()
+        except:
+            return None
+        t_list = [0]*4
+        i = 0
+        while i < 4:
+            t_list[i] = self.time_data
+            self.time_data += 4
+            i += 1
+        try:
+            self.x_data = np.append(
+                self.x_data, np.array(t_list).astype(np.int))
+        except ValueError:
+            return None
+        # преобразуем лист в float и записываем его в данные оси y
+        self.y_data = np.append(
+            self.y_data, data)
         if self.x_data[-1] > self.showlen and self.showlen >= 4:
             self.x_data = np.delete(self.x_data, [0, 1, 2, 3])
             self.y_data = np.delete(self.y_data, [0, 1, 2, 3])
