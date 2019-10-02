@@ -32,6 +32,11 @@ class BlueCardioGraph(pg.GraphicsWindow):
         self.show_timer.setInterval(100)  # in milliseconds
         self.show_timer.start()
         self.show_timer.timeout.connect(self.onFixView)
+        
+        self.error_timer = QtCore.QTimer(self)
+        self.error_timer.setInterval(5000)  # in milliseconds
+        self.error_timer.start()
+        self.error_timer.timeout.connect(self.onPrintError)
 
         if self.qrs_compute:
             self.qrs_timer = QtCore.QTimer(self)
@@ -91,6 +96,10 @@ class BlueCardioGraph(pg.GraphicsWindow):
             self.min_y = np.amin(self.y_data)
             self.plotItem.setYRange(
                 self.min_y - 10, self.max_y + 10)
+            
+    def onPrintError(self):
+        self.logger.warning("Percentage of received messages: %s", self.comm.GetError())
+        self.comm.ResetError()
 
     def OnNewData(self, result):
         try:
