@@ -9,9 +9,11 @@ import pyqtgraph as pg
 import datahandle
 from QRS import ECG_QRS_detect
 
-#https://kushaldas.in/posts/pyqt5-thread-example.html
+# https://kushaldas.in/posts/pyqt5-thread-example.html
+
+
 class BlueCardioGraph(pg.GraphicsWindow):
-    def __init__(self, communication, qrs, showlen, logger, parent = None):
+    def __init__(self, communication, qrs, showlen, logger, parent=None):
         pg.GraphicsWindow.__init__(self)
 
         self.comm = communication
@@ -25,11 +27,6 @@ class BlueCardioGraph(pg.GraphicsWindow):
         self.data_switch = True
         self.qrs_compute = qrs
         self.counter = 0
-
-        # self.data_timer = QtCore.QTimer(self)
-        # self.data_timer.setInterval(5)  # in milliseconds
-        # self.data_timer.start()
-        # self.data_timer.timeout.connect(self.onNewData)
 
         self.show_timer = QtCore.QTimer(self)
         self.show_timer.setInterval(100)  # in milliseconds
@@ -55,11 +52,11 @@ class BlueCardioGraph(pg.GraphicsWindow):
             [], pen=None, symbol='o', symbolBrush='y', symbolSize=5)
         if(showlen >= 4):
             self.plotItem.setXRange(0, showlen)
-        
-        self.comm.signal.connect(self.OnNewDataT)
-        if self.comm.start() is not None:
+
+        self.comm.signal.connect(self.OnNewData)
+        if self.comm.start() is not None: #проверка - стоит ли запускать тред, или он уже запущен (случай с pygatt)
             self.comm.start()
-        
+
     def DataUpdSwitch(self):
         #pen = pg.mkPen('g', width=2)
         if self.data_switch:
@@ -94,36 +91,10 @@ class BlueCardioGraph(pg.GraphicsWindow):
             self.min_y = np.amin(self.y_data)
             self.plotItem.setYRange(
                 self.min_y - 10, self.max_y + 10)
-            
-    def OnNewDataT(self, result):
+
+    def OnNewData(self, result):
         try:
             counter, data = result
-        except:
-            return None
-        t_list = [0]*4
-        i = 0
-        while i < 4:
-            t_list[i] = self.time_data
-            self.time_data += 4
-            i += 1
-        try:
-            self.x_data = np.append(
-                self.x_data, np.array(t_list).astype(np.int))
-        except ValueError:
-            return None
-        # преобразуем лист в float и записываем его в данные оси y
-        self.y_data = np.append(
-            self.y_data, data)
-        if self.x_data[-1] > self.showlen and self.showlen >= 4:
-            self.x_data = np.delete(self.x_data, [0, 1, 2, 3])
-            self.y_data = np.delete(self.y_data, [0, 1, 2, 3])
-            self.plotItem.setXRange(
-                self.x_data[-1] - self.showlen, self.x_data[-1])
-        self.setData(self.x_data, self.y_data)
-        
-    def onNewData(self):
-        try:
-            counter, data = self.comm.GetParsedData()
         except:
             return None
         t_list = [0]*4

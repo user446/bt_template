@@ -4,25 +4,19 @@ import socket
 import numpy as np
 from PyQt5 import QtCore
 
-class BLEPort(QtCore.QThread):
+# тред не нужен, т.к. pygatt имеет собственный тред
+
+
+class BLEPort():
     signal = QtCore.pyqtSignal('PyQt_PyObject')
+
     def __init__(self, logger):
-        QtCore.QThread.__init__(self)
         self.data = []
         self.datacount = 0
         self.time_data = 0
         self.logger = logger
-        self.ready = False
 
-    def ResetReadyStatus(self):
-        self.ready = False
-        
-    def GetReadyStatus(self):
-        return self.ready
-     
-    def GetParsedData(self):
-        return self.datacount, self.data
-
+    # функция вызываемая из pygatt
     def handle_data(self, handle, value):
         self.data = struct.unpack('4f', bytearray(value[0:16]))
         counter = struct.unpack('i', bytearray(value[16:20]))[0]
@@ -33,24 +27,19 @@ class BLEPort(QtCore.QThread):
         self.logger.info("Received data: %s, length: %s, count: %s",
                          self.data, len(self.data), self.datacount)
         pass_signal = self.datacount, self.data
-        self.signal.emit(pass_signal)
-        
+        self.signal.emit(pass_signal)  # вызываем сигнал
+
 
 class TCPPort(QtCore.QThread):
+    signal = QtCore.pyqtSignal('PyQt_PyObject')
+
     def __init__(self, logger, tcp):
         QtCore.QThread.__init__(self)
         self.data = []
         self.datacount = 0
         self.logger = logger
-        self.ready = False
         self.tcp = tcp
-        
-    def ResetReadyStatus(self):
-        self.ready = False
-        
-    def GetReadyStatus(self):
-        return self.ready
-    
+
     def GetParsedData(self):
         try:
             dt = self.tcp.recv(16)
@@ -64,24 +53,23 @@ class TCPPort(QtCore.QThread):
                 "Seems like previous packet was lost: %s", data[4])
             self.datacount = data[4]
         return self.datacount, self.data
-        
+
+    def run(self):
+        while True:
+            data = self.GetParsedData()
+            self.signal.emit(data)
+
+
 class SerialPort(QtCore.QThread):
     signal = QtCore.pyqtSignal('PyQt_PyObject')
-    
+
     def __init__(self, logger, serial):
         QtCore.QThread.__init__(self)
         self.data = []
         self.datacount = 0
         self.logger = logger
-        self.ready = False
-        self.serial = serial        
-    
-    def ResetReadyStatus(self):
-        self.ready = False
-        
-    def GetReadyStatus(self):
-        return self.ready
-    
+        self.serial = serial
+
     def GetParsedData(self):
         try:
             ser_data = self.serial.read_until(terminator=serial.LF).decode(
@@ -108,7 +96,7 @@ class SerialPort(QtCore.QThread):
                 "Seems like previous packet was lost: %s", data[0])
         self.datacount = int(data[0])
         return self.datacount, np.array(self.data).astype(np.float)
-    
+
     def run(self):
         while True:
             data = self.GetParsedData()

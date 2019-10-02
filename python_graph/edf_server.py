@@ -29,6 +29,7 @@ def windowed(seq, step=4):
         window.append(fillvalue)
     yield tuple(window)
 
+
 def connect(ip, port):
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.bind((ip, port))
@@ -37,6 +38,7 @@ def connect(ip, port):
     conn, addr = s.accept()
     logger.info('Connection address: %s', addr)
     yield conn, addr
+
 
 def edfserver(edfpath, args):
     names = glob.glob(edfpath)
@@ -72,7 +74,6 @@ def edfserver(edfpath, args):
                 logger.info("Caught exception socket.error : %s", msg)
                 conn.close()
                 connect(TCP_IP, TCP_PORT)
-                
     conn.close()
 
 
