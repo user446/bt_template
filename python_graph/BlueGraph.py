@@ -8,6 +8,7 @@ from PyQt5 import QtCore, QtWidgets, QtGui
 import pyqtgraph as pg
 import datahandle
 from QRS import ECG_QRS_detect
+from r_peak import FindRPeaks
 
 # https://kushaldas.in/posts/pyqt5-thread-example.html
 
@@ -66,25 +67,28 @@ class BlueCardioGraph(pg.GraphicsWindow):
         #pen = pg.mkPen('g', width=2)
         if self.data_switch:
             #pen.drawLine(pg.Point(self.x_data[-1], self.min_y - 10),pg.Point(self.x_data[-1],self.max_y + 10))
-            self.data_timer.stop()
+            #self.data_timer.stop()
+            self.comm.signal.disconnect()
             self.show_timer.stop()
             self.data_switch = False
         else:
             #pen.drawLine(pg.Point(self.x_data[-1], self.min_y - 10),pg.Point(self.x_data[-1],self.max_y + 10))
-            self.data_timer.start()
+            #self.data_timer.start()
+            self.comm.signal.connect(self.OnNewData)
             self.show_timer.start()
             self.data_switch = True
 
     def OnQRSCompute(self):
         if self.qrs_compute is True:
-            R_peaks, S_point, Q_point = ECG_QRS_detect(self.y_data, 360)
+            #R_peaks, S_point, Q_point = ECG_QRS_detect(self.y_data, 360)
+            R_peaks = FindRPeaks(self.y_data, 60)
             if R_peaks.any():
-                self.setQRS(self.x_data, Q_point, R_peaks, S_point)
+                self.setQRS(self.x_data, R = R_peaks)
 
-    def setQRS(self, x, Q, R, S):
-        self.plotDataQ.setData(x[Q], self.y_data[Q])
+    def setQRS(self, x, R):
+        #self.plotDataQ.setData(x[Q], self.y_data[Q])
         self.plotDataR.setData(x[R], self.y_data[R])
-        self.plotDataS.setData(x[S], self.y_data[S])
+        #self.plotDataS.setData(x[S], self.y_data[S])
 
     def setData(self, x, y):
         self.plotDataItem.setData(x, y)
@@ -95,7 +99,7 @@ class BlueCardioGraph(pg.GraphicsWindow):
             self.max_y = np.amax(self.y_data)
             self.min_y = np.amin(self.y_data)
             self.plotItem.setYRange(
-                self.min_y - 10, self.max_y + 10)
+                self.min_y, self.max_y)
             
     def onPrintError(self):
         self.logger.warning("Percentage of received messages: %s", self.comm.GetError())

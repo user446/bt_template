@@ -129,13 +129,27 @@ class SerialPort(QtCore.QThread):
             self.logger.warning(
                 "Wrong amount of received parameters error: %s", self.data)
             return None
-        if (self.datacount+1) != int(data[0]):
+        try:
+            if (self.datacount+1) != int(data[0]):
+                self.logger.warning(
+                    "Seems like previous packet was lost: %s", data[0])
+        except ValueError:
             self.logger.warning(
-                "Seems like previous packet was lost: %s", data[0])
+                    "Invalid literal was received: %s", data[0])
+            return None
         self.received = self.received + 1
-        self.error_percent = self.received/self.total_messages
+        
+        try:
+            self.error_percent = self.received/self.total_messages
+        except:
+            self.error_percent = 0
         self.datacount = int(data[0])
-        return self.datacount, np.array(self.data).astype(np.float)
+        try:
+            return self.datacount, np.array(self.data).astype(np.float)
+        except ValueError:
+            self.logger.warning(
+                    "Invalid value literals were received: %s", self.data)
+            return None
 
     def run(self):
         while True:

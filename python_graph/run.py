@@ -33,7 +33,7 @@ def main(args):
         logger.info("info: Trying to open port %s...", args.communication)
         try:
             ser = serial.Serial(port=args.communication, baudrate=115200,
-                                bytesize=8, timeout=2, stopbits=serial.STOPBITS_ONE, parity=serial.PARITY_NONE)
+                                bytesize=8, timeout=5, stopbits=serial.STOPBITS_ONE, parity=serial.PARITY_NONE)
             logger.info("info: Port entity initialised for %s",
                         args.communication)
             comm = SerialPort(logger, ser)
@@ -43,7 +43,7 @@ def main(args):
             ser.open()
             logger.info("info: Port %s is opened!", args.communication)
         except serial.serialutil.SerialException as e:
-            logger.error("error: %s, trying to open again...", e)
+            logger.error("error: %s trying to open again...", e)
             try:
                 ser.close()
                 ser.open()
@@ -125,9 +125,9 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description='Script to show BlueCardio realtime output')
     parser.add_argument('-comm', action='store', dest='communication',
-                        default='BLE', help='Enter the name of your COM%N% port, enter BLE or TCP:%IP%:%PORT%')
+                        default='COM29', help='Enter the name of your COM%N% port, enter BLE or TCP:%IP%:%PORT%')
     parser.add_argument('-qrs', action='store', dest='qrs',
-                        default='n', help='Activate QRS computation [y/n]')
+                        default='y', help='Activate QRS computation [y/n]')
     parser.add_argument('-len', action='store', dest='length', type=int, default=4096,
                         help='Enter max length of stored values, if < 4 then all values will be shown')
     parser.add_argument('-log', action='store', dest='logging',

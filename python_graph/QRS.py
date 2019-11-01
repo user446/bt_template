@@ -39,7 +39,7 @@ def find_peak(data, length):
     for i in range(lgth-length+1):
         temp = data[i:i+length]
         var = np.var(temp)
-        if var < 5e-15:
+        if var < 5e-50:
             continue
         index = int((length-1)/2)
         peak = True
