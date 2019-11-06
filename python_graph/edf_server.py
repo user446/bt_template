@@ -34,10 +34,11 @@ def connect(ip, port):
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.bind((ip, port))
     s.listen(1)
-    logger.info('Connecting...')
-    conn, addr = s.accept()
-    logger.info('Connection address: %s', addr)
-    yield conn, addr
+    while True:
+        logger.info('Connecting...')
+        conn, addr = s.accept()
+        logger.info('Connection address: %s', addr)
+        yield (conn, addr)
 
 
 def edfserver(edfpath, args):
@@ -59,11 +60,11 @@ def edfserver(edfpath, args):
     logger.info('File to open: %s', name)
     data = mne.io.read_raw_edf(name)
     raw_data = data.get_data()
+    times=data.times
     datacount = 0
 
-    conn, addr = connect(TCP_IP, TCP_PORT)
-    while True:
-        for rec in windowed(zip(data.times, raw_data[CHANNEL])):
+    for (conn, addr) in connect(TCP_IP, TCP_PORT):
+        for rec in windowed(zip(times, raw_data[CHANNEL])):
             sleep(rec[-1][0]-rec[0][0])
             data = [d[1] for d in rec]
             var = struct.pack('4fi', *data, datacount)
@@ -73,7 +74,8 @@ def edfserver(edfpath, args):
             except socket.error as msg:
                 logger.info("Caught exception socket.error : %s", msg)
                 conn.close()
-                connect(TCP_IP, TCP_PORT)
+                break
+    
     conn.close()
 
 
@@ -87,7 +89,7 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(
         description='Script to run edf file server output for BlueCardio')
-    parser.add_argument('-port', action='store', dest='port',
+    parser.add_argument('-port', action='store', dest='port', type=int,
                         default='5005', help='Enter the port that will be used for server')
     parser.add_argument('-file', action='store', dest='filename',
                         default='random', type=str, help='Enter the name of the file to open in "./edf" folder, pring "random" to use random file')
