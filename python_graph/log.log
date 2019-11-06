@@ -1,8 +1,5 @@
-2019-11-01 18:21:08,768 info: Starting BlueCardio graph application
-2019-11-01 18:21:08,770 info: BlueCardio started with arguments: Namespace(communication='COM29', length=4096, logging='n', qrs='y')
-2019-11-01 18:21:08,771 info: Trying to open port COM29...
-2019-11-01 18:21:08,798 info: Port entity initialised for COM29
-2019-11-01 18:21:08,799 error: Port is already open. trying to open again...
-2019-11-01 18:21:08,829 info: Port COM29 is opened!
-2019-11-01 18:21:08,839 info: QtWidget initialised!
-2019-11-01 18:21:09,135 Seems like previous packet was lost: 642656
+2019-11-06 19:05:11,637 info: Starting BlueCardio graph application
+2019-11-06 19:05:11,637 info: BlueCardio started with arguments: Namespace(communication='TCP:127.0.0.1:5005', length=4096, logging='y', qrs='y')
+2019-11-06 19:05:11,641 Trying to connect to 127.0.0.1:5005
+2019-11-06 19:05:11,643 Connected!
+2019-11-06 19:05:11,651 info: QtWidget initialised!

@@ -7,8 +7,7 @@ import numpy as np
 from PyQt5 import QtCore, QtWidgets, QtGui
 import pyqtgraph as pg
 import datahandle
-from QRS import ECG_QRS_detect
-from r_peak import FindRPeaks
+import mne
 
 # https://kushaldas.in/posts/pyqt5-thread-example.html
 
@@ -79,9 +78,10 @@ class BlueCardioGraph(pg.GraphicsWindow):
             self.data_switch = True
 
     def OnQRSCompute(self):
-        if self.qrs_compute is True:
+        if self.qrs_compute is True and self.x_data[-1] > 250:
             #R_peaks, S_point, Q_point = ECG_QRS_detect(self.y_data, 360)
-            R_peaks = FindRPeaks(self.y_data, 60)
+            #R_peaks = FindRPeaks(self.y_data, 60)
+            R_peaks = mne.preprocessing.ecg.qrs_detector(250, self.y_data, thresh_value = 'auto')
             if R_peaks.any():
                 self.setQRS(self.x_data, R = R_peaks)
 
