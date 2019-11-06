@@ -75,9 +75,7 @@ def edfserver(edfpath, args):
                 logger.info("Caught exception socket.error : %s", msg)
                 conn.close()
                 break
-    
-    conn.close()
-
+     conn.close()
 
 if __name__ == "__main__":
     logging.basicConfig(filename="server_log.log",
