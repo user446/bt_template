@@ -125,13 +125,13 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description='Script to show BlueCardio realtime output')
     parser.add_argument('-comm', action='store', dest='communication',
-                        default='TCP:127.0.0.1:5005', help='Enter the name of your COM%N% port, enter BLE or TCP:%IP%:%PORT%')
+                        default='TCP:127.0.0.1:49999', help='Enter the name of your COM%N% port, enter BLE or TCP:%IP%:%PORT%')
     parser.add_argument('-qrs', action='store', dest='qrs',
                         default='y', help='Activate QRS computation [y/n]')
     parser.add_argument('-len', action='store', dest='length', type=int, default=4096,
                         help='Enter max length of stored values, if < 4 then all values will be shown')
     parser.add_argument('-log', action='store', dest='logging',
-                        default='n', help='Activate logger [y/n]')
+                        default='y', help='Activate logger [y/n]')
     args = parser.parse_args()
 
     cm = re.search(

@@ -16,6 +16,6 @@ pause
 ) else (
 echo Running python script with default parameters
 echo =============================================
-run.py -comm TCP:127.0.0.1:5005 -qrs y -len 4096 -log y
+run.py
 pause
 )

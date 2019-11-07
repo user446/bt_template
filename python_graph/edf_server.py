@@ -75,7 +75,7 @@ def edfserver(edfpath, args):
                 logger.info("Caught exception socket.error : %s", msg)
                 conn.close()
                 break
-     conn.close()
+    conn.close()
 
 if __name__ == "__main__":
     logging.basicConfig(filename="server_log.log",
@@ -88,7 +88,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description='Script to run edf file server output for BlueCardio')
     parser.add_argument('-port', action='store', dest='port', type=int,
-                        default='5005', help='Enter the port that will be used for server')
+                        default='49999', help='Enter the port that will be used for server')
     parser.add_argument('-file', action='store', dest='filename',
                         default='random', type=str, help='Enter the name of the file to open in "./edf" folder, pring "random" to use random file')
     parser.add_argument('-chan', action='store', dest='channel',

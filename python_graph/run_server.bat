@@ -3,5 +3,5 @@ setlocal enabledelayedexpansion
 cd ./venv/Scripts
 call activate.bat
 cd ../..
-run_server.py
+edf_server.py
 pause

@@ -7,11 +7,10 @@ from PyQt5 import QtCore
 # тред не нужен, т.к. pygatt имеет собственный тред
 
 
-class BLEPort(QtCore.QThread):
+class BLEPort():
     signal = QtCore.pyqtSignal('PyQt_PyObject')
 
     def __init__(self, logger):
-        QtCore.QThread.__init__(self)
         self.data = []
         self.datacount = 0
         self.time_data = 0
@@ -66,25 +65,36 @@ class TCPPort(QtCore.QThread):
 
     def GetParsedData(self):
         try:
-            dt = self.tcp.recv(16)
+            dt = bytearray()
+            while(len(dt) < 20):
+                packet = self.tcp.recv(20 - len(dt))
+                if not packet:
+                    break
+                dt.extend(packet)
             self.received = self.received + 1
         except socket.error as msg:
             self.logger.info("Caught exception socket.error : %s", msg)
             return None
-        data = struct.unpack('4fi', dt)
-        self.data = data[0:3]
+        if(len(dt) == 20):
+            data = struct.unpack('4fi', dt)
+        else:
+            return None
+        self.data = data[0:4]
         if (self.datacount+1) != data[4]:
             self.logger.warning(
                 "Seems like previous packet was lost: %s", data[4])
         self.total_messages = self.total_messages + (data[4] - self.datacount)
         self.datacount = data[4]
-        self.error_percent = self.received/self.total_messages
-        return self.datacount, self.data
+        try:
+            self.error_percent = self.received/self.total_messages
+        except:
+            self.error_percent = 0
+        return (self.datacount, self.data)
 
     def run(self):
         while True:
-            data = self.GetParsedData()
-            self.signal.emit(data)
+            pack = self.GetParsedData()
+            self.signal.emit(pack)
 
 
 class SerialPort(QtCore.QThread):

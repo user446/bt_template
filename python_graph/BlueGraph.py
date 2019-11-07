@@ -58,9 +58,11 @@ class BlueCardioGraph(pg.GraphicsWindow):
         if(showlen >= 4):
             self.plotItem.setXRange(0, showlen)
 
-        self.comm.signal.connect(self.OnNewData)
-        if self.comm.start() is not None: #проверка - стоит ли запускать тред, или он уже запущен (случай с pygatt)
+        try: #проверка - стоит ли запускать тред, или он уже запущен (случай с pygatt)
             self.comm.start()
+        except AttributeError:
+            self.logger.warning("Ok, this is pygatt, no need to start()")
+        self.comm.signal.connect(self.OnNewData)
 
     def DataUpdSwitch(self):
         #pen = pg.mkPen('g', width=2)
@@ -107,7 +109,7 @@ class BlueCardioGraph(pg.GraphicsWindow):
 
     def OnNewData(self, result):
         try:
-            counter, data = result
+            (counter, data) = result
         except:
             return None
         t_list = [0]*4
