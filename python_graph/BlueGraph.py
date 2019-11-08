@@ -8,6 +8,7 @@ from PyQt5 import QtCore, QtWidgets, QtGui
 import pyqtgraph as pg
 import datahandle
 import mne
+from detection import detect
 
 # https://kushaldas.in/posts/pyqt5-thread-example.html
 
@@ -40,7 +41,7 @@ class BlueCardioGraph(pg.GraphicsWindow):
 
         if self.qrs_compute:
             self.qrs_timer = QtCore.QTimer(self)
-            self.qrs_timer.setInterval(2000)
+            self.qrs_timer.setInterval(500)
             self.qrs_timer.start()
             self.qrs_timer.timeout.connect(self.OnQRSCompute)
 
@@ -52,9 +53,9 @@ class BlueCardioGraph(pg.GraphicsWindow):
         self.plotDataQ = self.plotItem.plot(
             [], pen=None, symbol='o', symbolBrush='c', symbolSize=5)
         self.plotDataR = self.plotItem.plot(
-            [], pen=None, symbol='o', symbolBrush='r', symbolSize=5)
+            [], pen=None, symbol='o', symbolBrush='r', symbolSize=10)
         self.plotDataS = self.plotItem.plot(
-            [], pen=None, symbol='o', symbolBrush='y', symbolSize=5)
+            [], pen=None, symbol='s', symbolBrush='g', symbolSize=11)
         if(showlen >= 4):
             self.plotItem.setXRange(0, showlen)
 
@@ -71,26 +72,27 @@ class BlueCardioGraph(pg.GraphicsWindow):
             #self.data_timer.stop()
             self.comm.signal.disconnect()
             self.show_timer.stop()
+            self.qrs_timer.stop()
             self.data_switch = False
         else:
             #pen.drawLine(pg.Point(self.x_data[-1], self.min_y - 10),pg.Point(self.x_data[-1],self.max_y + 10))
             #self.data_timer.start()
             self.comm.signal.connect(self.OnNewData)
             self.show_timer.start()
+            self.qrs_timer.start()
             self.data_switch = True
 
     def OnQRSCompute(self):
-        if self.qrs_compute is True and self.x_data[-1] > 250:
-            #R_peaks, S_point, Q_point = ECG_QRS_detect(self.y_data, 360)
-            #R_peaks = FindRPeaks(self.y_data, 60)
-            R_peaks = mne.preprocessing.ecg.qrs_detector(250, self.y_data, thresh_value = 'auto')
-            if R_peaks.any():
-                self.setQRS(self.x_data, R = R_peaks)
+        if self.qrs_compute is True and self.x_data[-1] > self.showlen:
+            R_peaks0 = mne.preprocessing.ecg.qrs_detector(256, self.y_data, thresh_value = 'auto')
+            R_peaks1 = np.array(detect(self.y_data, 256)).astype(np.int)
+            if R_peaks1.any() and R_peaks0.any():
+                self.setQRS(self.x_data, R = R_peaks0, S = R_peaks1)
 
-    def setQRS(self, x, R):
+    def setQRS(self, x, R, S):
         #self.plotDataQ.setData(x[Q], self.y_data[Q])
         self.plotDataR.setData(x[R], self.y_data[R])
-        #self.plotDataS.setData(x[S], self.y_data[S])
+        self.plotDataS.setData(x[S], self.y_data[S])
 
     def setData(self, x, y):
         self.plotDataItem.setData(x, y)

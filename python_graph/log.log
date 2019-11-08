@@ -1,24 +1,13 @@
-2019-11-07 13:13:05,604 info: Starting BlueCardio graph application
-2019-11-07 13:13:05,605 info: BlueCardio started with arguments: Namespace(communication='TCP:127.0.0.1:49999', length=4096, logging='y', qrs='y')
-2019-11-07 13:13:05,609 Trying to connect to 127.0.0.1:49999
-2019-11-07 13:13:05,610 Connected!
-2019-11-07 13:13:05,618 info: QtWidget initialised!
-2019-11-07 13:13:05,815 Seems like previous packet was lost: 33311
-2019-11-07 13:13:10,641 Percentage of received messages: 0.01169000712081652
-2019-11-07 13:13:15,641 Percentage of received messages: 1.0
-2019-11-07 13:13:20,658 Percentage of received messages: 1.0
-2019-11-07 13:13:25,687 Percentage of received messages: 1.0
-2019-11-07 13:13:30,663 Percentage of received messages: 1.0
-2019-11-07 13:13:35,694 Percentage of received messages: 1.0
-2019-11-07 13:13:40,686 Percentage of received messages: 1.0
-2019-11-07 13:13:45,704 Percentage of received messages: 1.0
-2019-11-07 13:13:50,696 Percentage of received messages: 1.0
-2019-11-07 13:13:54,283 Caught exception socket.error : [WinError 10053] ѕрограмма на вашем хост-компьютере разорвала установленное подключение
-2019-11-07 13:13:54,283 info: Abort action received from user
-2019-11-07 13:13:54,284 Caught exception socket.error : [WinError 10038] —делана попытка выполнить операцию на объекте, не €вл€ющемс€ сокетом
-2019-11-07 13:13:54,284 Caught exception socket.error : [WinError 10038] —делана попытка выполнить операцию на объекте, не €вл€ющемс€ сокетом
-2019-11-07 13:13:54,285 Caught exception socket.error : [WinError 10038] —делана попытка выполнить операцию на объекте, не €вл€ющемс€ сокетом
-2019-11-07 13:13:54,285 Caught exception socket.error : [WinError 10038] —делана попытка выполнить операцию на объекте, не €вл€ющемс€ сокетом
-2019-11-07 13:13:54,286 Caught exception socket.error : [WinError 10038] —делана попытка выполнить операцию на объекте, не €вл€ющемс€ сокетом
-2019-11-07 13:13:54,286 Caught exception socket.error : [WinError 10038] —делана попытка выполнить операцию на объекте, не €вл€ющемс€ сокетом
-2019-11-07 13:13:54,286 Caught exception socket.error : [WinError 10038] —делана попытка выполнить операцию на объекте, не €вл€ющемс€ сокетом
+2019-11-08 16:26:59,489 info: Starting BlueCardio graph application
+2019-11-08 16:26:59,490 info: BlueCardio started with arguments: Namespace(communication='COM29', length=4096, logging='n', qrs='y')
+2019-11-08 16:26:59,490 info: Trying to open port COM29...
+2019-11-08 16:26:59,517 info: Port entity initialised for COM29
+2019-11-08 16:26:59,517 error: Port is already open. trying to open again...
+2019-11-08 16:26:59,545 info: Port COM29 is opened!
+2019-11-08 16:26:59,558 info: QtWidget initialised!
+2019-11-08 16:26:59,789 Seems like previous packet was lost: 144541
+2019-11-08 16:27:04,615 Percentage of received messages: 1.0
+2019-11-08 16:27:09,632 Percentage of received messages: 1.0
+2019-11-08 16:27:14,644 Percentage of received messages: 1.0
+2019-11-08 16:27:19,651 Percentage of received messages: 1.0
+2019-11-08 16:27:25,085 Percentage of received messages: 1.0
