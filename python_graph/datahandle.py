@@ -1,6 +1,8 @@
 import struct
 import serial
 import socket
+import time
+from collections import deque
 import numpy as np
 from PyQt5 import QtCore
 
@@ -102,6 +104,8 @@ class SerialPort(QtCore.QThread):
 
     def __init__(self, logger, serial):
         QtCore.QThread.__init__(self)
+        self.recieve_buffer = ""
+        self.linequeue = deque([])
         self.data = []
         self.datacount = 0
         self.logger = logger
@@ -117,45 +121,58 @@ class SerialPort(QtCore.QThread):
         self.total_messages = 0
         self.received = 0
 
-    def GetParsedData(self):
+    def GetParsedData(self, ser_data):
         try:
-            ser_data = self.serial.read_until(terminator=serial.LF).decode(
-                'utf-8')        # считываем сообщение из порта до конца
+            self.logger.info("Serial data: %s", ser_data)
             self.total_messages = self.total_messages + 1
         except serial.serialutil.SerialException as e:
             self.logger.warning("warning: %s", e)
             return None
+        
         if not ser_data:
             self.logger.error("Empty line received: %s", ser_data)
             return None
-        data = ser_data.split("::")  # разделяем на составляющие
-        if len(data) < 3:   # если сообщение не было принято целиком, то
+        
+        data = ser_data.split('::')  # разделяем на составляющие
+        
+        if len(data) != 3:   # если сообщение не было принято целиком или имеет слишком много полей, то
             self.logger.warning("Message wasn't completely received: %s", data)
-            return None         # сбрасываем
+            return None              # сбрасываем
+        
         self.logger.info(ser_data)   # записываем сообщение в файл
         # разделяем числа по пробелам, выкидываем пустые элементы листа
         self.data = data[1].split()
+        
         if len(self.data) != 4:  # если принято не 4 числа, то что-то не так
             self.logger.warning(
                 "Wrong amount of received parameters error: %s", self.data)
-            return None
+            return None         #сбрасываем
+        
         try:
-            if (self.datacount+1) != int(data[0]):
+            if (self.datacount+2) != int(data[0]):
                 self.logger.warning(
-                    "Seems like previous packet was lost: %s", data[0])
-        except ValueError:
-            self.logger.warning(
-                    "Invalid literal was received: %s", data[0])
+                    "Seems like previous packet was lost: %s : ", data[0])
+            self.datacount = int(data[0])
+        except ValueError:      #не удалось распарсить счетчик сообщения
+            self.logger.warning("Invalid literal was received: %s", data[0])
             return None
+        
         self.received = self.received + 1
         
         try:
             self.error_percent = self.received/self.total_messages
         except:
             self.error_percent = 0
-        self.datacount = int(data[0])
+            
         try:
-            return self.datacount, np.array(self.data).astype(np.float)
+            num_data = [x[:-1] for x in self.data]
+            wrong_data = len([i for i in num_data if float(i) >= self.datacount]) 
+            if wrong_data > 0:
+                self.logger.warning(
+                    "Seems like something went wrong in data: %s", np.array(self.data).astype(np.float))
+                return None
+            return self.datacount, self.data #np.array(self.data).astype(np.float)
+        
         except ValueError:
             self.logger.warning(
                     "Invalid value literals were received: %s", self.data)
@@ -163,5 +180,12 @@ class SerialPort(QtCore.QThread):
 
     def run(self):
         while True:
-            data = self.GetParsedData()
-            self.signal.emit(data)
+            self.recieve_buffer += self.serial.read(self.serial.inWaiting()
+                 or 1).decode('utf-8')
+            lines = self.recieve_buffer.split('\n')
+            self.linequeue.extend(lines)
+            while len(self.linequeue) > 0:
+                data = self.GetParsedData(self.linequeue[0])
+                self.signal.emit(data)
+                del self.linequeue[0]
+            time.sleep(0.01)

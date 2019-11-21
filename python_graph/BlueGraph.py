@@ -22,11 +22,18 @@ class BlueCardioGraph(pg.GraphicsWindow):
         self.showlen = showlen
         self.x_data = np.array([])
         self.y_data = np.array([])
+        self.R_peak_data = np.array([])
+        self.R_peak_time = np.array([])
         self.max_y = 0
         self.min_y = 0
         self.time_data = 0
         self.data_switch = True
-        self.qrs_compute = qrs
+        if qrs == 'internal':
+            self.qrs_compute = qrs
+        elif isinstance(qrs, str) or not isinstance(qrs, bool):
+            raise ValueError('threshold value must be "internal" or a bool')
+        else:
+            self.qrs_compute = qrs
         self.counter = 0
 
         self.show_timer = QtCore.QTimer(self)
@@ -39,7 +46,7 @@ class BlueCardioGraph(pg.GraphicsWindow):
         self.error_timer.start()
         self.error_timer.timeout.connect(self.onPrintError)
 
-        if self.qrs_compute:
+        if self.qrs_compute != 'internal' and self.qrs_compute:
             self.qrs_timer = QtCore.QTimer(self)
             self.qrs_timer.setInterval(500)
             self.qrs_timer.start()
@@ -114,23 +121,41 @@ class BlueCardioGraph(pg.GraphicsWindow):
             (counter, data) = result
         except:
             return None
+        
         t_list = [0]*4
         i = 0
         while i < 4:
             t_list[i] = self.time_data
             self.time_data += 4
             i += 1
+        
         try:
             self.x_data = np.append(
                 self.x_data, np.array(t_list).astype(np.int))
         except ValueError:
             return None
         # преобразуем лист в float и записываем его в данные оси y
-        self.y_data = np.append(
-            self.y_data, data)
+        if self.qrs_compute == 'internal':
+            i = 0
+            num_data = [x[:-1] for x in data]
+            r_peaks = [x[-1:] for x in data]
+            for rs in r_peaks:
+                if rs == 'R':
+                    self.R_peak_data = np.append(self.R_peak_data, num_data[i])
+                    self.R_peak_time = np.append(self.R_peak_time, t_list[i])
+                i+=1
+            self.y_data = np.append(
+                self.y_data, np.array(num_data).astype(np.float))
+        else:
+            self.y_data = np.append(
+                self.y_data, np.array(data).astype(np.float))
+        
+        
         if self.x_data[-1] > self.showlen and self.showlen >= 4:
             self.x_data = np.delete(self.x_data, [0, 1, 2, 3])
             self.y_data = np.delete(self.y_data, [0, 1, 2, 3])
             self.plotItem.setXRange(
                 self.x_data[-1] - self.showlen, self.x_data[-1])
+        if self.qrs_compute == 'internal':
+            self.plotDataR.setData(self.R_peak_time, self.R_peak_data)
         self.setData(self.x_data, self.y_data)
