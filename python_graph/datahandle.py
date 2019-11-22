@@ -122,22 +122,19 @@ class SerialPort(QtCore.QThread):
         self.received = 0
 
     def GetParsedData(self, ser_data):
-        try:
-            self.logger.info("Serial data: %s", ser_data)
-            self.total_messages = self.total_messages + 1
-        except serial.serialutil.SerialException as e:
-            self.logger.warning("warning: %s", e)
-            return None
+        
+        self.logger.info("Serial data: %s", ser_data)
+        self.total_messages = self.total_messages + 1
         
         if not ser_data:
             self.logger.error("Empty line received: %s", ser_data)
-            return None
+            raise RuntimeError
         
         data = ser_data.split('::')  # разделяем на составляющие
         
         if len(data) != 3:   # если сообщение не было принято целиком или имеет слишком много полей, то
             self.logger.warning("Message wasn't completely received: %s", data)
-            return None              # сбрасываем
+            raise RuntimeError              # сбрасываем
         
         self.logger.info(ser_data)   # записываем сообщение в файл
         # разделяем числа по пробелам, выкидываем пустые элементы листа
@@ -146,16 +143,16 @@ class SerialPort(QtCore.QThread):
         if len(self.data) != 4:  # если принято не 4 числа, то что-то не так
             self.logger.warning(
                 "Wrong amount of received parameters error: %s", self.data)
-            return None         #сбрасываем
+            raise RuntimeError         #сбрасываем
         
         try:
-            if (self.datacount+2) != int(data[0]):
+            if (self.datacount+1) != int(data[0]):
                 self.logger.warning(
                     "Seems like previous packet was lost: %s : ", data[0])
             self.datacount = int(data[0])
-        except ValueError:      #не удалось распарсить счетчик сообщения
+        except ValueError as e:      #не удалось распарсить счетчик сообщения
             self.logger.warning("Invalid literal was received: %s", data[0])
-            return None
+            raise e
         
         self.received = self.received + 1
         
@@ -170,22 +167,28 @@ class SerialPort(QtCore.QThread):
             if wrong_data > 0:
                 self.logger.warning(
                     "Seems like something went wrong in data: %s", np.array(self.data).astype(np.float))
-                return None
+                raise RuntimeError
             return self.datacount, self.data #np.array(self.data).astype(np.float)
         
-        except ValueError:
+        except ValueError as e:
             self.logger.warning(
                     "Invalid value literals were received: %s", self.data)
-            return None
+            raise e
 
     def run(self):
         while True:
-            self.recieve_buffer += self.serial.read(self.serial.inWaiting()
-                 or 1).decode('utf-8')
+            try:
+                self.recieve_buffer += self.serial.read(self.serial.inWaiting()
+                    or 1).decode('utf-8')
+            except serial.serialutil.SerialException as e:
+                self.logger.warning("warning: %s", e)
+                raise e
             lines = self.recieve_buffer.split('\n')
             self.linequeue.extend(lines)
             while len(self.linequeue) > 0:
-                data = self.GetParsedData(self.linequeue[0])
+                try:
+                    data = self.GetParsedData(self.linequeue.popleft())
+                except:
+                    continue
                 self.signal.emit(data)
-                del self.linequeue[0]
             time.sleep(0.01)

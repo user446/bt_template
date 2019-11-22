@@ -1,1015 +1,273 @@
-2019-11-21 18:44:38,501 info: Starting BlueCardio graph application
-2019-11-21 18:44:38,503 info: BlueCardio started with arguments: Namespace(communication='COM29', length=4096, logging='n', qrs='int')
-2019-11-21 18:44:38,504 info: Trying to open port COM29...
-2019-11-21 18:44:38,532 info: Port entity initialised for COM29
-2019-11-21 18:44:38,533 error: Port is already open. trying to open again...
-2019-11-21 18:44:38,561 info: Port COM29 is opened!
-2019-11-21 18:44:38,570 info: QtWidget initialised!
-2019-11-21 18:44:38,910 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:44:38,911 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:44:38,916 Empty line received: 
-2019-11-21 18:44:38,931 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:44:38,937 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:44:38,941 Message wasn't completely received: ['129806', '0.009777N 0.009777R 0.009777N 0']
-2019-11-21 18:44:38,965 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:44:38,979 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:44:39,020 Empty line received: 
-2019-11-21 18:44:39,044 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:44:39,049 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:44:39,103 Empty line received: 
-2019-11-21 18:44:39,124 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:44:39,128 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:44:39,173 Empty line received: 
-2019-11-21 18:44:39,196 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:44:39,201 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:44:39,218 Message wasn't completely received: ['12']
-2019-11-21 18:44:39,237 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:44:39,244 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:44:39,357 Message wasn't completely received: ['12988']
-2019-11-21 18:44:39,374 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:44:39,375 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:44:39,458 Message wasn't completely received: ['129914', '']
-2019-11-21 18:44:39,473 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:44:39,476 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:44:39,593 Empty line received: 
-2019-11-21 18:44:39,608 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:44:39,612 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:44:39,769 Message wasn't completely received: ['129970', '0.009773N 0.009773']
-2019-11-21 18:44:39,789 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:44:39,793 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:44:39,904 Empty line received: 
-2019-11-21 18:44:39,920 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:44:39,921 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:44:39,997 Message wasn't completely received: ['13']
-2019-11-21 18:44:40,015 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:44:40,016 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:44:40,076 Message wasn't completely received: ['130068', '0.009773N 0.009773N 0.009773N ']
-2019-11-21 18:44:40,091 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:44:40,094 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:44:40,217 Empty line received: 
-2019-11-21 18:44:40,228 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:44:40,229 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:44:40,255 Message wasn't completely received: ['130120', '0.009']
-2019-11-21 18:44:40,269 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:44:40,274 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:44:40,349 Empty line received: 
-2019-11-21 18:44:40,370 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:44:40,377 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:44:40,516 Message wasn't completely received: ['130154']
-2019-11-21 18:44:40,527 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:44:40,535 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:44:40,694 Message wasn't completely received: ['130192', '0.009773']
-2019-11-21 18:44:40,714 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:44:40,716 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:44:40,872 Message wasn't completely received: ['130236', '0.009777N 0.009777N 0.009777N 0.009773']
-2019-11-21 18:44:40,884 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:44:40,886 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:44:41,061 Message wasn't completely received: ['130278', '0.009773N 0.009773N 0.009773N 0.0']
-2019-11-21 18:44:41,082 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:44:41,084 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:44:41,196 Message wasn't completely received: ['130326', '0.009773N 0.']
-2019-11-21 18:44:41,214 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:44:41,216 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:44:41,337 Message wasn't completely received: ['130358', '0.009773N 0.009773']
-2019-11-21 18:44:41,348 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:44:41,351 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:44:41,533 Message wasn't completely received: ['130390', '0.009773N 0.009773N 0.009773N 0.00']
-2019-11-21 18:44:41,557 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:44:41,566 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:44:41,711 Message wasn't completely received: ['130440', '0.009777N 0.009773N 0.009777N 0.009']
-2019-11-21 18:44:41,724 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:44:41,726 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:44:41,828 Empty line received: 
-2019-11-21 18:44:41,847 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:44:41,852 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:44:42,055 Message wasn't completely received: ['130510', '0.009']
-2019-11-21 18:44:42,071 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:44:42,090 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:44:42,297 Empty line received: 
-2019-11-21 18:44:42,319 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:44:42,322 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:44:42,471 Message wasn't completely received: ['130624', '0.0']
-2019-11-21 18:44:42,493 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:44:42,495 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:44:42,602 Empty line received: 
-2019-11-21 18:44:42,624 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:44:42,628 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:44:42,863 Empty line received: 
-2019-11-21 18:44:42,882 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:44:42,884 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:44:43,091 Message wasn't completely received: ['130760', '0.009773N 0.009777N 0.009773N']
-2019-11-21 18:44:43,109 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:44:43,109 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:44:43,347 Empty line received: 
-2019-11-21 18:44:43,360 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:44:43,364 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:44:43,542 Message wasn't completely received: ['130876', '0.009773N 0.009773N 0.009777N 0.009777N']
-2019-11-21 18:44:43,553 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:44:43,556 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:44:43,788 Empty line received: 
-2019-11-21 18:44:43,816 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:44:43,825 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:44:44,124 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:44:44,125 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:44:44,456 Message wasn't completely received: ['131060', '0.009777N 0.009777N 0.009773N ']
-2019-11-21 18:44:44,480 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:44:44,489 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:44:44,801 Message wasn't completely received: ['131146', '0.009777']
-2019-11-21 18:44:44,824 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:44:44,827 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:44:44,890 Message wasn't completely received: ['131228', '0']
-2019-11-21 18:44:44,913 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:44:44,914 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:44:45,079 Empty line received: 
-2019-11-21 18:44:45,109 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:44:45,123 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:44:45,424 Message wasn't completely received: ['131298', '0.009777N 0.00977']
-2019-11-21 18:44:45,441 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:44:45,442 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:44:45,564 Message wasn't completely received: ['131378', '0.009777N 0.009777N 0.009777N 0.009']
-2019-11-21 18:44:45,587 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:44:45,588 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:44:45,943 Empty line received: 
-2019-11-21 18:44:45,969 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:44:45,976 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:44:46,199 Message wasn't completely received: ['131506', '0.009777']
-2019-11-21 18:44:46,223 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:44:46,237 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:44:46,545 Empty line received: 
-2019-11-21 18:44:46,585 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:44:46,587 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:44:46,814 Empty line received: 
-2019-11-21 18:44:46,837 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:44:46,839 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:44:47,269 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:44:47,280 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:44:47,705 Message wasn't completely received: ['131820', '0.00']
-2019-11-21 18:44:47,718 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:44:47,744 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:44:48,026 Message wasn't completely received: ['131928', '0.009777N 0.009777N']
-2019-11-21 18:44:48,042 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:44:48,043 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:44:48,384 Message wasn't completely received: ['132006', '0.009777N 0.009777N 0.00977']
-2019-11-21 18:44:48,398 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:44:48,399 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:44:48,623 Message wasn't completely received: ['132092', '0.009777N 0.009777N 0.009777N']
-2019-11-21 18:44:48,645 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:44:48,649 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:44:49,137 Message wasn't completely received: ['132152', '0.009777N 0.009777N 0.009777N 0']
-2019-11-21 18:44:49,164 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:44:49,171 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:44:49,602 Empty line received: 
-2019-11-21 18:44:49,616 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:44:49,616 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:44:50,117 Message wasn't completely received: ['132386', '0.009777N 0']
-2019-11-21 18:44:50,130 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:44:50,143 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:44:50,607 Message wasn't completely received: ['132510', '0.009777N 0.009777N 0.00']
-2019-11-21 18:44:50,638 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:44:50,639 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:44:51,254 Empty line received: 
-2019-11-21 18:44:51,274 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:44:51,275 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:44:51,603 Message wasn't completely received: ['132786', '']
-2019-11-21 18:44:51,618 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:44:51,621 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:44:52,185 Empty line received: 
-2019-11-21 18:44:52,224 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:44:52,225 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:44:52,569 Empty line received: 
-2019-11-21 18:44:52,590 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:44:52,593 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:44:53,359 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:44:53,361 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:44:53,769 Message wasn't completely received: ['13329']
-2019-11-21 18:44:53,781 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:44:53,787 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:44:54,513 Empty line received: 
-2019-11-21 18:44:54,547 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:44:54,549 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:44:55,396 Message wasn't completely received: ['133576', '0.009777N 0']
-2019-11-21 18:44:55,424 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:44:55,427 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:44:56,114 Empty line received: 
-2019-11-21 18:44:56,138 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:44:56,152 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:44:56,934 Message wasn't completely received: ['133960', '0.009777N 0.009777N 0.009777N 0.']
-2019-11-21 18:44:56,947 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:44:56,948 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:44:57,613 Message wasn't completely received: ['134156', '0.0']
-2019-11-21 18:44:57,638 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:44:57,639 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:44:58,396 Empty line received: 
-2019-11-21 18:44:58,414 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:44:58,419 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:44:59,466 Message wasn't completely received: ['134510', '0.009777N 0.009777N 0.0097']
-2019-11-21 18:44:59,478 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:44:59,504 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:45:00,600 Empty line received: 
-2019-11-21 18:45:00,630 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:45:00,632 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:45:01,327 Empty line received: 
-2019-11-21 18:45:01,352 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:45:01,354 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:45:02,316 Message wasn't completely received: ['135218', '0.009777N 0.009773N 0.']
-2019-11-21 18:45:02,336 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:45:02,338 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:45:03,513 Empty line received: 
-2019-11-21 18:45:03,534 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:45:03,538 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:45:04,658 Message wasn't completely received: ['135746', '0.009773N 0']
-2019-11-21 18:45:04,672 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:45:04,676 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:45:05,809 Empty line received: 
-2019-11-21 18:45:05,829 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:45:05,838 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:45:07,078 Message wasn't completely received: ['136300', '0.009777N 0.009777N 0']
-2019-11-21 18:45:07,099 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:45:07,100 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:45:07,907 Empty line received: 
-2019-11-21 18:45:07,934 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:45:07,939 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:45:09,109 Message wasn't completely received: ['136808', '0.009777N 0.009777N 0.009777N 0.00']
-2019-11-21 18:45:09,127 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:45:09,132 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:45:10,388 Message wasn't completely received: ['137096', '0.009777N']
-2019-11-21 18:45:10,421 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:45:10,424 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:45:11,853 Empty line received: 
-2019-11-21 18:45:11,877 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:45:11,886 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:45:13,634 Message wasn't completely received: ['137760', '0.009773N 0.009777N']
-2019-11-21 18:45:13,656 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:45:13,666 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:45:14,958 Empty line received: 
-2019-11-21 18:45:14,991 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:45:14,996 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:45:16,436 Message wasn't completely received: ['1385']
-2019-11-21 18:45:16,456 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:45:16,464 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:45:18,851 Message wasn't completely received: ['1388']
-2019-11-21 18:45:18,870 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:45:18,874 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:45:20,762 Message wasn't completely received: ['139312', '0.009777N 0.009781N 0.0']
-2019-11-21 18:45:20,788 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:45:20,794 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:45:22,546 Message wasn't completely received: ['139324', '0.009777N 0.009777N 139450', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:45:22,546 Seems like previous packet was lost: 139452 : 
-2019-11-21 18:45:22,552 Message wasn't completely received: ['139884', '0.009777N 0.009777N 0.009777']
-2019-11-21 18:45:22,563 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:45:22,563 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:45:22,568 Percentage of received messages: 0.9985491885881086
-2019-11-21 18:45:23,716 Message wasn't completely received: ['139324', '0.009777N 0.009777N 139450', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:45:23,718 Seems like previous packet was lost: 139452 : 
-2019-11-21 18:45:23,747 Message wasn't completely received: ['139896', '0.009777N 0.009139912', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:45:23,748 Seems like previous packet was lost: 139914 : 
-2019-11-21 18:45:23,787 Message wasn't completely received: ['140340', '0.009777N 0.009777N 0.009777N 0.00']
-2019-11-21 18:45:23,799 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:45:23,802 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:45:25,731 Message wasn't completely received: ['139324', '0.009777N 0.009777N 139450', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:45:25,732 Seems like previous packet was lost: 139452 : 
-2019-11-21 18:45:25,805 Message wasn't completely received: ['139896', '0.009777N 0.009139912', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:45:25,807 Seems like previous packet was lost: 139914 : 
-2019-11-21 18:45:25,975 Message wasn't completely received: ['140638', '0.009773N 0.009777N 0.00']
-2019-11-21 18:45:25,994 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:45:25,995 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:45:27,400 Message wasn't completely received: ['139324', '0.009777N 0.009777N 139450', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:45:27,402 Seems like previous packet was lost: 139452 : 
-2019-11-21 18:45:27,501 Message wasn't completely received: ['139896', '0.009777N 0.009139912', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:45:27,501 Seems like previous packet was lost: 139914 : 
-2019-11-21 18:45:27,803 Message wasn't completely received: ['141086', '0.0']
-2019-11-21 18:45:27,830 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:45:27,831 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:45:29,972 Message wasn't completely received: ['139324', '0.009777N 0.009777N 139450', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:45:29,983 Seems like previous packet was lost: 139452 : 
-2019-11-21 18:45:29,989 Message wasn't completely received: ['139896', '0.009777N 0.009139912', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:45:29,990 Seems like previous packet was lost: 139914 : 
-2019-11-21 18:45:30,048 Message wasn't completely received: ['141102', '0.009777N 0.009777N 0.009777N 0.009141170', '0.009781N 0.009777N 0.009781N 0.009777N ', 'END\r']
-2019-11-21 18:45:30,052 Seems like previous packet was lost: 141172 : 
-2019-11-21 18:45:30,101 Message wasn't completely received: ['141598', '0.009777N 0.009777N 0.009777N 0.009777N :']
-2019-11-21 18:45:30,115 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:45:30,119 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:45:32,092 Message wasn't completely received: ['139324', '0.009777N 0.009777N 139450', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:45:32,095 Seems like previous packet was lost: 139452 : 
-2019-11-21 18:45:32,231 Message wasn't completely received: ['139896', '0.009777N 0.009139912', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:45:32,231 Seems like previous packet was lost: 139914 : 
-2019-11-21 18:45:32,550 Message wasn't completely received: ['141102', '0.009777N 0.009777N 0.009777N 0.009141170', '0.009781N 0.009777N 0.009781N 0.009777N ', 'END\r']
-2019-11-21 18:45:32,552 Seems like previous packet was lost: 141172 : 
-2019-11-21 18:45:32,600 Message wasn't completely received: ['142046', '0.009777N 0.009777N ']
-2019-11-21 18:45:32,620 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:45:32,621 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:45:34,391 Message wasn't completely received: ['139324', '0.009777N 0.009777N 139450', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:45:34,392 Seems like previous packet was lost: 139452 : 
-2019-11-21 18:45:34,419 Message wasn't completely received: ['139896', '0.009777N 0.009139912', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:45:34,438 Seems like previous packet was lost: 139914 : 
-2019-11-21 18:45:34,697 Message wasn't completely received: ['141102', '0.009777N 0.009777N 0.009777N 0.009141170', '0.009781N 0.009777N 0.009781N 0.009777N ', 'END\r']
-2019-11-21 18:45:34,702 Seems like previous packet was lost: 141172 : 
-2019-11-21 18:45:34,875 Message wasn't completely received: ['142062', '0.009773N 0.009773N 0.009773N 0.009773142164', '0.009773N 0.009773N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:45:34,880 Seems like previous packet was lost: 142166 : 
-2019-11-21 18:45:34,964 Message wasn't completely received: ['142594']
-2019-11-21 18:45:34,976 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:45:34,977 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:45:36,896 Message wasn't completely received: ['139324', '0.009777N 0.009777N 139450', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:45:36,902 Seems like previous packet was lost: 139452 : 
-2019-11-21 18:45:36,936 Message wasn't completely received: ['139896', '0.009777N 0.009139912', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:45:36,945 Seems like previous packet was lost: 139914 : 
-2019-11-21 18:45:37,150 Message wasn't completely received: ['141102', '0.009777N 0.009777N 0.009777N 0.009141170', '0.009781N 0.009777N 0.009781N 0.009777N ', 'END\r']
-2019-11-21 18:45:37,155 Seems like previous packet was lost: 141172 : 
-2019-11-21 18:45:37,236 Message wasn't completely received: ['142062', '0.009773N 0.009773N 0.009773N 0.009773142164', '0.009773N 0.009773N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:45:37,238 Seems like previous packet was lost: 142166 : 
-2019-11-21 18:45:37,247 Wrong amount of received parameters error: ['0.009777N', '0.0099773N', '0.009777N', '0.009777N', '0.009773N']
-2019-11-21 18:45:37,256 Seems like previous packet was lost: 142770 : 
-2019-11-21 18:45:37,264 Message wasn't completely received: ['143198', '0.009777N 0.00977']
-2019-11-21 18:45:37,290 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:45:37,291 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:45:39,118 Message wasn't completely received: ['139324', '0.009777N 0.009777N 139450', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:45:39,128 Seems like previous packet was lost: 139452 : 
-2019-11-21 18:45:39,159 Message wasn't completely received: ['139896', '0.009777N 0.009139912', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:45:39,160 Seems like previous packet was lost: 139914 : 
-2019-11-21 18:45:39,345 Message wasn't completely received: ['141102', '0.009777N 0.009777N 0.009777N 0.009141170', '0.009781N 0.009777N 0.009781N 0.009777N ', 'END\r']
-2019-11-21 18:45:39,349 Seems like previous packet was lost: 141172 : 
-2019-11-21 18:45:39,400 Message wasn't completely received: ['142062', '0.009773N 0.009773N 0.009773N 0.009773142164', '0.009773N 0.009773N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:45:39,402 Seems like previous packet was lost: 142166 : 
-2019-11-21 18:45:39,452 Wrong amount of received parameters error: ['0.009777N', '0.0099773N', '0.009777N', '0.009777N', '0.009773N']
-2019-11-21 18:45:39,459 Seems like previous packet was lost: 142770 : 
-2019-11-21 18:45:39,571 Message wasn't completely received: ['143214', '0.009777N 0.009777N 0.00977143338', '0.009773N 0.009773N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:45:39,572 Seems like previous packet was lost: 143340 : 
-2019-11-21 18:45:39,698 Message wasn't completely received: ['143768', '0.009773N']
-2019-11-21 18:45:39,732 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:45:39,733 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:45:41,064 Message wasn't completely received: ['139324', '0.009777N 0.009777N 139450', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:45:41,071 Seems like previous packet was lost: 139452 : 
-2019-11-21 18:45:41,147 Message wasn't completely received: ['139896', '0.009777N 0.009139912', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:45:41,162 Seems like previous packet was lost: 139914 : 
-2019-11-21 18:45:41,429 Message wasn't completely received: ['141102', '0.009777N 0.009777N 0.009777N 0.009141170', '0.009781N 0.009777N 0.009781N 0.009777N ', 'END\r']
-2019-11-21 18:45:41,439 Seems like previous packet was lost: 141172 : 
-2019-11-21 18:45:41,459 Message wasn't completely received: ['142062', '0.009773N 0.009773N 0.009773N 0.009773142164', '0.009773N 0.009773N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:45:41,463 Seems like previous packet was lost: 142166 : 
-2019-11-21 18:45:41,480 Wrong amount of received parameters error: ['0.009777N', '0.0099773N', '0.009777N', '0.009777N', '0.009773N']
-2019-11-21 18:45:41,481 Seems like previous packet was lost: 142770 : 
-2019-11-21 18:45:41,550 Message wasn't completely received: ['143214', '0.009777N 0.009777N 0.00977143338', '0.009773N 0.009773N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:45:41,556 Seems like previous packet was lost: 143340 : 
-2019-11-21 18:45:41,627 Message wasn't completely received: ['143784', '0.009777N 0.009143896', '0.009773N 0.009773N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:45:41,636 Seems like previous packet was lost: 143898 : 
-2019-11-21 18:45:41,692 Message wasn't completely received: ['144326', '0.009777N 0.']
-2019-11-21 18:45:41,714 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:45:41,718 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:45:43,297 Message wasn't completely received: ['139324', '0.009777N 0.009777N 139450', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:45:43,298 Seems like previous packet was lost: 139452 : 
-2019-11-21 18:45:43,407 Message wasn't completely received: ['139896', '0.009777N 0.009139912', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:45:43,411 Seems like previous packet was lost: 139914 : 
-2019-11-21 18:45:43,629 Message wasn't completely received: ['141102', '0.009777N 0.009777N 0.009777N 0.009141170', '0.009781N 0.009777N 0.009781N 0.009777N ', 'END\r']
-2019-11-21 18:45:43,633 Seems like previous packet was lost: 141172 : 
-2019-11-21 18:45:43,782 Message wasn't completely received: ['142062', '0.009773N 0.009773N 0.009773N 0.009773142164', '0.009773N 0.009773N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:45:43,783 Seems like previous packet was lost: 142166 : 
-2019-11-21 18:45:43,849 Wrong amount of received parameters error: ['0.009777N', '0.0099773N', '0.009777N', '0.009777N', '0.009773N']
-2019-11-21 18:45:43,851 Seems like previous packet was lost: 142770 : 
-2019-11-21 18:45:43,961 Message wasn't completely received: ['143214', '0.009777N 0.009777N 0.00977143338', '0.009773N 0.009773N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:45:43,962 Seems like previous packet was lost: 143340 : 
-2019-11-21 18:45:44,073 Message wasn't completely received: ['143784', '0.009777N 0.009143896', '0.009773N 0.009773N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:45:44,078 Seems like previous packet was lost: 143898 : 
-2019-11-21 18:45:44,185 Message wasn't completely received: ['144342', '0.009777N 0.009144486', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:45:44,186 Seems like previous packet was lost: 144488 : 
-2019-11-21 18:45:44,251 Message wasn't completely received: ['144916', '0.009777N 0.009777N ']
-2019-11-21 18:45:44,270 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:45:44,274 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:45:45,791 Message wasn't completely received: ['139324', '0.009777N 0.009777N 139450', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:45:45,795 Seems like previous packet was lost: 139452 : 
-2019-11-21 18:45:45,811 Message wasn't completely received: ['139896', '0.009777N 0.009139912', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:45:45,813 Seems like previous packet was lost: 139914 : 
-2019-11-21 18:45:46,006 Message wasn't completely received: ['141102', '0.009777N 0.009777N 0.009777N 0.009141170', '0.009781N 0.009777N 0.009781N 0.009777N ', 'END\r']
-2019-11-21 18:45:46,013 Seems like previous packet was lost: 141172 : 
-2019-11-21 18:45:46,249 Message wasn't completely received: ['142062', '0.009773N 0.009773N 0.009773N 0.009773142164', '0.009773N 0.009773N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:45:46,251 Seems like previous packet was lost: 142166 : 
-2019-11-21 18:45:46,371 Wrong amount of received parameters error: ['0.009777N', '0.0099773N', '0.009777N', '0.009777N', '0.009773N']
-2019-11-21 18:45:46,372 Seems like previous packet was lost: 142770 : 
-2019-11-21 18:45:46,398 Message wasn't completely received: ['143214', '0.009777N 0.009777N 0.00977143338', '0.009773N 0.009773N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:45:46,399 Seems like previous packet was lost: 143340 : 
-2019-11-21 18:45:46,404 Message wasn't completely received: ['143784', '0.009777N 0.009143896', '0.009773N 0.009773N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:45:46,406 Seems like previous packet was lost: 143898 : 
-2019-11-21 18:45:46,489 Message wasn't completely received: ['144342', '0.009777N 0.009144486', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:45:46,498 Seems like previous packet was lost: 144488 : 
-2019-11-21 18:45:46,611 Message wasn't completely received: ['144932', '0.009777N 0.009144964', '0.009777N 0.009777N 0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:45:46,613 Seems like previous packet was lost: 144966 : 
-2019-11-21 18:45:46,709 Message wasn't completely received: ['145394', '0.009777N 0.009777N 0']
-2019-11-21 18:45:46,728 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:45:46,749 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:45:48,289 Message wasn't completely received: ['139324', '0.009777N 0.009777N 139450', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:45:48,293 Seems like previous packet was lost: 139452 : 
-2019-11-21 18:45:48,390 Message wasn't completely received: ['139896', '0.009777N 0.009139912', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:45:48,391 Seems like previous packet was lost: 139914 : 
-2019-11-21 18:45:48,552 Message wasn't completely received: ['141102', '0.009777N 0.009777N 0.009777N 0.009141170', '0.009781N 0.009777N 0.009781N 0.009777N ', 'END\r']
-2019-11-21 18:45:48,553 Seems like previous packet was lost: 141172 : 
-2019-11-21 18:45:48,678 Message wasn't completely received: ['142062', '0.009773N 0.009773N 0.009773N 0.009773142164', '0.009773N 0.009773N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:45:48,687 Seems like previous packet was lost: 142166 : 
-2019-11-21 18:45:48,795 Wrong amount of received parameters error: ['0.009777N', '0.0099773N', '0.009777N', '0.009777N', '0.009773N']
-2019-11-21 18:45:48,796 Seems like previous packet was lost: 142770 : 
-2019-11-21 18:45:48,828 Message wasn't completely received: ['143214', '0.009777N 0.009777N 0.00977143338', '0.009773N 0.009773N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:45:48,829 Seems like previous packet was lost: 143340 : 
-2019-11-21 18:45:48,837 Message wasn't completely received: ['143784', '0.009777N 0.009143896', '0.009773N 0.009773N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:45:48,841 Seems like previous packet was lost: 143898 : 
-2019-11-21 18:45:48,881 Message wasn't completely received: ['144342', '0.009777N 0.009144486', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:45:48,886 Seems like previous packet was lost: 144488 : 
-2019-11-21 18:45:48,927 Message wasn't completely received: ['144932', '0.009777N 0.009144964', '0.009777N 0.009777N 0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:45:48,931 Seems like previous packet was lost: 144966 : 
-2019-11-21 18:45:49,038 Wrong amount of received parameters error: ['0.009777N', '0.009']
-2019-11-21 18:45:49,046 Seems like previous packet was lost: 145582 : 
-2019-11-21 18:45:49,080 Message wasn't completely received: ['146012', '0.009777N 0.009777N ']
-2019-11-21 18:45:49,107 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:45:49,117 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:45:51,023 Message wasn't completely received: ['139324', '0.009777N 0.009777N 139450', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:45:51,024 Seems like previous packet was lost: 139452 : 
-2019-11-21 18:45:51,090 Message wasn't completely received: ['139896', '0.009777N 0.009139912', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:45:51,098 Seems like previous packet was lost: 139914 : 
-2019-11-21 18:45:51,340 Message wasn't completely received: ['141102', '0.009777N 0.009777N 0.009777N 0.009141170', '0.009781N 0.009777N 0.009781N 0.009777N ', 'END\r']
-2019-11-21 18:45:51,345 Seems like previous packet was lost: 141172 : 
-2019-11-21 18:45:51,475 Message wasn't completely received: ['142062', '0.009773N 0.009773N 0.009773N 0.009773142164', '0.009773N 0.009773N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:45:51,477 Seems like previous packet was lost: 142166 : 
-2019-11-21 18:45:51,518 Wrong amount of received parameters error: ['0.009777N', '0.0099773N', '0.009777N', '0.009777N', '0.009773N']
-2019-11-21 18:45:51,521 Seems like previous packet was lost: 142770 : 
-2019-11-21 18:45:51,598 Message wasn't completely received: ['143214', '0.009777N 0.009777N 0.00977143338', '0.009773N 0.009773N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:45:51,599 Seems like previous packet was lost: 143340 : 
-2019-11-21 18:45:51,696 Message wasn't completely received: ['143784', '0.009777N 0.009143896', '0.009773N 0.009773N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:45:51,698 Seems like previous packet was lost: 143898 : 
-2019-11-21 18:45:51,825 Message wasn't completely received: ['144342', '0.009777N 0.009144486', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:45:51,826 Seems like previous packet was lost: 144488 : 
-2019-11-21 18:45:51,867 Message wasn't completely received: ['144932', '0.009777N 0.009144964', '0.009777N 0.009777N 0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:45:51,870 Seems like previous packet was lost: 144966 : 
-2019-11-21 18:45:51,909 Wrong amount of received parameters error: ['0.009777N', '0.009']
-2019-11-21 18:45:51,919 Seems like previous packet was lost: 145582 : 
-2019-11-21 18:45:51,989 Wrong amount of received parameters error: ['0.009777N']
-2019-11-21 18:45:51,990 Seems like previous packet was lost: 146176 : 
-2019-11-21 18:45:52,062 Message wasn't completely received: ['146606', '0.009777N 0.009777N 0.009']
-2019-11-21 18:45:52,079 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:45:52,085 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:45:54,134 Message wasn't completely received: ['139324', '0.009777N 0.009777N 139450', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:45:54,136 Seems like previous packet was lost: 139452 : 
-2019-11-21 18:45:54,235 Message wasn't completely received: ['139896', '0.009777N 0.009139912', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:45:54,242 Seems like previous packet was lost: 139914 : 
-2019-11-21 18:45:54,499 Message wasn't completely received: ['141102', '0.009777N 0.009777N 0.009777N 0.009141170', '0.009781N 0.009777N 0.009781N 0.009777N ', 'END\r']
-2019-11-21 18:45:54,501 Seems like previous packet was lost: 141172 : 
-2019-11-21 18:45:54,686 Message wasn't completely received: ['142062', '0.009773N 0.009773N 0.009773N 0.009773142164', '0.009773N 0.009773N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:45:54,687 Seems like previous packet was lost: 142166 : 
-2019-11-21 18:45:54,792 Wrong amount of received parameters error: ['0.009777N', '0.0099773N', '0.009777N', '0.009777N', '0.009773N']
-2019-11-21 18:45:54,793 Seems like previous packet was lost: 142770 : 
-2019-11-21 18:45:54,899 Message wasn't completely received: ['143214', '0.009777N 0.009777N 0.00977143338', '0.009773N 0.009773N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:45:54,901 Seems like previous packet was lost: 143340 : 
-2019-11-21 18:45:54,974 Message wasn't completely received: ['143784', '0.009777N 0.009143896', '0.009773N 0.009773N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:45:55,000 Seems like previous packet was lost: 143898 : 
-2019-11-21 18:45:55,028 Message wasn't completely received: ['144342', '0.009777N 0.009144486', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:45:55,029 Seems like previous packet was lost: 144488 : 
-2019-11-21 18:45:55,084 Message wasn't completely received: ['144932', '0.009777N 0.009144964', '0.009777N 0.009777N 0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:45:55,085 Seems like previous packet was lost: 144966 : 
-2019-11-21 18:45:55,194 Wrong amount of received parameters error: ['0.009777N', '0.009']
-2019-11-21 18:45:55,194 Seems like previous packet was lost: 145582 : 
-2019-11-21 18:45:55,347 Wrong amount of received parameters error: ['0.009777N']
-2019-11-21 18:45:55,348 Seems like previous packet was lost: 146176 : 
-2019-11-21 18:45:55,451 Invalid value literals were received: ['0.0090.009777N', '0.009777N', '0.009777N', '0.009777N']
-2019-11-21 18:45:55,454 Seems like previous packet was lost: 146750 : 
-2019-11-21 18:45:55,482 Empty line received: 
-2019-11-21 18:45:55,497 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:45:55,500 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:45:57,360 Message wasn't completely received: ['139324', '0.009777N 0.009777N 139450', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:45:57,372 Seems like previous packet was lost: 139452 : 
-2019-11-21 18:45:57,432 Message wasn't completely received: ['139896', '0.009777N 0.009139912', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:45:57,442 Seems like previous packet was lost: 139914 : 
-2019-11-21 18:45:57,682 Message wasn't completely received: ['141102', '0.009777N 0.009777N 0.009777N 0.009141170', '0.009781N 0.009777N 0.009781N 0.009777N ', 'END\r']
-2019-11-21 18:45:57,684 Seems like previous packet was lost: 141172 : 
-2019-11-21 18:45:57,976 Message wasn't completely received: ['142062', '0.009773N 0.009773N 0.009773N 0.009773142164', '0.009773N 0.009773N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:45:57,979 Seems like previous packet was lost: 142166 : 
-2019-11-21 18:45:58,088 Wrong amount of received parameters error: ['0.009777N', '0.0099773N', '0.009777N', '0.009777N', '0.009773N']
-2019-11-21 18:45:58,089 Seems like previous packet was lost: 142770 : 
-2019-11-21 18:45:58,164 Message wasn't completely received: ['143214', '0.009777N 0.009777N 0.00977143338', '0.009773N 0.009773N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:45:58,171 Seems like previous packet was lost: 143340 : 
-2019-11-21 18:45:58,253 Message wasn't completely received: ['143784', '0.009777N 0.009143896', '0.009773N 0.009773N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:45:58,255 Seems like previous packet was lost: 143898 : 
-2019-11-21 18:45:58,283 Message wasn't completely received: ['144342', '0.009777N 0.009144486', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:45:58,293 Seems like previous packet was lost: 144488 : 
-2019-11-21 18:45:58,358 Message wasn't completely received: ['144932', '0.009777N 0.009144964', '0.009777N 0.009777N 0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:45:58,365 Seems like previous packet was lost: 144966 : 
-2019-11-21 18:45:58,394 Wrong amount of received parameters error: ['0.009777N', '0.009']
-2019-11-21 18:45:58,402 Seems like previous packet was lost: 145582 : 
-2019-11-21 18:45:58,450 Wrong amount of received parameters error: ['0.009777N']
-2019-11-21 18:45:58,457 Seems like previous packet was lost: 146176 : 
-2019-11-21 18:45:58,519 Invalid value literals were received: ['0.0090.009777N', '0.009777N', '0.009777N', '0.009777N']
-2019-11-21 18:45:58,522 Seems like previous packet was lost: 146750 : 
-2019-11-21 18:45:58,614 Message wasn't completely received: ['147194', '0.009777N 0.009777N 0.0147466', '0.009781N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:45:58,616 Seems like previous packet was lost: 147468 : 
-2019-11-21 18:45:58,686 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:45:58,687 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:46:00,515 Message wasn't completely received: ['139324', '0.009777N 0.009777N 139450', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:00,516 Seems like previous packet was lost: 139452 : 
-2019-11-21 18:46:00,560 Message wasn't completely received: ['139896', '0.009777N 0.009139912', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:00,567 Seems like previous packet was lost: 139914 : 
-2019-11-21 18:46:00,709 Message wasn't completely received: ['141102', '0.009777N 0.009777N 0.009777N 0.009141170', '0.009781N 0.009777N 0.009781N 0.009777N ', 'END\r']
-2019-11-21 18:46:00,713 Seems like previous packet was lost: 141172 : 
-2019-11-21 18:46:00,966 Message wasn't completely received: ['142062', '0.009773N 0.009773N 0.009773N 0.009773142164', '0.009773N 0.009773N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:00,975 Seems like previous packet was lost: 142166 : 
-2019-11-21 18:46:00,994 Wrong amount of received parameters error: ['0.009777N', '0.0099773N', '0.009777N', '0.009777N', '0.009773N']
-2019-11-21 18:46:01,013 Seems like previous packet was lost: 142770 : 
-2019-11-21 18:46:01,079 Message wasn't completely received: ['143214', '0.009777N 0.009777N 0.00977143338', '0.009773N 0.009773N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:01,081 Seems like previous packet was lost: 143340 : 
-2019-11-21 18:46:01,126 Message wasn't completely received: ['143784', '0.009777N 0.009143896', '0.009773N 0.009773N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:01,131 Seems like previous packet was lost: 143898 : 
-2019-11-21 18:46:01,243 Message wasn't completely received: ['144342', '0.009777N 0.009144486', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:01,244 Seems like previous packet was lost: 144488 : 
-2019-11-21 18:46:01,288 Message wasn't completely received: ['144932', '0.009777N 0.009144964', '0.009777N 0.009777N 0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:46:01,294 Seems like previous packet was lost: 144966 : 
-2019-11-21 18:46:01,348 Wrong amount of received parameters error: ['0.009777N', '0.009']
-2019-11-21 18:46:01,357 Seems like previous packet was lost: 145582 : 
-2019-11-21 18:46:01,453 Wrong amount of received parameters error: ['0.009777N']
-2019-11-21 18:46:01,458 Seems like previous packet was lost: 146176 : 
-2019-11-21 18:46:01,562 Invalid value literals were received: ['0.0090.009777N', '0.009777N', '0.009777N', '0.009777N']
-2019-11-21 18:46:01,570 Seems like previous packet was lost: 146750 : 
-2019-11-21 18:46:01,657 Message wasn't completely received: ['147194', '0.009777N 0.009777N 0.0147466', '0.009781N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:01,663 Seems like previous packet was lost: 147468 : 
-2019-11-21 18:46:01,762 Seems like previous packet was lost: 148292 : 
-2019-11-21 18:46:01,785 Message wasn't completely received: ['148722', '0.009777N 0.009781N']
-2019-11-21 18:46:01,807 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:46:01,808 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:46:03,362 Message wasn't completely received: ['139324', '0.009777N 0.009777N 139450', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:03,364 Seems like previous packet was lost: 139452 : 
-2019-11-21 18:46:03,431 Message wasn't completely received: ['139896', '0.009777N 0.009139912', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:03,432 Seems like previous packet was lost: 139914 : 
-2019-11-21 18:46:03,640 Message wasn't completely received: ['141102', '0.009777N 0.009777N 0.009777N 0.009141170', '0.009781N 0.009777N 0.009781N 0.009777N ', 'END\r']
-2019-11-21 18:46:03,642 Seems like previous packet was lost: 141172 : 
-2019-11-21 18:46:03,791 Message wasn't completely received: ['142062', '0.009773N 0.009773N 0.009773N 0.009773142164', '0.009773N 0.009773N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:03,797 Seems like previous packet was lost: 142166 : 
-2019-11-21 18:46:03,853 Wrong amount of received parameters error: ['0.009777N', '0.0099773N', '0.009777N', '0.009777N', '0.009773N']
-2019-11-21 18:46:03,858 Seems like previous packet was lost: 142770 : 
-2019-11-21 18:46:03,891 Message wasn't completely received: ['143214', '0.009777N 0.009777N 0.00977143338', '0.009773N 0.009773N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:03,894 Seems like previous packet was lost: 143340 : 
-2019-11-21 18:46:03,990 Message wasn't completely received: ['143784', '0.009777N 0.009143896', '0.009773N 0.009773N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:03,991 Seems like previous packet was lost: 143898 : 
-2019-11-21 18:46:04,034 Message wasn't completely received: ['144342', '0.009777N 0.009144486', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:04,043 Seems like previous packet was lost: 144488 : 
-2019-11-21 18:46:04,142 Message wasn't completely received: ['144932', '0.009777N 0.009144964', '0.009777N 0.009777N 0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:46:04,144 Seems like previous packet was lost: 144966 : 
-2019-11-21 18:46:04,180 Wrong amount of received parameters error: ['0.009777N', '0.009']
-2019-11-21 18:46:04,181 Seems like previous packet was lost: 145582 : 
-2019-11-21 18:46:04,186 Wrong amount of received parameters error: ['0.009777N']
-2019-11-21 18:46:04,187 Seems like previous packet was lost: 146176 : 
-2019-11-21 18:46:04,193 Invalid value literals were received: ['0.0090.009777N', '0.009777N', '0.009777N', '0.009777N']
-2019-11-21 18:46:04,194 Seems like previous packet was lost: 146750 : 
-2019-11-21 18:46:04,273 Message wasn't completely received: ['147194', '0.009777N 0.009777N 0.0147466', '0.009781N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:04,284 Seems like previous packet was lost: 147468 : 
-2019-11-21 18:46:04,327 Seems like previous packet was lost: 148292 : 
-2019-11-21 18:46:04,393 Wrong amount of received parameters error: ['0.009781N', '0.009777R', '0.009777N', '0.009777N0.009781N', '0.009777N', '0.009777N']
-2019-11-21 18:46:04,400 Seems like previous packet was lost: 149062 : 
-2019-11-21 18:46:04,468 Message wasn't completely received: ['149492', '0.009777N 0.009777N 0.0']
-2019-11-21 18:46:04,483 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:46:04,485 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:46:06,440 Message wasn't completely received: ['139324', '0.009777N 0.009777N 139450', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:06,443 Seems like previous packet was lost: 139452 : 
-2019-11-21 18:46:06,548 Message wasn't completely received: ['139896', '0.009777N 0.009139912', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:06,550 Seems like previous packet was lost: 139914 : 
-2019-11-21 18:46:06,768 Message wasn't completely received: ['141102', '0.009777N 0.009777N 0.009777N 0.009141170', '0.009781N 0.009777N 0.009781N 0.009777N ', 'END\r']
-2019-11-21 18:46:06,771 Seems like previous packet was lost: 141172 : 
-2019-11-21 18:46:06,935 Message wasn't completely received: ['142062', '0.009773N 0.009773N 0.009773N 0.009773142164', '0.009773N 0.009773N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:06,953 Seems like previous packet was lost: 142166 : 
-2019-11-21 18:46:07,013 Wrong amount of received parameters error: ['0.009777N', '0.0099773N', '0.009777N', '0.009777N', '0.009773N']
-2019-11-21 18:46:07,024 Seems like previous packet was lost: 142770 : 
-2019-11-21 18:46:07,055 Message wasn't completely received: ['143214', '0.009777N 0.009777N 0.00977143338', '0.009773N 0.009773N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:07,058 Seems like previous packet was lost: 143340 : 
-2019-11-21 18:46:07,179 Message wasn't completely received: ['143784', '0.009777N 0.009143896', '0.009773N 0.009773N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:07,181 Seems like previous packet was lost: 143898 : 
-2019-11-21 18:46:07,320 Message wasn't completely received: ['144342', '0.009777N 0.009144486', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:07,321 Seems like previous packet was lost: 144488 : 
-2019-11-21 18:46:07,363 Message wasn't completely received: ['144932', '0.009777N 0.009144964', '0.009777N 0.009777N 0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:46:07,366 Seems like previous packet was lost: 144966 : 
-2019-11-21 18:46:07,413 Wrong amount of received parameters error: ['0.009777N', '0.009']
-2019-11-21 18:46:07,419 Seems like previous packet was lost: 145582 : 
-2019-11-21 18:46:07,438 Wrong amount of received parameters error: ['0.009777N']
-2019-11-21 18:46:07,440 Seems like previous packet was lost: 146176 : 
-2019-11-21 18:46:07,534 Invalid value literals were received: ['0.0090.009777N', '0.009777N', '0.009777N', '0.009777N']
-2019-11-21 18:46:07,535 Seems like previous packet was lost: 146750 : 
-2019-11-21 18:46:07,675 Message wasn't completely received: ['147194', '0.009777N 0.009777N 0.0147466', '0.009781N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:07,677 Seems like previous packet was lost: 147468 : 
-2019-11-21 18:46:07,781 Seems like previous packet was lost: 148292 : 
-2019-11-21 18:46:07,808 Wrong amount of received parameters error: ['0.009781N', '0.009777R', '0.009777N', '0.009777N0.009781N', '0.009777N', '0.009777N']
-2019-11-21 18:46:07,810 Seems like previous packet was lost: 149062 : 
-2019-11-21 18:46:07,834 Wrong amount of received parameters error: ['0.009777N', '0.009777N', '0.009777N', '0.009781N', '0.009777N', '0.009777N', '0.009777N']
-2019-11-21 18:46:07,835 Seems like previous packet was lost: 149816 : 
-2019-11-21 18:46:07,866 Message wasn't completely received: ['150246', '0.009781N 0.009781N 0.009777']
-2019-11-21 18:46:07,885 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:46:07,888 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:46:09,883 Message wasn't completely received: ['139324', '0.009777N 0.009777N 139450', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:09,885 Seems like previous packet was lost: 139452 : 
-2019-11-21 18:46:09,926 Message wasn't completely received: ['139896', '0.009777N 0.009139912', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:09,939 Seems like previous packet was lost: 139914 : 
-2019-11-21 18:46:09,970 Message wasn't completely received: ['141102', '0.009777N 0.009777N 0.009777N 0.009141170', '0.009781N 0.009777N 0.009781N 0.009777N ', 'END\r']
-2019-11-21 18:46:09,988 Seems like previous packet was lost: 141172 : 
-2019-11-21 18:46:10,139 Message wasn't completely received: ['142062', '0.009773N 0.009773N 0.009773N 0.009773142164', '0.009773N 0.009773N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:10,140 Seems like previous packet was lost: 142166 : 
-2019-11-21 18:46:10,232 Wrong amount of received parameters error: ['0.009777N', '0.0099773N', '0.009777N', '0.009777N', '0.009773N']
-2019-11-21 18:46:10,234 Seems like previous packet was lost: 142770 : 
-2019-11-21 18:46:10,354 Message wasn't completely received: ['143214', '0.009777N 0.009777N 0.00977143338', '0.009773N 0.009773N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:10,366 Seems like previous packet was lost: 143340 : 
-2019-11-21 18:46:10,393 Message wasn't completely received: ['143784', '0.009777N 0.009143896', '0.009773N 0.009773N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:10,395 Seems like previous packet was lost: 143898 : 
-2019-11-21 18:46:10,440 Message wasn't completely received: ['144342', '0.009777N 0.009144486', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:10,448 Seems like previous packet was lost: 144488 : 
-2019-11-21 18:46:10,480 Message wasn't completely received: ['144932', '0.009777N 0.009144964', '0.009777N 0.009777N 0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:46:10,481 Seems like previous packet was lost: 144966 : 
-2019-11-21 18:46:10,570 Wrong amount of received parameters error: ['0.009777N', '0.009']
-2019-11-21 18:46:10,571 Seems like previous packet was lost: 145582 : 
-2019-11-21 18:46:10,661 Wrong amount of received parameters error: ['0.009777N']
-2019-11-21 18:46:10,669 Seems like previous packet was lost: 146176 : 
-2019-11-21 18:46:10,723 Invalid value literals were received: ['0.0090.009777N', '0.009777N', '0.009777N', '0.009777N']
-2019-11-21 18:46:10,724 Seems like previous packet was lost: 146750 : 
-2019-11-21 18:46:10,744 Message wasn't completely received: ['147194', '0.009777N 0.009777N 0.0147466', '0.009781N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:10,764 Seems like previous packet was lost: 147468 : 
-2019-11-21 18:46:10,794 Seems like previous packet was lost: 148292 : 
-2019-11-21 18:46:10,814 Wrong amount of received parameters error: ['0.009781N', '0.009777R', '0.009777N', '0.009777N0.009781N', '0.009777N', '0.009777N']
-2019-11-21 18:46:10,821 Seems like previous packet was lost: 149062 : 
-2019-11-21 18:46:10,848 Wrong amount of received parameters error: ['0.009777N', '0.009777N', '0.009777N', '0.009781N', '0.009777N', '0.009777N', '0.009777N']
-2019-11-21 18:46:10,853 Seems like previous packet was lost: 149816 : 
-2019-11-21 18:46:10,907 Wrong amount of received parameters error: ['0.009781N', '0.009781N', '0.0097N', '0.009777N', '0.009777N']
-2019-11-21 18:46:10,916 Seems like previous packet was lost: 150462 : 
-2019-11-21 18:46:10,949 Empty line received: 
-2019-11-21 18:46:10,967 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:46:10,970 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:46:12,844 Message wasn't completely received: ['139324', '0.009777N 0.009777N 139450', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:12,850 Seems like previous packet was lost: 139452 : 
-2019-11-21 18:46:12,889 Message wasn't completely received: ['139896', '0.009777N 0.009139912', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:12,913 Seems like previous packet was lost: 139914 : 
-2019-11-21 18:46:13,062 Message wasn't completely received: ['141102', '0.009777N 0.009777N 0.009777N 0.009141170', '0.009781N 0.009777N 0.009781N 0.009777N ', 'END\r']
-2019-11-21 18:46:13,064 Seems like previous packet was lost: 141172 : 
-2019-11-21 18:46:13,333 Message wasn't completely received: ['142062', '0.009773N 0.009773N 0.009773N 0.009773142164', '0.009773N 0.009773N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:13,334 Seems like previous packet was lost: 142166 : 
-2019-11-21 18:46:13,344 Wrong amount of received parameters error: ['0.009777N', '0.0099773N', '0.009777N', '0.009777N', '0.009773N']
-2019-11-21 18:46:13,381 Seems like previous packet was lost: 142770 : 
-2019-11-21 18:46:13,435 Message wasn't completely received: ['143214', '0.009777N 0.009777N 0.00977143338', '0.009773N 0.009773N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:13,439 Seems like previous packet was lost: 143340 : 
-2019-11-21 18:46:13,545 Message wasn't completely received: ['143784', '0.009777N 0.009143896', '0.009773N 0.009773N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:13,546 Seems like previous packet was lost: 143898 : 
-2019-11-21 18:46:13,648 Message wasn't completely received: ['144342', '0.009777N 0.009144486', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:13,651 Seems like previous packet was lost: 144488 : 
-2019-11-21 18:46:13,744 Message wasn't completely received: ['144932', '0.009777N 0.009144964', '0.009777N 0.009777N 0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:46:13,754 Seems like previous packet was lost: 144966 : 
-2019-11-21 18:46:13,857 Wrong amount of received parameters error: ['0.009777N', '0.009']
-2019-11-21 18:46:13,865 Seems like previous packet was lost: 145582 : 
-2019-11-21 18:46:13,998 Wrong amount of received parameters error: ['0.009777N']
-2019-11-21 18:46:13,999 Seems like previous packet was lost: 146176 : 
-2019-11-21 18:46:14,078 Invalid value literals were received: ['0.0090.009777N', '0.009777N', '0.009777N', '0.009777N']
-2019-11-21 18:46:14,080 Seems like previous packet was lost: 146750 : 
-2019-11-21 18:46:14,173 Message wasn't completely received: ['147194', '0.009777N 0.009777N 0.0147466', '0.009781N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:14,179 Seems like previous packet was lost: 147468 : 
-2019-11-21 18:46:14,243 Seems like previous packet was lost: 148292 : 
-2019-11-21 18:46:14,293 Wrong amount of received parameters error: ['0.009781N', '0.009777R', '0.009777N', '0.009777N0.009781N', '0.009777N', '0.009777N']
-2019-11-21 18:46:14,312 Seems like previous packet was lost: 149062 : 
-2019-11-21 18:46:14,382 Wrong amount of received parameters error: ['0.009777N', '0.009777N', '0.009777N', '0.009781N', '0.009777N', '0.009777N', '0.009777N']
-2019-11-21 18:46:14,384 Seems like previous packet was lost: 149816 : 
-2019-11-21 18:46:14,530 Wrong amount of received parameters error: ['0.009781N', '0.009781N', '0.0097N', '0.009777N', '0.009777N']
-2019-11-21 18:46:14,531 Seems like previous packet was lost: 150462 : 
-2019-11-21 18:46:14,618 Message wasn't completely received: ['150906', '0.009777N 0.009781N 0.009777N 0.009781N :151282', '0.009781N 0.009781N 0.009781N 0.009781N ', 'END\r']
-2019-11-21 18:46:14,619 Seems like previous packet was lost: 151284 : 
-2019-11-21 18:46:14,670 Message wasn't completely received: ['151714', '0.009781N 0.009777N 0.00977']
-2019-11-21 18:46:14,685 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:46:14,722 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:46:16,458 Message wasn't completely received: ['139324', '0.009777N 0.009777N 139450', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:16,461 Seems like previous packet was lost: 139452 : 
-2019-11-21 18:46:16,510 Message wasn't completely received: ['139896', '0.009777N 0.009139912', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:16,516 Seems like previous packet was lost: 139914 : 
-2019-11-21 18:46:16,654 Message wasn't completely received: ['141102', '0.009777N 0.009777N 0.009777N 0.009141170', '0.009781N 0.009777N 0.009781N 0.009777N ', 'END\r']
-2019-11-21 18:46:16,660 Seems like previous packet was lost: 141172 : 
-2019-11-21 18:46:16,838 Message wasn't completely received: ['142062', '0.009773N 0.009773N 0.009773N 0.009773142164', '0.009773N 0.009773N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:16,843 Seems like previous packet was lost: 142166 : 
-2019-11-21 18:46:16,867 Wrong amount of received parameters error: ['0.009777N', '0.0099773N', '0.009777N', '0.009777N', '0.009773N']
-2019-11-21 18:46:16,868 Seems like previous packet was lost: 142770 : 
-2019-11-21 18:46:16,923 Message wasn't completely received: ['143214', '0.009777N 0.009777N 0.00977143338', '0.009773N 0.009773N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:16,926 Seems like previous packet was lost: 143340 : 
-2019-11-21 18:46:16,969 Message wasn't completely received: ['143784', '0.009777N 0.009143896', '0.009773N 0.009773N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:16,976 Seems like previous packet was lost: 143898 : 
-2019-11-21 18:46:17,025 Message wasn't completely received: ['144342', '0.009777N 0.009144486', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:17,030 Seems like previous packet was lost: 144488 : 
-2019-11-21 18:46:17,080 Message wasn't completely received: ['144932', '0.009777N 0.009144964', '0.009777N 0.009777N 0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:46:17,083 Seems like previous packet was lost: 144966 : 
-2019-11-21 18:46:17,169 Wrong amount of received parameters error: ['0.009777N', '0.009']
-2019-11-21 18:46:17,169 Seems like previous packet was lost: 145582 : 
-2019-11-21 18:46:17,299 Wrong amount of received parameters error: ['0.009777N']
-2019-11-21 18:46:17,300 Seems like previous packet was lost: 146176 : 
-2019-11-21 18:46:17,402 Invalid value literals were received: ['0.0090.009777N', '0.009777N', '0.009777N', '0.009777N']
-2019-11-21 18:46:17,403 Seems like previous packet was lost: 146750 : 
-2019-11-21 18:46:17,494 Message wasn't completely received: ['147194', '0.009777N 0.009777N 0.0147466', '0.009781N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:17,495 Seems like previous packet was lost: 147468 : 
-2019-11-21 18:46:17,536 Seems like previous packet was lost: 148292 : 
-2019-11-21 18:46:17,606 Wrong amount of received parameters error: ['0.009781N', '0.009777R', '0.009777N', '0.009777N0.009781N', '0.009777N', '0.009777N']
-2019-11-21 18:46:17,607 Seems like previous packet was lost: 149062 : 
-2019-11-21 18:46:17,662 Wrong amount of received parameters error: ['0.009777N', '0.009777N', '0.009777N', '0.009781N', '0.009777N', '0.009777N', '0.009777N']
-2019-11-21 18:46:17,667 Seems like previous packet was lost: 149816 : 
-2019-11-21 18:46:17,779 Wrong amount of received parameters error: ['0.009781N', '0.009781N', '0.0097N', '0.009777N', '0.009777N']
-2019-11-21 18:46:17,781 Seems like previous packet was lost: 150462 : 
-2019-11-21 18:46:17,801 Message wasn't completely received: ['150906', '0.009777N 0.009781N 0.009777N 0.009781N :151282', '0.009781N 0.009781N 0.009781N 0.009781N ', 'END\r']
-2019-11-21 18:46:17,802 Seems like previous packet was lost: 151284 : 
-2019-11-21 18:46:17,815 Wrong amount of received parameters error: ['0.009781N', '0.009009781N']
-2019-11-21 18:46:17,816 Seems like previous packet was lost: 152026 : 
-2019-11-21 18:46:17,861 Message wasn't completely received: ['152458', '0.009781N 0.009781N 0']
-2019-11-21 18:46:17,886 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:46:17,887 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:46:19,211 Message wasn't completely received: ['139324', '0.009777N 0.009777N 139450', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:19,221 Seems like previous packet was lost: 139452 : 
-2019-11-21 18:46:19,327 Message wasn't completely received: ['139896', '0.009777N 0.009139912', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:19,330 Seems like previous packet was lost: 139914 : 
-2019-11-21 18:46:19,586 Message wasn't completely received: ['141102', '0.009777N 0.009777N 0.009777N 0.009141170', '0.009781N 0.009777N 0.009781N 0.009777N ', 'END\r']
-2019-11-21 18:46:19,590 Seems like previous packet was lost: 141172 : 
-2019-11-21 18:46:19,769 Message wasn't completely received: ['142062', '0.009773N 0.009773N 0.009773N 0.009773142164', '0.009773N 0.009773N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:19,771 Seems like previous packet was lost: 142166 : 
-2019-11-21 18:46:19,784 Wrong amount of received parameters error: ['0.009777N', '0.0099773N', '0.009777N', '0.009777N', '0.009773N']
-2019-11-21 18:46:19,786 Seems like previous packet was lost: 142770 : 
-2019-11-21 18:46:19,845 Message wasn't completely received: ['143214', '0.009777N 0.009777N 0.00977143338', '0.009773N 0.009773N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:19,846 Seems like previous packet was lost: 143340 : 
-2019-11-21 18:46:19,913 Message wasn't completely received: ['143784', '0.009777N 0.009143896', '0.009773N 0.009773N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:19,915 Seems like previous packet was lost: 143898 : 
-2019-11-21 18:46:19,958 Message wasn't completely received: ['144342', '0.009777N 0.009144486', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:19,967 Seems like previous packet was lost: 144488 : 
-2019-11-21 18:46:20,000 Message wasn't completely received: ['144932', '0.009777N 0.009144964', '0.009777N 0.009777N 0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:46:20,011 Seems like previous packet was lost: 144966 : 
-2019-11-21 18:46:20,112 Wrong amount of received parameters error: ['0.009777N', '0.009']
-2019-11-21 18:46:20,113 Seems like previous packet was lost: 145582 : 
-2019-11-21 18:46:20,155 Wrong amount of received parameters error: ['0.009777N']
-2019-11-21 18:46:20,156 Seems like previous packet was lost: 146176 : 
-2019-11-21 18:46:20,162 Invalid value literals were received: ['0.0090.009777N', '0.009777N', '0.009777N', '0.009777N']
-2019-11-21 18:46:20,166 Seems like previous packet was lost: 146750 : 
-2019-11-21 18:46:20,203 Message wasn't completely received: ['147194', '0.009777N 0.009777N 0.0147466', '0.009781N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:20,205 Seems like previous packet was lost: 147468 : 
-2019-11-21 18:46:20,223 Seems like previous packet was lost: 148292 : 
-2019-11-21 18:46:20,264 Wrong amount of received parameters error: ['0.009781N', '0.009777R', '0.009777N', '0.009777N0.009781N', '0.009777N', '0.009777N']
-2019-11-21 18:46:20,266 Seems like previous packet was lost: 149062 : 
-2019-11-21 18:46:20,335 Wrong amount of received parameters error: ['0.009777N', '0.009777N', '0.009777N', '0.009781N', '0.009777N', '0.009777N', '0.009777N']
-2019-11-21 18:46:20,344 Seems like previous packet was lost: 149816 : 
-2019-11-21 18:46:20,431 Wrong amount of received parameters error: ['0.009781N', '0.009781N', '0.0097N', '0.009777N', '0.009777N']
-2019-11-21 18:46:20,433 Seems like previous packet was lost: 150462 : 
-2019-11-21 18:46:20,507 Message wasn't completely received: ['150906', '0.009777N 0.009781N 0.009777N 0.009781N :151282', '0.009781N 0.009781N 0.009781N 0.009781N ', 'END\r']
-2019-11-21 18:46:20,508 Seems like previous packet was lost: 151284 : 
-2019-11-21 18:46:20,536 Wrong amount of received parameters error: ['0.009781N', '0.009009781N']
-2019-11-21 18:46:20,539 Seems like previous packet was lost: 152026 : 
-2019-11-21 18:46:20,574 Wrong amount of received parameters error: ['09777N']
-2019-11-21 18:46:20,585 Seems like previous packet was lost: 152924 : 
-2019-11-21 18:46:20,715 Message wasn't completely received: ['153356', '0.009777N 0.009777N 0.009777N 0.']
-2019-11-21 18:46:20,731 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:46:20,733 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:46:22,124 Message wasn't completely received: ['139324', '0.009777N 0.009777N 139450', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:22,125 Seems like previous packet was lost: 139452 : 
-2019-11-21 18:46:22,236 Message wasn't completely received: ['139896', '0.009777N 0.009139912', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:22,239 Seems like previous packet was lost: 139914 : 
-2019-11-21 18:46:22,449 Message wasn't completely received: ['141102', '0.009777N 0.009777N 0.009777N 0.009141170', '0.009781N 0.009777N 0.009781N 0.009777N ', 'END\r']
-2019-11-21 18:46:22,451 Seems like previous packet was lost: 141172 : 
-2019-11-21 18:46:22,528 Message wasn't completely received: ['142062', '0.009773N 0.009773N 0.009773N 0.009773142164', '0.009773N 0.009773N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:22,530 Seems like previous packet was lost: 142166 : 
-2019-11-21 18:46:22,587 Wrong amount of received parameters error: ['0.009777N', '0.0099773N', '0.009777N', '0.009777N', '0.009773N']
-2019-11-21 18:46:22,588 Seems like previous packet was lost: 142770 : 
-2019-11-21 18:46:22,619 Message wasn't completely received: ['143214', '0.009777N 0.009777N 0.00977143338', '0.009773N 0.009773N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:22,621 Seems like previous packet was lost: 143340 : 
-2019-11-21 18:46:22,649 Message wasn't completely received: ['143784', '0.009777N 0.009143896', '0.009773N 0.009773N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:22,653 Seems like previous packet was lost: 143898 : 
-2019-11-21 18:46:22,664 Message wasn't completely received: ['144342', '0.009777N 0.009144486', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:22,683 Seems like previous packet was lost: 144488 : 
-2019-11-21 18:46:22,798 Message wasn't completely received: ['144932', '0.009777N 0.009144964', '0.009777N 0.009777N 0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:46:22,800 Seems like previous packet was lost: 144966 : 
-2019-11-21 18:46:22,907 Wrong amount of received parameters error: ['0.009777N', '0.009']
-2019-11-21 18:46:22,910 Seems like previous packet was lost: 145582 : 
-2019-11-21 18:46:23,028 Wrong amount of received parameters error: ['0.009777N']
-2019-11-21 18:46:23,031 Seems like previous packet was lost: 146176 : 
-2019-11-21 18:46:23,104 Invalid value literals were received: ['0.0090.009777N', '0.009777N', '0.009777N', '0.009777N']
-2019-11-21 18:46:23,106 Seems like previous packet was lost: 146750 : 
-2019-11-21 18:46:23,184 Message wasn't completely received: ['147194', '0.009777N 0.009777N 0.0147466', '0.009781N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:23,191 Seems like previous packet was lost: 147468 : 
-2019-11-21 18:46:23,229 Seems like previous packet was lost: 148292 : 
-2019-11-21 18:46:23,311 Wrong amount of received parameters error: ['0.009781N', '0.009777R', '0.009777N', '0.009777N0.009781N', '0.009777N', '0.009777N']
-2019-11-21 18:46:23,314 Seems like previous packet was lost: 149062 : 
-2019-11-21 18:46:23,391 Wrong amount of received parameters error: ['0.009777N', '0.009777N', '0.009777N', '0.009781N', '0.009777N', '0.009777N', '0.009777N']
-2019-11-21 18:46:23,394 Seems like previous packet was lost: 149816 : 
-2019-11-21 18:46:23,451 Wrong amount of received parameters error: ['0.009781N', '0.009781N', '0.0097N', '0.009777N', '0.009777N']
-2019-11-21 18:46:23,452 Seems like previous packet was lost: 150462 : 
-2019-11-21 18:46:23,467 Message wasn't completely received: ['150906', '0.009777N 0.009781N 0.009777N 0.009781N :151282', '0.009781N 0.009781N 0.009781N 0.009781N ', 'END\r']
-2019-11-21 18:46:23,469 Seems like previous packet was lost: 151284 : 
-2019-11-21 18:46:23,602 Wrong amount of received parameters error: ['0.009781N', '0.009009781N']
-2019-11-21 18:46:23,610 Seems like previous packet was lost: 152026 : 
-2019-11-21 18:46:23,697 Wrong amount of received parameters error: ['09777N']
-2019-11-21 18:46:23,699 Seems like previous packet was lost: 152924 : 
-2019-11-21 18:46:23,837 Message wasn't completely received: ['153370', '0153696', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:23,839 Seems like previous packet was lost: 153698 : 
-2019-11-21 18:46:23,862 Empty line received: 
-2019-11-21 18:46:23,884 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:46:23,886 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:46:25,742 Message wasn't completely received: ['139324', '0.009777N 0.009777N 139450', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:25,745 Seems like previous packet was lost: 139452 : 
-2019-11-21 18:46:25,797 Message wasn't completely received: ['139896', '0.009777N 0.009139912', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:25,799 Seems like previous packet was lost: 139914 : 
-2019-11-21 18:46:25,849 Message wasn't completely received: ['141102', '0.009777N 0.009777N 0.009777N 0.009141170', '0.009781N 0.009777N 0.009781N 0.009777N ', 'END\r']
-2019-11-21 18:46:25,854 Seems like previous packet was lost: 141172 : 
-2019-11-21 18:46:25,991 Message wasn't completely received: ['142062', '0.009773N 0.009773N 0.009773N 0.009773142164', '0.009773N 0.009773N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:25,992 Seems like previous packet was lost: 142166 : 
-2019-11-21 18:46:26,081 Wrong amount of received parameters error: ['0.009777N', '0.0099773N', '0.009777N', '0.009777N', '0.009773N']
-2019-11-21 18:46:26,083 Seems like previous packet was lost: 142770 : 
-2019-11-21 18:46:26,157 Message wasn't completely received: ['143214', '0.009777N 0.009777N 0.00977143338', '0.009773N 0.009773N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:26,160 Seems like previous packet was lost: 143340 : 
-2019-11-21 18:46:26,229 Message wasn't completely received: ['143784', '0.009777N 0.009143896', '0.009773N 0.009773N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:26,230 Seems like previous packet was lost: 143898 : 
-2019-11-21 18:46:26,262 Message wasn't completely received: ['144342', '0.009777N 0.009144486', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:26,269 Seems like previous packet was lost: 144488 : 
-2019-11-21 18:46:26,287 Message wasn't completely received: ['144932', '0.009777N 0.009144964', '0.009777N 0.009777N 0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:46:26,295 Seems like previous packet was lost: 144966 : 
-2019-11-21 18:46:26,312 Wrong amount of received parameters error: ['0.009777N', '0.009']
-2019-11-21 18:46:26,312 Seems like previous packet was lost: 145582 : 
-2019-11-21 18:46:26,323 Wrong amount of received parameters error: ['0.009777N']
-2019-11-21 18:46:26,326 Seems like previous packet was lost: 146176 : 
-2019-11-21 18:46:26,385 Invalid value literals were received: ['0.0090.009777N', '0.009777N', '0.009777N', '0.009777N']
-2019-11-21 18:46:26,393 Seems like previous packet was lost: 146750 : 
-2019-11-21 18:46:26,470 Message wasn't completely received: ['147194', '0.009777N 0.009777N 0.0147466', '0.009781N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:26,475 Seems like previous packet was lost: 147468 : 
-2019-11-21 18:46:26,550 Seems like previous packet was lost: 148292 : 
-2019-11-21 18:46:26,667 Wrong amount of received parameters error: ['0.009781N', '0.009777R', '0.009777N', '0.009777N0.009781N', '0.009777N', '0.009777N']
-2019-11-21 18:46:26,669 Seems like previous packet was lost: 149062 : 
-2019-11-21 18:46:26,788 Wrong amount of received parameters error: ['0.009777N', '0.009777N', '0.009777N', '0.009781N', '0.009777N', '0.009777N', '0.009777N']
-2019-11-21 18:46:26,790 Seems like previous packet was lost: 149816 : 
-2019-11-21 18:46:26,817 Wrong amount of received parameters error: ['0.009781N', '0.009781N', '0.0097N', '0.009777N', '0.009777N']
-2019-11-21 18:46:26,821 Seems like previous packet was lost: 150462 : 
-2019-11-21 18:46:26,846 Message wasn't completely received: ['150906', '0.009777N 0.009781N 0.009777N 0.009781N :151282', '0.009781N 0.009781N 0.009781N 0.009781N ', 'END\r']
-2019-11-21 18:46:26,846 Seems like previous packet was lost: 151284 : 
-2019-11-21 18:46:26,852 Wrong amount of received parameters error: ['0.009781N', '0.009009781N']
-2019-11-21 18:46:26,863 Seems like previous packet was lost: 152026 : 
-2019-11-21 18:46:26,924 Wrong amount of received parameters error: ['09777N']
-2019-11-21 18:46:26,933 Seems like previous packet was lost: 152924 : 
-2019-11-21 18:46:27,018 Message wasn't completely received: ['153370', '0153696', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:27,024 Seems like previous packet was lost: 153698 : 
-2019-11-21 18:46:27,116 Message wasn't completely received: ['154142', '0.009781N 0.009154382', '0.009781N 0.009781R 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:27,121 Seems like previous packet was lost: 154384 : 
-2019-11-21 18:46:27,212 Message wasn't completely received: ['154816', '0']
-2019-11-21 18:46:27,231 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:46:27,238 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:46:29,150 Message wasn't completely received: ['139324', '0.009777N 0.009777N 139450', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:29,151 Seems like previous packet was lost: 139452 : 
-2019-11-21 18:46:29,291 Message wasn't completely received: ['139896', '0.009777N 0.009139912', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:29,293 Seems like previous packet was lost: 139914 : 
-2019-11-21 18:46:29,565 Message wasn't completely received: ['141102', '0.009777N 0.009777N 0.009777N 0.009141170', '0.009781N 0.009777N 0.009781N 0.009777N ', 'END\r']
-2019-11-21 18:46:29,565 Seems like previous packet was lost: 141172 : 
-2019-11-21 18:46:29,689 Message wasn't completely received: ['142062', '0.009773N 0.009773N 0.009773N 0.009773142164', '0.009773N 0.009773N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:29,693 Seems like previous packet was lost: 142166 : 
-2019-11-21 18:46:29,784 Wrong amount of received parameters error: ['0.009777N', '0.0099773N', '0.009777N', '0.009777N', '0.009773N']
-2019-11-21 18:46:29,785 Seems like previous packet was lost: 142770 : 
-2019-11-21 18:46:29,872 Message wasn't completely received: ['143214', '0.009777N 0.009777N 0.00977143338', '0.009773N 0.009773N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:29,873 Seems like previous packet was lost: 143340 : 
-2019-11-21 18:46:29,969 Message wasn't completely received: ['143784', '0.009777N 0.009143896', '0.009773N 0.009773N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:29,978 Seems like previous packet was lost: 143898 : 
-2019-11-21 18:46:30,092 Message wasn't completely received: ['144342', '0.009777N 0.009144486', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:30,094 Seems like previous packet was lost: 144488 : 
-2019-11-21 18:46:30,243 Message wasn't completely received: ['144932', '0.009777N 0.009144964', '0.009777N 0.009777N 0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:46:30,245 Seems like previous packet was lost: 144966 : 
-2019-11-21 18:46:30,275 Wrong amount of received parameters error: ['0.009777N', '0.009']
-2019-11-21 18:46:30,277 Seems like previous packet was lost: 145582 : 
-2019-11-21 18:46:30,292 Wrong amount of received parameters error: ['0.009777N']
-2019-11-21 18:46:30,294 Seems like previous packet was lost: 146176 : 
-2019-11-21 18:46:30,390 Invalid value literals were received: ['0.0090.009777N', '0.009777N', '0.009777N', '0.009777N']
-2019-11-21 18:46:30,394 Seems like previous packet was lost: 146750 : 
-2019-11-21 18:46:30,488 Message wasn't completely received: ['147194', '0.009777N 0.009777N 0.0147466', '0.009781N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:30,489 Seems like previous packet was lost: 147468 : 
-2019-11-21 18:46:30,559 Seems like previous packet was lost: 148292 : 
-2019-11-21 18:46:30,631 Wrong amount of received parameters error: ['0.009781N', '0.009777R', '0.009777N', '0.009777N0.009781N', '0.009777N', '0.009777N']
-2019-11-21 18:46:30,634 Seems like previous packet was lost: 149062 : 
-2019-11-21 18:46:30,715 Wrong amount of received parameters error: ['0.009777N', '0.009777N', '0.009777N', '0.009781N', '0.009777N', '0.009777N', '0.009777N']
-2019-11-21 18:46:30,721 Seems like previous packet was lost: 149816 : 
-2019-11-21 18:46:30,845 Wrong amount of received parameters error: ['0.009781N', '0.009781N', '0.0097N', '0.009777N', '0.009777N']
-2019-11-21 18:46:30,847 Seems like previous packet was lost: 150462 : 
-2019-11-21 18:46:30,937 Message wasn't completely received: ['150906', '0.009777N 0.009781N 0.009777N 0.009781N :151282', '0.009781N 0.009781N 0.009781N 0.009781N ', 'END\r']
-2019-11-21 18:46:30,938 Seems like previous packet was lost: 151284 : 
-2019-11-21 18:46:31,006 Wrong amount of received parameters error: ['0.009781N', '0.009009781N']
-2019-11-21 18:46:31,016 Seems like previous packet was lost: 152026 : 
-2019-11-21 18:46:31,094 Wrong amount of received parameters error: ['09777N']
-2019-11-21 18:46:31,095 Seems like previous packet was lost: 152924 : 
-2019-11-21 18:46:31,212 Message wasn't completely received: ['153370', '0153696', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:31,217 Seems like previous packet was lost: 153698 : 
-2019-11-21 18:46:31,265 Message wasn't completely received: ['154142', '0.009781N 0.009154382', '0.009781N 0.009781R 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:31,277 Seems like previous packet was lost: 154384 : 
-2019-11-21 18:46:31,394 Message wasn't completely received: ['154828', '0.009777N 0.009155142', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:31,396 Seems like previous packet was lost: 155144 : 
-2019-11-21 18:46:31,486 Message wasn't completely received: ['155576', '0.009777N']
-2019-11-21 18:46:31,502 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:46:31,505 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:46:33,993 Message wasn't completely received: ['139324', '0.009777N 0.009777N 139450', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:34,003 Seems like previous packet was lost: 139452 : 
-2019-11-21 18:46:34,081 Message wasn't completely received: ['139896', '0.009777N 0.009139912', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:34,083 Seems like previous packet was lost: 139914 : 
-2019-11-21 18:46:34,557 Message wasn't completely received: ['141102', '0.009777N 0.009777N 0.009777N 0.009141170', '0.009781N 0.009777N 0.009781N 0.009777N ', 'END\r']
-2019-11-21 18:46:34,557 Seems like previous packet was lost: 141172 : 
-2019-11-21 18:46:34,802 Message wasn't completely received: ['142062', '0.009773N 0.009773N 0.009773N 0.009773142164', '0.009773N 0.009773N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:34,813 Seems like previous packet was lost: 142166 : 
-2019-11-21 18:46:34,850 Wrong amount of received parameters error: ['0.009777N', '0.0099773N', '0.009777N', '0.009777N', '0.009773N']
-2019-11-21 18:46:34,854 Seems like previous packet was lost: 142770 : 
-2019-11-21 18:46:34,967 Message wasn't completely received: ['143214', '0.009777N 0.009777N 0.00977143338', '0.009773N 0.009773N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:34,968 Seems like previous packet was lost: 143340 : 
-2019-11-21 18:46:35,054 Message wasn't completely received: ['143784', '0.009777N 0.009143896', '0.009773N 0.009773N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:35,065 Seems like previous packet was lost: 143898 : 
-2019-11-21 18:46:35,136 Message wasn't completely received: ['144342', '0.009777N 0.009144486', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:35,145 Seems like previous packet was lost: 144488 : 
-2019-11-21 18:46:35,245 Message wasn't completely received: ['144932', '0.009777N 0.009144964', '0.009777N 0.009777N 0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:46:35,247 Seems like previous packet was lost: 144966 : 
-2019-11-21 18:46:35,298 Wrong amount of received parameters error: ['0.009777N', '0.009']
-2019-11-21 18:46:35,299 Seems like previous packet was lost: 145582 : 
-2019-11-21 18:46:35,462 Wrong amount of received parameters error: ['0.009777N']
-2019-11-21 18:46:35,463 Seems like previous packet was lost: 146176 : 
-2019-11-21 18:46:35,569 Invalid value literals were received: ['0.0090.009777N', '0.009777N', '0.009777N', '0.009777N']
-2019-11-21 18:46:35,572 Seems like previous packet was lost: 146750 : 
-2019-11-21 18:46:35,707 Message wasn't completely received: ['147194', '0.009777N 0.009777N 0.0147466', '0.009781N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:35,713 Seems like previous packet was lost: 147468 : 
-2019-11-21 18:46:35,872 Seems like previous packet was lost: 148292 : 
-2019-11-21 18:46:35,937 Wrong amount of received parameters error: ['0.009781N', '0.009777R', '0.009777N', '0.009777N0.009781N', '0.009777N', '0.009777N']
-2019-11-21 18:46:35,938 Seems like previous packet was lost: 149062 : 
-2019-11-21 18:46:36,021 Wrong amount of received parameters error: ['0.009777N', '0.009777N', '0.009777N', '0.009781N', '0.009777N', '0.009777N', '0.009777N']
-2019-11-21 18:46:36,033 Seems like previous packet was lost: 149816 : 
-2019-11-21 18:46:36,192 Wrong amount of received parameters error: ['0.009781N', '0.009781N', '0.0097N', '0.009777N', '0.009777N']
-2019-11-21 18:46:36,196 Seems like previous packet was lost: 150462 : 
-2019-11-21 18:46:36,307 Message wasn't completely received: ['150906', '0.009777N 0.009781N 0.009777N 0.009781N :151282', '0.009781N 0.009781N 0.009781N 0.009781N ', 'END\r']
-2019-11-21 18:46:36,308 Seems like previous packet was lost: 151284 : 
-2019-11-21 18:46:36,396 Wrong amount of received parameters error: ['0.009781N', '0.009009781N']
-2019-11-21 18:46:36,398 Seems like previous packet was lost: 152026 : 
-2019-11-21 18:46:36,506 Wrong amount of received parameters error: ['09777N']
-2019-11-21 18:46:36,507 Seems like previous packet was lost: 152924 : 
-2019-11-21 18:46:36,603 Message wasn't completely received: ['153370', '0153696', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:36,606 Seems like previous packet was lost: 153698 : 
-2019-11-21 18:46:36,753 Message wasn't completely received: ['154142', '0.009781N 0.009154382', '0.009781N 0.009781R 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:36,755 Seems like previous packet was lost: 154384 : 
-2019-11-21 18:46:36,864 Message wasn't completely received: ['154828', '0.009777N 0.009155142', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:36,866 Seems like previous packet was lost: 155144 : 
-2019-11-21 18:46:36,964 Message wasn't completely received: ['155588', '0.009777N 0.009\r']
-2019-11-21 18:46:36,965 Seems like previous packet was lost: 155952 : 
-2019-11-21 18:46:37,116 Message wasn't completely received: ['156386', '0.009781N 0.0097']
-2019-11-21 18:46:37,134 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:46:37,136 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:46:39,276 Message wasn't completely received: ['139324', '0.009777N 0.009777N 139450', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:39,283 Seems like previous packet was lost: 139452 : 
-2019-11-21 18:46:39,427 Message wasn't completely received: ['139896', '0.009777N 0.009139912', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:39,429 Seems like previous packet was lost: 139914 : 
-2019-11-21 18:46:39,781 Message wasn't completely received: ['141102', '0.009777N 0.009777N 0.009777N 0.009141170', '0.009781N 0.009777N 0.009781N 0.009777N ', 'END\r']
-2019-11-21 18:46:39,782 Seems like previous packet was lost: 141172 : 
-2019-11-21 18:46:39,935 Message wasn't completely received: ['142062', '0.009773N 0.009773N 0.009773N 0.009773142164', '0.009773N 0.009773N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:39,942 Seems like previous packet was lost: 142166 : 
-2019-11-21 18:46:39,993 Wrong amount of received parameters error: ['0.009777N', '0.0099773N', '0.009777N', '0.009777N', '0.009773N']
-2019-11-21 18:46:39,996 Seems like previous packet was lost: 142770 : 
-2019-11-21 18:46:40,107 Message wasn't completely received: ['143214', '0.009777N 0.009777N 0.00977143338', '0.009773N 0.009773N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:40,110 Seems like previous packet was lost: 143340 : 
-2019-11-21 18:46:40,147 Message wasn't completely received: ['143784', '0.009777N 0.009143896', '0.009773N 0.009773N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:40,151 Seems like previous packet was lost: 143898 : 
-2019-11-21 18:46:40,225 Message wasn't completely received: ['144342', '0.009777N 0.009144486', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:40,232 Seems like previous packet was lost: 144488 : 
-2019-11-21 18:46:40,240 Message wasn't completely received: ['144932', '0.009777N 0.009144964', '0.009777N 0.009777N 0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:46:40,255 Seems like previous packet was lost: 144966 : 
-2019-11-21 18:46:40,275 Wrong amount of received parameters error: ['0.009777N', '0.009']
-2019-11-21 18:46:40,292 Seems like previous packet was lost: 145582 : 
-2019-11-21 18:46:40,356 Wrong amount of received parameters error: ['0.009777N']
-2019-11-21 18:46:40,356 Seems like previous packet was lost: 146176 : 
-2019-11-21 18:46:40,474 Invalid value literals were received: ['0.0090.009777N', '0.009777N', '0.009777N', '0.009777N']
-2019-11-21 18:46:40,480 Seems like previous packet was lost: 146750 : 
-2019-11-21 18:46:40,534 Message wasn't completely received: ['147194', '0.009777N 0.009777N 0.0147466', '0.009781N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:40,541 Seems like previous packet was lost: 147468 : 
-2019-11-21 18:46:40,599 Seems like previous packet was lost: 148292 : 
-2019-11-21 18:46:40,761 Wrong amount of received parameters error: ['0.009781N', '0.009777R', '0.009777N', '0.009777N0.009781N', '0.009777N', '0.009777N']
-2019-11-21 18:46:40,762 Seems like previous packet was lost: 149062 : 
-2019-11-21 18:46:40,850 Wrong amount of received parameters error: ['0.009777N', '0.009777N', '0.009777N', '0.009781N', '0.009777N', '0.009777N', '0.009777N']
-2019-11-21 18:46:40,852 Seems like previous packet was lost: 149816 : 
-2019-11-21 18:46:40,869 Wrong amount of received parameters error: ['0.009781N', '0.009781N', '0.0097N', '0.009777N', '0.009777N']
-2019-11-21 18:46:40,874 Seems like previous packet was lost: 150462 : 
-2019-11-21 18:46:40,913 Message wasn't completely received: ['150906', '0.009777N 0.009781N 0.009777N 0.009781N :151282', '0.009781N 0.009781N 0.009781N 0.009781N ', 'END\r']
-2019-11-21 18:46:40,920 Seems like previous packet was lost: 151284 : 
-2019-11-21 18:46:40,949 Wrong amount of received parameters error: ['0.009781N', '0.009009781N']
-2019-11-21 18:46:40,962 Seems like previous packet was lost: 152026 : 
-2019-11-21 18:46:40,998 Wrong amount of received parameters error: ['09777N']
-2019-11-21 18:46:41,007 Seems like previous packet was lost: 152924 : 
-2019-11-21 18:46:41,044 Message wasn't completely received: ['153370', '0153696', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:41,051 Seems like previous packet was lost: 153698 : 
-2019-11-21 18:46:41,080 Message wasn't completely received: ['154142', '0.009781N 0.009154382', '0.009781N 0.009781R 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:41,086 Seems like previous packet was lost: 154384 : 
-2019-11-21 18:46:41,135 Message wasn't completely received: ['154828', '0.009777N 0.009155142', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:41,139 Seems like previous packet was lost: 155144 : 
-2019-11-21 18:46:41,244 Message wasn't completely received: ['155588', '0.009777N 0.009\r']
-2019-11-21 18:46:41,246 Seems like previous packet was lost: 155952 : 
-2019-11-21 18:46:41,268 Message wasn't completely received: ['156398', '0.009781N 0.02', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:41,269 Seems like previous packet was lost: 156984 : 
-2019-11-21 18:46:41,274 Message wasn't completely received: ['157416', '0.009777N 0.009777N 0.009777N 0.']
-2019-11-21 18:46:41,293 Message wasn't completely received: ['0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:46:41,303 Seems like previous packet was lost: 129720 : 
-2019-11-21 18:46:42,785 Message wasn't completely received: ['139324', '0.009777N 0.009777N 139450', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:42,789 Seems like previous packet was lost: 139452 : 
-2019-11-21 18:46:42,824 Message wasn't completely received: ['139896', '0.009777N 0.009139912', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:42,835 Seems like previous packet was lost: 139914 : 
-2019-11-21 18:46:42,993 Message wasn't completely received: ['141102', '0.009777N 0.009777N 0.009777N 0.009141170', '0.009781N 0.009777N 0.009781N 0.009777N ', 'END\r']
-2019-11-21 18:46:42,997 Seems like previous packet was lost: 141172 : 
-2019-11-21 18:46:43,111 Message wasn't completely received: ['142062', '0.009773N 0.009773N 0.009773N 0.009773142164', '0.009773N 0.009773N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:43,113 Seems like previous packet was lost: 142166 : 
-2019-11-21 18:46:43,153 Wrong amount of received parameters error: ['0.009777N', '0.0099773N', '0.009777N', '0.009777N', '0.009773N']
-2019-11-21 18:46:43,154 Seems like previous packet was lost: 142770 : 
-2019-11-21 18:46:43,163 Message wasn't completely received: ['143214', '0.009777N 0.009777N 0.00977143338', '0.009773N 0.009773N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:43,164 Seems like previous packet was lost: 143340 : 
-2019-11-21 18:46:43,170 Message wasn't completely received: ['143784', '0.009777N 0.009143896', '0.009773N 0.009773N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:43,177 Seems like previous packet was lost: 143898 : 
-2019-11-21 18:46:43,243 Message wasn't completely received: ['144342', '0.009777N 0.009144486', '0.009777N 0.009777N 0.009777N 0.009777N ', 'END\r']
-2019-11-21 18:46:43,250 Seems like previous packet was lost: 144488 : 
-2019-11-21 18:46:43,355 Message wasn't completely received: ['144932', '0.009777N 0.009144964', '0.009777N 0.009777N 0.009773N 0.009773N ', 'END\r']
-2019-11-21 18:46:43,362 Seems like previous packet was lost: 144966 : 
-2019-11-21 18:46:43,396 Wrong amount of received parameters error: ['0.009777N', '0.009']
-2019-11-21 18:46:43,405 Seems like previous packet was lost: 145582 : 
-2019-11-21 18:46:43,432 Wrong amount of received parameters error: ['0.009777N']
-2019-11-21 18:46:43,443 Seems like previous packet was lost: 146176 : 
-2019-11-21 18:46:43,525 Invalid value literals were received: ['0.0090.009777N', '0.009777N', '0.009777N', '0.009777N']
-2019-11-21 18:46:43,527 Seems like previous packet was lost: 146750 : 
+2019-11-22 18:41:40,884 info: Starting BlueCardio graph application
+2019-11-22 18:41:40,885 info: BlueCardio started with arguments: Namespace(communication='COM29', length=4096, logging='n', qrs='int')
+2019-11-22 18:41:40,885 info: Trying to open port COM29...
+2019-11-22 18:41:40,911 info: Port entity initialised for COM29
+2019-11-22 18:41:40,911 error: Port is already open. trying to open again...
+2019-11-22 18:41:40,939 info: Port COM29 is opened!
+2019-11-22 18:41:40,953 info: QtWidget initialised!
+2019-11-22 18:41:41,159 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:41,160 Empty line received: 
+2019-11-22 18:41:41,177 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:41,179 Message wasn't completely received: ['108994', '0.007738N']
+2019-11-22 18:41:41,191 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:41,198 Empty line received: 
+2019-11-22 18:41:41,212 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:41,219 Message wasn't completely received: ['108996', '0.007738N 0.007742N 0.007742N 0.0077']
+2019-11-22 18:41:41,233 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:41,242 Empty line received: 
+2019-11-22 18:41:41,258 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:41,268 Empty line received: 
+2019-11-22 18:41:41,286 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:41,295 Empty line received: 
+2019-11-22 18:41:41,308 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:41,315 Message wasn't completely received: ['109002', '0.007742N 0.007742N 0.0077']
+2019-11-22 18:41:41,328 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:41,345 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:41,350 Empty line received: 
+2019-11-22 18:41:41,364 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:41,371 Empty line received: 
+2019-11-22 18:41:41,386 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:41,395 Empty line received: 
+2019-11-22 18:41:41,410 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:41,417 Message wasn't completely received: ['109008', '0.007738N 0.007738N 0.00774']
+2019-11-22 18:41:41,428 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:41,442 Empty line received: 
+2019-11-22 18:41:41,458 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:41,472 Message wasn't completely received: ['109011', '0.007742N 0.0077']
+2019-11-22 18:41:41,485 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:41,486 Empty line received: 
+2019-11-22 18:41:41,502 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:41,515 Empty line received: 
+2019-11-22 18:41:41,528 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:41,536 Empty line received: 
+2019-11-22 18:41:41,552 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:41,556 Message wasn't completely received: ['109017', '0.007742N 0.007738']
+2019-11-22 18:41:41,567 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:41,585 Empty line received: 
+2019-11-22 18:41:41,603 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:41,613 Empty line received: 
+2019-11-22 18:41:41,625 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:41,630 Empty line received: 
+2019-11-22 18:41:41,640 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:41,641 Empty line received: 
+2019-11-22 18:41:41,651 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:41,652 Message wasn't completely received: ['109023', '0.007742N 0.007742N']
+2019-11-22 18:41:41,662 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:41,663 Empty line received: 
+2019-11-22 18:41:41,687 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:41,727 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:41,755 Empty line received: 
+2019-11-22 18:41:41,768 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:41,809 Empty line received: 
+2019-11-22 18:41:41,828 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:41,848 Empty line received: 
+2019-11-22 18:41:41,873 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:41,885 Empty line received: 
+2019-11-22 18:41:41,901 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:41,924 Empty line received: 
+2019-11-22 18:41:41,943 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:41,964 Message wasn't completely received: ['109041', '']
+2019-11-22 18:41:41,992 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:42,022 Empty line received: 
+2019-11-22 18:41:42,036 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:42,052 Empty line received: 
+2019-11-22 18:41:42,068 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:42,124 Empty line received: 
+2019-11-22 18:41:42,142 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:42,175 Message wasn't completely received: ['109053', '0.007742N 0.007742N 0.007738N 0.00774']
+2019-11-22 18:41:42,191 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:42,215 Message wasn't completely received: ['109056', '0.007738N 0.007742R 0.007738N 0.007742']
+2019-11-22 18:41:42,240 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:42,281 Empty line received: 
+2019-11-22 18:41:42,302 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:42,334 Message wasn't completely received: ['109063', '0.007746R 0.0']
+2019-11-22 18:41:42,350 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:42,436 Empty line received: 
+2019-11-22 18:41:42,453 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:42,480 Empty line received: 
+2019-11-22 18:41:42,500 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:42,553 Message wasn't completely received: ['109075', '0.007742N 0.007742N 0.00773']
+2019-11-22 18:41:42,584 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:42,623 Empty line received: 
+2019-11-22 18:41:42,651 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:42,699 Empty line received: 
+2019-11-22 18:41:42,720 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:42,811 Empty line received: 
+2019-11-22 18:41:42,829 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:42,871 Empty line received: 
+2019-11-22 18:41:42,895 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:42,940 Empty line received: 
+2019-11-22 18:41:42,961 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:43,050 Empty line received: 
+2019-11-22 18:41:43,064 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:43,120 Empty line received: 
+2019-11-22 18:41:43,135 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:43,205 Message wasn't completely received: ['109114', '0.007742N 0.007742N 0.']
+2019-11-22 18:41:43,220 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:43,250 Empty line received: 
+2019-11-22 18:41:43,267 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:43,333 Message wasn't completely received: ['109122', '0.007742N 0.007742N 0.007742N 0.007742N']
+2019-11-22 18:41:43,345 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:43,398 Message wasn't completely received: ['109127']
+2019-11-22 18:41:43,409 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:43,472 Empty line received: 
+2019-11-22 18:41:43,484 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:43,542 Empty line received: 
+2019-11-22 18:41:43,560 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:43,638 Message wasn't completely received: ['109140', '0.007742']
+2019-11-22 18:41:43,658 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:43,752 Message wasn't completely received: ['10914']
+2019-11-22 18:41:43,764 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:43,860 Empty line received: 
+2019-11-22 18:41:43,881 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:44,003 Empty line received: 
+2019-11-22 18:41:44,026 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:44,122 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:44,172 Empty line received: 
+2019-11-22 18:41:44,190 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:44,305 Empty line received: 
+2019-11-22 18:41:44,321 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:44,388 Empty line received: 
+2019-11-22 18:41:44,406 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:44,516 Empty line received: 
+2019-11-22 18:41:44,536 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:44,662 Empty line received: 
+2019-11-22 18:41:44,685 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:44,780 Empty line received: 
+2019-11-22 18:41:44,793 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:44,924 Empty line received: 
+2019-11-22 18:41:44,945 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:45,084 Empty line received: 
+2019-11-22 18:41:45,103 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:45,236 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:45,384 Empty line received: 
+2019-11-22 18:41:45,404 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:45,473 Empty line received: 
+2019-11-22 18:41:45,497 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:45,675 Empty line received: 
+2019-11-22 18:41:45,690 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:45,894 Empty line received: 
+2019-11-22 18:41:45,912 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:46,105 Empty line received: 
+2019-11-22 18:41:46,126 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:46,365 Empty line received: 
+2019-11-22 18:41:46,386 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:46,558 Message wasn't completely received: ['109313', '0.007742N 0.007742N 0']
+2019-11-22 18:41:46,579 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:46,777 Message wasn't completely received: ['109325', '0.007746N 0.007742N 0.0']
+2019-11-22 18:41:46,798 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:46,911 Empty line received: 
+2019-11-22 18:41:46,927 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:47,032 Empty line received: 
+2019-11-22 18:41:47,043 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:47,212 Empty line received: 
+2019-11-22 18:41:47,230 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:47,445 Message wasn't completely received: ['109365', '0.0']
+2019-11-22 18:41:47,461 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:47,697 Message wasn't completely received: ['10937']
+2019-11-22 18:41:47,711 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:47,787 Percentage of received messages: 0.992896174863388
+2019-11-22 18:41:47,844 Empty line received: 
+2019-11-22 18:41:47,860 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:48,100 Empty line received: 
+2019-11-22 18:41:48,113 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:48,448 Message wasn't completely received: ['109419', '0.007738N 0.007742N 0.0']
+2019-11-22 18:41:48,469 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:48,687 Empty line received: 
+2019-11-22 18:41:48,698 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:48,950 Message wasn't completely received: ['109']
+2019-11-22 18:41:48,964 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:49,153 Message wasn't completely received: ['109471', '0.007742N 0.00773']
+2019-11-22 18:41:49,165 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:49,442 Empty line received: 
+2019-11-22 18:41:49,464 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:49,631 Empty line received: 
+2019-11-22 18:41:49,647 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:49,838 Message wasn't completely received: ['109513', '0.007742N 0.007738N 0.007']
+2019-11-22 18:41:49,852 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:50,171 Empty line received: 
+2019-11-22 18:41:50,193 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:50,608 Empty line received: 
+2019-11-22 18:41:50,628 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:50,982 Empty line received: 
+2019-11-22 18:41:50,997 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:51,357 Empty line received: 
+2019-11-22 18:41:51,371 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:51,651 Empty line received: 
+2019-11-22 18:41:51,667 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:52,052 Empty line received: 
+2019-11-22 18:41:52,065 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:52,466 Message wasn't completely received: ['109661', '0.007742N 0.007742N 0.007738N 0.00773']
+2019-11-22 18:41:52,488 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:52,807 Message wasn't completely received: ['109687', '0.007742N 0']
+2019-11-22 18:41:52,828 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:53,168 Empty line received: 
+2019-11-22 18:41:53,216 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:53,548 Empty line received: 
+2019-11-22 18:41:53,561 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:54,057 Empty line received: 
+2019-11-22 18:41:54,069 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:54,488 Message wasn't completely received: ['109784', '0.007742N 0.007742N 0.0']
+2019-11-22 18:41:54,510 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:54,850 Message wasn't completely received: ['109811', '0.007']
+2019-11-22 18:41:54,868 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:55,225 Empty line received: 
+2019-11-22 18:41:55,244 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:55,533 Message wasn't completely received: ['109856', '0.007742N 0.007742N 0.007']
+2019-11-22 18:41:55,547 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:55,873 Empty line received: 
+2019-11-22 18:41:55,896 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:56,330 Empty line received: 
+2019-11-22 18:41:56,353 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:56,746 Empty line received: 
+2019-11-22 18:41:56,760 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:57,241 Message wasn't completely received: ['109949', '0.007742']
+2019-11-22 18:41:57,254 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:57,749 Empty line received: 
+2019-11-22 18:41:57,768 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:58,255 Empty line received: 
+2019-11-22 18:41:58,277 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:58,785 Empty line received: 
+2019-11-22 18:41:58,798 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:59,394 Empty line received: 
+2019-11-22 18:41:59,409 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:41:59,931 Message wasn't completely received: ['110111', '0.007742N 0.007742N 0.007738N 0.007742N ']
+2019-11-22 18:41:59,943 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:42:00,509 Message wasn't completely received: ['110144', '0.007742N 0.']
+2019-11-22 18:42:00,537 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:42:01,158 Empty line received: 
+2019-11-22 18:42:01,172 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:42:01,867 Empty line received: 
+2019-11-22 18:42:01,884 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:42:02,431 Empty line received: 
+2019-11-22 18:42:02,449 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:42:03,006 Empty line received: 
+2019-11-22 18:42:03,026 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:42:03,599 Message wasn't completely received: ['1103']
+2019-11-22 18:42:03,612 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:42:04,392 Empty line received: 
+2019-11-22 18:42:04,413 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:42:05,178 Empty line received: 
+2019-11-22 18:42:05,192 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:42:05,818 Empty line received: 
+2019-11-22 18:42:05,830 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:42:06,553 Empty line received: 
+2019-11-22 18:42:06,577 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:42:07,328 Empty line received: 
+2019-11-22 18:42:07,350 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:42:08,026 Empty line received: 
+2019-11-22 18:42:08,046 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:42:08,822 Empty line received: 
+2019-11-22 18:42:08,834 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:42:09,748 Empty line received: 
+2019-11-22 18:42:09,767 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:42:10,602 Message wasn't completely received: ['110746', '0.007742N 0.']
+2019-11-22 18:42:10,634 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:42:11,336 Empty line received: 
+2019-11-22 18:42:11,357 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:42:12,314 Empty line received: 
+2019-11-22 18:42:12,328 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:42:13,474 Message wasn't completely received: ['110903', '0.0']
+2019-11-22 18:42:13,487 Seems like previous packet was lost: 108980 : 
+2019-11-22 18:42:14,331 Message wasn't completely received: ['110974', '0.00774']
+2019-11-22 18:42:14,349 Seems like previous packet was lost: 108980 : 

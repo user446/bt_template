@@ -66,19 +66,18 @@ typedef union {
 
 struct timer t_converter;
 struct timer t_sender;
-struct timer t_compute;
 update_value uv;
 volatile uint32_t msg_counter	=	0;
 volatile uint32_t onsend_counter = 0;
 volatile uint8_t buffer_counter = 0;
-volatile _Bool on_sent_flag = true;
-volatile _Bool on_compute_flag = false;
 float adjusted_data = 0;
 
 float data_insert[DATA_AMOUNT];
 float data_compute[DATA_AMOUNT];
 int data_qrs_peaks[DATA_AMOUNT];
-int data_onsend[DATA_AMOUNT];
+float data_onsend[DATA_AMOUNT];
+bool OnSend = false;
+bool IsNewData = false;
 
 char send_str[DATA_AMOUNT];
 int R_peaks[CONVERSION_NUM];
@@ -153,56 +152,39 @@ void t_Converter_callback(void)
 		if(ret != HAL_OK)
 			__nop();
 	}
-	else if(buffer_counter >= DATA_AMOUNT && on_compute_flag == false)
+	else if(buffer_counter >= DATA_AMOUNT)
 	{
 		buffer_counter = 0;		//позволяем записывать новый массив
 		memcpy(data_compute, data_insert, sizeof(float)*DATA_AMOUNT);	//копируем массив данных в массив для обсчета пиков QRS 
-		on_compute_flag = true;	//разрешаем обсчет пиков, запрещаем копирование
-		on_sent_flag = true;	//запрещаем отправку
+		
+		DetectQrsPeaks(data_compute, DATA_AMOUNT, (char*)data_qrs_peaks, 250);		//вычисляем массив пиков QRS
+		memcpy(data_onsend, data_compute, sizeof(float)*DATA_AMOUNT);		//копируем данные в новый массив на отправку
+		onsend_counter = 0;
+		OnSend = true;
 	}
 }
 //
 
 void t_Sender_callback(void)
 {
-		if(!on_compute_flag && !on_sent_flag)
+	if(onsend_counter < DATA_AMOUNT && OnSend)
 		{
-			if(onsend_counter < DATA_AMOUNT)
-			{
-				memcpy(uv.update_buff_f, data_onsend+onsend_counter, CONVERSION_NUM*sizeof(float));
-				memcpy(R_peaks, data_qrs_peaks+onsend_counter, CONVERSION_NUM*sizeof(int));
-				uv.update_buff_u32[CONVERSION_NUM] = msg_counter;
-				
-				sprintf(send_str, "%d::%f%s %f%s %f%s %f%s ::END\r\n", uv.update_buff_u32[CONVERSION_NUM], 
+			memcpy(uv.update_buff_f, data_onsend+onsend_counter, CONVERSION_NUM*sizeof(float));
+			memcpy(R_peaks, data_qrs_peaks+onsend_counter, CONVERSION_NUM*sizeof(int));
+			
+			sprintf(send_str, "%d::%f%s %f%s %f%s %f%s ::END\r\n", msg_counter, 
 																									uv.update_buff_f[0],	R_peaks[0]	? "R" : "N",
 																									uv.update_buff_f[1],	R_peaks[1]	? "R" : "N",
 																									uv.update_buff_f[2],	R_peaks[2]	? "R" : "N",
 																									uv.update_buff_f[3],	R_peaks[3]	? "R" : "N");
-				onsend_counter+=CONVERSION_NUM;
-				ret = HAL_UART_Transmit_DMA(&huart2, (uint8_t*)send_str, strlen(send_str));
-				if(ret == HAL_OK)
-				{
-					HAL_GPIO_TogglePin(LD4_GPIO_Port, LD4_Pin);
-				}
-				msg_counter++;
-			}
-			else
+			onsend_counter+=CONVERSION_NUM;
+			msg_counter++;
+			ret = HAL_UART_Transmit_DMA(&huart2, (uint8_t*)send_str, strlen(send_str));
+			if(ret == HAL_OK)
 			{
-				onsend_counter = 0;
+				HAL_GPIO_TogglePin(LD4_GPIO_Port, LD4_Pin);
 			}
 		}
-}
-//
-
-void t_ComputeQRS(void)
-{
-	if(on_compute_flag) //обсчет пиков в массиве разрешен
-	{
-		DetectQrsPeaks(data_compute, DATA_AMOUNT, (char*)data_qrs_peaks, 250);		//вычисляем массив пиков QRS
-		memcpy(data_onsend, data_compute, sizeof(float)*DATA_AMOUNT);		//копируем данные в новый массив на отправку
-		on_compute_flag = false;	//запрещаем дальнейший обсчет пиков
-		on_sent_flag = false;		//разрешаем отправку
-	}
 }
 //
 /* USER CODE END 0 */
@@ -242,8 +224,7 @@ int main(void)
   MX_TIM3_Init();
   /* USER CODE BEGIN 2 */
 	Timer_set(&t_converter, 4, sw_timer_base_ms, &t_Converter_callback, false, true);
-	Timer_set(&t_sender, 4, sw_timer_base_ms, &t_Sender_callback, false, true);
-	Timer_set(&t_compute, 1, sw_timer_base_ms, &t_ComputeQRS, false, true);
+	Timer_set(&t_sender, 16, sw_timer_base_ms, &t_Sender_callback, false, true);
 	HAL_TIM_Base_Start_IT(&htim3);
   /* USER CODE END 2 */
 

@@ -150,9 +150,9 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>151</LineNumber>
+          <LineNumber>181</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134245914</Address>
+          <Address>134246286</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -161,19 +161,19 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>../Core/Src/main.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\nucleo_target\../Core/Src/main.c\151</Expression>
+          <Expression>\\nucleo_target\../Core/Src/main.c\181</Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>
         <Ww>
           <count>0</count>
           <WinNumber>1</WinNumber>
-          <ItemText>buffer_counter</ItemText>
+          <ItemText>buffer_counter,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>1</count>
           <WinNumber>1</WinNumber>
-          <ItemText>msg_counter</ItemText>
+          <ItemText>msg_counter,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>2</count>
@@ -199,6 +199,11 @@
           <count>6</count>
           <WinNumber>1</WinNumber>
           <ItemText>uv</ItemText>
+        </Ww>
+        <Ww>
+          <count>7</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>onsend_counter,0x0A</ItemText>
         </Ww>
       </WatchWindow1>
       <WatchWindow2>
