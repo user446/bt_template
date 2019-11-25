@@ -39,7 +39,7 @@
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
 #define CONVERSION_NUM 4
-#define DATA_AMOUNT 255
+#define DATA_AMOUNT 4096
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -67,17 +67,17 @@ typedef union {
 struct timer t_converter;
 struct timer t_sender;
 update_value uv;
-volatile uint32_t msg_counter	=	0;
-volatile uint32_t onsend_counter = 0;
-volatile uint8_t buffer_counter = 0;
-float adjusted_data = 0;
+volatile int msg_counter	=	0;
+volatile int onsend_counter = 0;
+volatile int buffer_counter = 0;
+volatile float adjusted_data = 0;
 
 float data_insert[DATA_AMOUNT];
 float data_compute[DATA_AMOUNT];
 int data_qrs_peaks[DATA_AMOUNT];
 float data_onsend[DATA_AMOUNT];
-bool OnSend = false;
-bool IsNewData = false;
+volatile bool OnSend = false;
+volatile bool IsNewData = false;
 
 char send_str[DATA_AMOUNT];
 int R_peaks[CONVERSION_NUM];
@@ -108,7 +108,6 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 	if(htim->Instance == TIM3)
 	{
 		t_OnDigitCompleteInterrupt();
-		HAL_NVIC_ClearPendingIRQ(TIM3_IRQn);
 	}
 }
 //
@@ -144,26 +143,22 @@ void t_Converter_callback(void)
 	if((HAL_ADC_GetState(&hadc1) & HAL_ADC_STATE_READY) != 0 && buffer_counter < DATA_AMOUNT)
 	{
 		ret = HAL_ADC_Start_DMA(&hadc1,	&conversion_raw, 1);
-		//uv.update_buff_f[buffer_counter++] = (float)(conversion_raw&0x0FFF)*1.25f/4096.0f/80.53f;
-		adjusted_data = (float)(conversion_raw&0x0FFF)*1.25f/4096.0f/80.53f;
-		if(adjusted_data > 0.01f)
-			__nop();
-		data_insert[buffer_counter++] = adjusted_data;
 		if(ret != HAL_OK)
 			__nop();
+		//uv.update_buff_f[buffer_counter++] = (float)(conversion_raw&0x0FFF)*1.25f/4096.0f/80.53f;
+		adjusted_data = (float)(conversion_raw&0x0FFF)*1.25f/4096.0f/80.53f;
+		if(adjusted_data > 0.1f || adjusted_data < 0.001f)
+		{
+			__nop();
+			return;
+		}
+		data_insert[buffer_counter++] = adjusted_data;
 	}
 	else if(buffer_counter >= DATA_AMOUNT)
-	{
-		buffer_counter = 0;		//позволяем записывать новый массив
-		memcpy(data_compute, data_insert, sizeof(float)*DATA_AMOUNT);	//копируем массив данных в массив для обсчета пиков QRS 
-		
-		DetectQrsPeaks(data_compute, DATA_AMOUNT, (char*)data_qrs_peaks, 250);		//вычисляем массив пиков QRS
-		memcpy(data_onsend, data_compute, sizeof(float)*DATA_AMOUNT);		//копируем данные в новый массив на отправку
-		onsend_counter = 0;
-		OnSend = true;
-	}
+		OnSend = false;
 }
 //
+
 
 void t_Sender_callback(void)
 {
@@ -223,9 +218,9 @@ int main(void)
   MX_USART2_UART_Init();
   MX_TIM3_Init();
   /* USER CODE BEGIN 2 */
-	Timer_set(&t_converter, 4, sw_timer_base_ms, &t_Converter_callback, false, true);
-	Timer_set(&t_sender, 16, sw_timer_base_ms, &t_Sender_callback, false, true);
 	HAL_TIM_Base_Start_IT(&htim3);
+	Timer_set(&t_converter, 4, sw_timer_base_ms, &t_Converter_callback, true, true);
+	Timer_set(&t_sender, 16, sw_timer_base_ms, &t_Sender_callback, true, true);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -233,6 +228,16 @@ int main(void)
   while (1)
   {
 		t_OnDigitCompleteContinuous();
+		if(!OnSend && buffer_counter >= DATA_AMOUNT)
+		{
+			buffer_counter = 0;		//позволяем записывать новый массив
+			memcpy(data_compute, data_insert, sizeof(float)*DATA_AMOUNT);	//копируем массив данных в массив для обсчета пиков QRS 
+			
+			DetectQrsPeaks(data_compute, DATA_AMOUNT, (char*)data_qrs_peaks, 60);		//вычисляем массив пиков QRS
+			memcpy(data_onsend, data_compute, sizeof(float)*DATA_AMOUNT);		//копируем данные в новый массив на отправку
+			onsend_counter = 0;
+			OnSend = true;
+		}
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

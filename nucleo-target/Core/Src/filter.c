@@ -68,30 +68,30 @@ void fill(Filter* filter, float cutoff, int is_hpf)
 {
     const float B = tan(cutoff * M_PI);
     const float BB = B * B;
-    const float S = 1.0 + M_SQRT2 * B + BB;
+    const float S = 1.0f + M_SQRT2 * B + BB;
 
     if (is_hpf) {
-        filter->b0 = 1.0 / S;
-        filter->b1 = -2.0 * filter->b0;
+        filter->b0 = 1.0f / S;
+        filter->b1 = -2.0f * filter->b0;
     } else {
         filter->b0 = BB / S;
-        filter->b1 = 2.0 * filter->b0;
+        filter->b1 = 2.0f * filter->b0;
     }
     filter->b2 = filter->b0;
-    filter->a1 = 2.0 * (BB - 1.0) / S;
-    filter->a2 = (1.0 - M_SQRT2 * B + BB) / S;
+    filter->a1 = 2.0f * (BB - 1.0f) / S;
+    filter->a2 = (1.0f - M_SQRT2 * B + BB) / S;
 }
 //
 
 void fillRejection(Filter* filter, float cutoff)
 {
-    const float TWO_PI = 2 * M_PI;
-    const float MU = 0.005;
+    const float TWO_PI = 2.0f * M_PI;
+    const float MU = 0.005f;
 
-    filter->b0 = 1.0 - MU;
+    filter->b0 = 1.0f - MU;
     filter->b2 = filter->b0;
-    filter->b1 = cos(TWO_PI * cutoff) * (2.0 * MU - 2.0);
+    filter->b1 = cos(TWO_PI * cutoff) * (2.0f * MU - 2.0f);
     filter->a1 = filter->b1;
-    filter->a2 = 1.0 - 2.0 * MU;
+    filter->a2 = 1.0f - 2.0f * MU;
 }
 //

@@ -104,7 +104,7 @@ class SerialPort(QtCore.QThread):
 
     def __init__(self, logger, serial):
         QtCore.QThread.__init__(self)
-        self.recieve_buffer = ""
+        self.recieve_buffer = ''
         self.linequeue = deque([])
         self.data = []
         self.datacount = 0
@@ -113,6 +113,8 @@ class SerialPort(QtCore.QThread):
         self.total_messages = 0
         self.received = 0
         self.error_percent = 0
+        self.previous_lost = []
+        self.previous_lost_count = 0
         
     def GetError(self):
         return self.error_percent
@@ -148,8 +150,15 @@ class SerialPort(QtCore.QThread):
         try:
             if (self.datacount+1) != int(data[0]):
                 self.logger.warning(
-                    "Seems like previous packet was lost: %s : ", data[0])
+                    "Seems like previous packet was lost: %s : %s", data[0], self.data)
+                if data[0] != self.previous_lost_count:
+                    self.previous_lost = self.data
+                    self.previous_lost_count = data[0]
+                else:
+                    self.logger.error("Seems like same broken package was sent!")
+                    raise RuntimeError
             self.datacount = int(data[0])
+            #self.logger.warning("Received number of package is: %s", self.datacount)
         except ValueError as e:      #не удалось распарсить счетчик сообщения
             self.logger.warning("Invalid literal was received: %s", data[0])
             raise e
@@ -163,7 +172,7 @@ class SerialPort(QtCore.QThread):
             
         try:
             num_data = [x[:-1] for x in self.data]
-            wrong_data = len([i for i in num_data if float(i) >= self.datacount]) 
+            wrong_data = len([i for i in num_data if float(i) > 0.1 or float(i) < 0.001]) 
             if wrong_data > 0:
                 self.logger.warning(
                     "Seems like something went wrong in data: %s", np.array(self.data).astype(np.float))
@@ -176,6 +185,7 @@ class SerialPort(QtCore.QThread):
             raise e
 
     def run(self):
+        #import pydevd;pydevd.settrace(suspend=False) #раскомментировать только если нужно отладить треды
         while True:
             try:
                 self.recieve_buffer += self.serial.read(self.serial.inWaiting()
@@ -184,11 +194,17 @@ class SerialPort(QtCore.QThread):
                 self.logger.warning("warning: %s", e)
                 raise e
             lines = self.recieve_buffer.split('\n')
-            self.linequeue.extend(lines)
-            while len(self.linequeue) > 0:
-                try:
-                    data = self.GetParsedData(self.linequeue.popleft())
-                except:
-                    continue
-                self.signal.emit(data)
-            time.sleep(0.01)
+            if len(lines) > 1:
+                self.linequeue.extend(lines)
+                self.recieve_buffer = ''
+                while len(self.linequeue) > 0:
+                    indata = self.linequeue.popleft()
+                    if indata:
+                        try:
+                            data = self.GetParsedData(indata)
+                        except:
+                            continue
+                    else:
+                        continue
+                    self.signal.emit(data)
+

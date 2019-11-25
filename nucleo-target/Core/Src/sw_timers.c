@@ -4,8 +4,7 @@
 
 static volatile uint64_t sys_tick_count;
 
-static volatile uint8_t t_counter_interrupt = 0;
-static volatile uint8_t t_counter_continuous = 0;
+static volatile uint8_t t_counter = 0;
 static struct timer* timer_stack[128];
 
 /**
@@ -40,7 +39,7 @@ void t_OnDigitCompleteInterrupt(void)
 {
 	sys_tick_count++;
 	timer_counter_int = 0;
- 	while(timer_counter_int < t_counter_interrupt)
+ 	while(timer_counter_int < t_counter)
 	{
 		if(timer_stack[timer_counter_int]->on_interrupt == true)
 			CheckTimer(timer_stack[timer_counter_int]);
@@ -61,11 +60,11 @@ volatile uint8_t timer_counter_cont = 0;
 void t_OnDigitCompleteContinuous(void)
 {
 	timer_counter_cont = 0;
- 	while(timer_counter_cont < t_counter_continuous)
+ 	while(timer_counter_cont < t_counter)
 	{
 		if(timer_stack[timer_counter_cont]->on_interrupt == false)
 			CheckTimer(timer_stack[timer_counter_cont]);
-			timer_counter_cont++;
+		timer_counter_cont++;
 	}
 }
 //
@@ -87,13 +86,10 @@ void Timer_set(struct timer* t, uint32_t interval, uint32_t time_base, void (*ca
 	t->interval = interval * time_base;
 	t->start = sys_tick_count;
 	t->callback = callback;
-	timer_stack[t_counter_interrupt + t_counter_continuous] = t;
+	timer_stack[t_counter] = t;
 	t->on_interrupt = on_interrupt;
 	t->autorestart = autorestart;
-	if(on_interrupt)
-		t_counter_interrupt++;
-	else
-		t_counter_continuous++;
+	t_counter++;
 }
 //
 

@@ -79,14 +79,16 @@ class BlueCardioGraph(pg.GraphicsWindow):
             #self.data_timer.stop()
             self.comm.signal.disconnect()
             self.show_timer.stop()
-            self.qrs_timer.stop()
+            if self.qrs_compute != 'internal' and self.qrs_compute:
+                self.qrs_timer.stop()
             self.data_switch = False
         else:
             #pen.drawLine(pg.Point(self.x_data[-1], self.min_y - 10),pg.Point(self.x_data[-1],self.max_y + 10))
             #self.data_timer.start()
             self.comm.signal.connect(self.OnNewData)
             self.show_timer.start()
-            self.qrs_timer.start()
+            if self.qrs_compute != 'internal' and self.qrs_compute:
+                self.qrs_timer.start()
             self.data_switch = True
 
     def OnQRSCompute(self):

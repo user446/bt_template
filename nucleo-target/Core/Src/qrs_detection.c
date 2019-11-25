@@ -38,8 +38,8 @@ int DetectQrsPeaks(float const* signal, int size, char* result, float rate)
     count = Thresholding(buffer, size, MIN_RR, result);
     free(buffer);
     // TODO: subtract filters delay
-    //SubtractDelay(result, size, WINDOW_SIZE / 2);
-		SubtractDelay(result, size, 0);
+    SubtractDelay(result, size, WINDOW_SIZE / 2);
+		//SubtractDelay(result, size, 0);
     return count;
 }
 

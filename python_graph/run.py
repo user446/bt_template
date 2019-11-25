@@ -50,7 +50,7 @@ def main(args):
                 logger.info("info: Port %s is opened!", args.communication)
             except serial.serialutil.SerialException as e:
                 logger.error("error: %s, abort!", e)
-                return None
+                raise RuntimeError
     elif args.communication == 'BLE':
         logger.info(
             "info: Trying to initialize communication via BLE device...")
@@ -65,7 +65,7 @@ def main(args):
             logger.info(
                 "Unable to install connection with BLE device for unknown reason")
             adapter.stop()
-            return None
+            raise RuntimeError
     elif cm is not None:
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         logger.info("Trying to connect to %s:%s", IP, PORT)
@@ -74,7 +74,7 @@ def main(args):
             sock.connect((IP, int(PORT)))
         except socket.error as msg:
             logger.info("Caught exception socket.error : %s", msg)
-            return None
+            raise RuntimeError
         logger.info("Connected!")
 
     app = QtGui.QApplication([])
@@ -136,15 +136,18 @@ if __name__ == "__main__":
                         default='n', help='Activate logger [y/n]')
     args = parser.parse_args()
 
+
     cm = re.search(
         r'^TCP:.*[0-9]+(?:\.[0-9]+){3}:[0-9]+.*', args.communication)
-
+    as_string = str(args.communication).replace(' ', '')
+    as_array = as_string.split(':')
+    
     if args.communication == 'BLE':
         adapter = pygatt.BGAPIBackend()
-    elif cm:
-        as_string = str(args.communication).replace(' ', '')
-        as_array = as_string.split(':')
+    elif len(as_array) > 1:
         IP = as_array[1]
         PORT = as_array[2]
+    else:
+        cm = None
 
     main(args)
