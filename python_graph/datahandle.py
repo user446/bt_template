@@ -172,7 +172,7 @@ class SerialPort(QtCore.QThread):
             
         try:
             num_data = [x[:-1] for x in self.data]
-            wrong_data = len([i for i in num_data if float(i) > 0.1 or float(i) < 0.001]) 
+            wrong_data = len([i for i in num_data if float(i) > 1024 or float(i) < 0.01]) #len([i for i in num_data if float(i) > 0.1 or float(i) < 0.001]) 
             if wrong_data > 0:
                 self.logger.warning(
                     "Seems like something went wrong in data: %s", np.array(self.data).astype(np.float))

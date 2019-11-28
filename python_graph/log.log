@@ -1,21 +1,45 @@
-2019-11-25 19:10:40,976 info: Starting BlueCardio graph application
-2019-11-25 19:10:40,976 info: BlueCardio started with arguments: Namespace(communication='COM29', length=4096, logging='n', qrs='int')
-2019-11-25 19:10:40,977 info: Trying to open port COM29...
-2019-11-25 19:10:41,002 info: Port entity initialised for COM29
-2019-11-25 19:10:41,003 error: Port is already open. trying to open again...
-2019-11-25 19:10:41,030 info: Port COM29 is opened!
-2019-11-25 19:10:41,049 info: QtWidget initialised!
-2019-11-25 19:10:41,812 Seems like previous packet was lost: 0 : ['0.009584R', '0.009588N', '0.009588N', '0.009588N']
-2019-11-25 19:10:44,593 Message wasn't completely received: ['166', '0.009610N 0.009603N 0.009']
-2019-11-25 19:10:44,596 Message wasn't completely received: ['595N 0.009588N ', 'END\r']
-2019-11-25 19:10:44,612 Seems like previous packet was lost: 167 : ['0.009588N', '0.009591N', '0.009588N', '0.009588N']
-2019-11-25 19:10:46,103 Percentage of received messages: 0.9922178988326849
-2019-11-25 19:10:51,113 Percentage of received messages: 1.0
-2019-11-25 19:10:53,148 Message wasn't completely received: ['\r']
-2019-11-25 19:10:56,128 Percentage of received messages: 0.9966442953020134
-2019-11-25 19:11:01,113 Percentage of received messages: 1.0
-2019-11-25 19:11:03,192 Message wasn't completely received: ['1270', '0.00']
-2019-11-25 19:11:03,196 Message wasn't completely received: ['9584N 0.009588N 0.009588N 0.009588N ', 'END\r']
-2019-11-25 19:11:03,218 Seems like previous packet was lost: 1271 : ['0.009584N', '0.009584N', '0.009588N', '0.009588N']
-2019-11-25 19:11:06,141 Percentage of received messages: 0.9933110367892977
-2019-11-25 19:11:10,239 warning: ReadFile failed (OSError(9, 'Неверный дескриптор.', None, 6))
+2019-11-28 19:18:34,260 info: Starting BlueCardio graph application
+2019-11-28 19:18:34,260 info: BlueCardio started with arguments: Namespace(communication='COM29', length=4096, logging='n', qrs='int')
+2019-11-28 19:18:34,260 info: Trying to open port COM29...
+2019-11-28 19:18:34,286 info: Port entity initialised for COM29
+2019-11-28 19:18:34,287 error: Port is already open. trying to open again...
+2019-11-28 19:18:34,314 info: Port COM29 is opened!
+2019-11-28 19:18:34,329 info: QtWidget initialised!
+2019-11-28 19:18:34,529 Message wasn't completely received: ['END\r']
+2019-11-28 19:18:34,529 Seems like previous packet was lost: 1139 : ['0.011113N', '0.011111N', '0.011109N', '0.011107N']
+2019-11-28 19:18:36,195 Invalid value literals were received: ['0.011124N', '0.011125R', '0.000043N', '0.000000N']
+2019-11-28 19:18:37,224 Message wasn't completely received: ['1']
+2019-11-28 19:18:37,231 Seems like previous packet was lost: 310 : ['0.011128N', '0.011129N', '0.011129N', '0.011129N']
+2019-11-28 19:18:37,246 Seems like previous packet was lost: 1311 : ['0.011129N', '0.011129N', '0.011128N', '0.011128N']
+2019-11-28 19:18:37,262 Invalid value literals were received: ['0.011128N', '0.011127N', '0.000000N', '0.000000N']
+2019-11-28 19:18:39,379 Percentage of received messages: 0.9933333333333333
+2019-11-28 19:18:40,446 Invalid value literals were received: ['0.011068N', '0.011068N', '0.000044N', '0.000000N']
+2019-11-28 19:18:41,518 Invalid value literals were received: ['0.011070N', '0.011070R', '0.000000N', '0.000000N']
+2019-11-28 19:18:44,379 Percentage of received messages: 1.0
+2019-11-28 19:18:44,700 Invalid value literals were received: ['0.011076N', '0.011077N', '0.000043N', '0.000000N']
+2019-11-28 19:18:45,767 Invalid value literals were received: ['0.011085N', '0.011086N', '0.000000N', '0.000000N']
+2019-11-28 19:18:48,948 Invalid value literals were received: ['0.011108N', '0.011108N', '0.000044N', '0.000000N']
+2019-11-28 19:18:49,371 Percentage of received messages: 1.0
+2019-11-28 19:18:50,015 Invalid value literals were received: ['0.011100N', '0.011100N', '0.000000N', '0.000000N']
+2019-11-28 19:18:53,200 Invalid value literals were received: ['0.011129N', '0.011129N', '0.000043N', '0.000000N']
+2019-11-28 19:18:54,268 Invalid value literals were received: ['0.011114N', '0.011112N', '0.000000N', '0.000000N']
+2019-11-28 19:18:54,384 Percentage of received messages: 1.0
+2019-11-28 19:18:57,450 Invalid value literals were received: ['0.011069N', '0.011069N', '0.000044N', '0.000000N']
+2019-11-28 19:18:58,516 Invalid value literals were received: ['0.011071N', '0.011071N', '0.000000N', '0.000000N']
+2019-11-28 19:18:59,395 Percentage of received messages: 1.0
+2019-11-28 19:19:01,704 Invalid value literals were received: ['0.011082N', '0.011082N', '0.000043N', '0.000000N']
+2019-11-28 19:19:02,769 Invalid value literals were received: ['0.011093N', '0.011094N', '0.000000N', '0.000000N']
+2019-11-28 19:19:04,411 Percentage of received messages: 1.0
+2019-11-28 19:19:05,952 Invalid value literals were received: ['0.011102N', '0.011102N', '0.000044N', '0.000000N']
+2019-11-28 19:19:07,023 Invalid value literals were received: ['0.011100N', '0.011100N', '0.000000N', '0.000000N']
+2019-11-28 19:19:09,425 Percentage of received messages: 1.0
+2019-11-28 19:19:10,202 Invalid value literals were received: ['0.011119N', '0.011118N', '0.000043N', '0.000000N']
+2019-11-28 19:19:11,270 Invalid value literals were received: ['0.011091N', '0.011089N', '0.000000N', '0.000000N']
+2019-11-28 19:19:14,440 Percentage of received messages: 1.0
+2019-11-28 19:19:14,454 Invalid value literals were received: ['0.011071N', '0.011071N', '0.000044N', '0.000000N']
+2019-11-28 19:19:15,519 Invalid value literals were received: ['0.011071N', '0.011071N', '0.000000N', '0.000000N']
+2019-11-28 19:19:18,704 Invalid value literals were received: ['0.011090N', '0.011091N', '0.000043N', '0.000000N']
+2019-11-28 19:19:19,434 Percentage of received messages: 1.0
+2019-11-28 19:19:19,771 Invalid value literals were received: ['0.011103N', '0.011103N', '0.000000N', '0.000000N']
+2019-11-28 19:19:22,958 Invalid value literals were received: ['0.011099N', '0.011099N', '0.000044N', '0.000000N']
+2019-11-28 19:19:23,531 warning: ReadFile failed (OSError(9, 'Неверный дескриптор.', None, 6))

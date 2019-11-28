@@ -23,12 +23,14 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "arm_math.h"
 #include "stdio.h"
 #include "string.h"
 #include "stdbool.h"
+#include "stdlib.h"
 #include "sw_timers.h"
-#include "qrs_detection.h"
-#include "filter.h"
+#include "fir_filter_taps.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -39,7 +41,8 @@
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
 #define CONVERSION_NUM 4
-#define DATA_AMOUNT 4096
+#define DATA_AMOUNT 250
+#define BLOCK_SIZE 25
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -73,11 +76,16 @@ volatile int buffer_counter = 0;
 volatile float adjusted_data = 0;
 
 float data_insert[DATA_AMOUNT];
+int data_pow[DATA_AMOUNT];
+
 float data_compute[DATA_AMOUNT];
 int data_qrs_peaks[DATA_AMOUNT];
+
+static float firStateF32[DATA_AMOUNT + NUM_TAPS - 1];
+static int NUMBLOCKS = DATA_AMOUNT/BLOCK_SIZE;
 float data_onsend[DATA_AMOUNT];
+
 volatile bool OnSend = false;
-volatile bool IsNewData = false;
 
 char send_str[DATA_AMOUNT];
 int R_peaks[CONVERSION_NUM];
@@ -148,6 +156,7 @@ void t_Converter_callback(void)
 		//uv.update_buff_f[buffer_counter++] = (float)(conversion_raw&0x0FFF)*1.25f/4096.0f/80.53f;
 		adjusted_data = (float)(conversion_raw&0x0FFF)*1.25f/4096.0f/80.53f;
 		if(adjusted_data > 0.1f || adjusted_data < 0.001f)
+//		if(adjusted_data > 1024 || adjusted_data < 200)
 		{
 			__nop();
 			return;
@@ -165,7 +174,7 @@ void t_Sender_callback(void)
 	if(onsend_counter < DATA_AMOUNT && OnSend)
 		{
 			memcpy(uv.update_buff_f, data_onsend+onsend_counter, CONVERSION_NUM*sizeof(float));
-			memcpy(R_peaks, data_qrs_peaks+onsend_counter, CONVERSION_NUM*sizeof(int));
+			memcpy(R_peaks, data_qrs_peaks+onsend_counter, CONVERSION_NUM*sizeof(uint16_t));
 			
 			sprintf(send_str, "%d::%f%s %f%s %f%s %f%s ::END\r\n", msg_counter, 
 																									uv.update_buff_f[0],	R_peaks[0]	? "R" : "N",
@@ -221,20 +230,28 @@ int main(void)
 	HAL_TIM_Base_Start_IT(&htim3);
 	Timer_set(&t_converter, 4, sw_timer_base_ms, &t_Converter_callback, true, true);
 	Timer_set(&t_sender, 16, sw_timer_base_ms, &t_Sender_callback, true, true);
+	
+	arm_fir_instance_f32 S;
+	arm_fir_init_f32(&S, NUM_TAPS, (float32_t *)&firCoeffs32[0], &firStateF32[0], BLOCK_SIZE);
+	
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+	int counter = 0;
   while (1)
   {
 		t_OnDigitCompleteContinuous();
 		if(!OnSend && buffer_counter >= DATA_AMOUNT)
 		{
-			buffer_counter = 0;		//позволяем записывать новый массив
 			memcpy(data_compute, data_insert, sizeof(float)*DATA_AMOUNT);	//копируем массив данных в массив для обсчета пиков QRS 
 			
-			DetectQrsPeaks(data_compute, DATA_AMOUNT, (char*)data_qrs_peaks, 60);		//вычисляем массив пиков QRS
-			memcpy(data_onsend, data_compute, sizeof(float)*DATA_AMOUNT);		//копируем данные в новый массив на отправку
+			buffer_counter = 0;		//позволяем записывать новый массив
+			for(counter = 0; counter < NUMBLOCKS; counter++)
+			{
+				arm_fir_f32(&S, data_compute + (counter * BLOCK_SIZE), data_onsend + (counter * BLOCK_SIZE), BLOCK_SIZE);
+			}
+			
 			onsend_counter = 0;
 			OnSend = true;
 		}
