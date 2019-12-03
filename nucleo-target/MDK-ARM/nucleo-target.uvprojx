@@ -400,11 +400,6 @@
               <FilePath>..\Core\Inc\sw_timers.h</FilePath>
             </File>
             <File>
-              <FileName>qrs.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Core\Src\qrs.c</FilePath>
-            </File>
-            <File>
               <FileName>main.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Core/Src/main.c</FilePath>

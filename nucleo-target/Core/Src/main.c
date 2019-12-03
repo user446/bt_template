@@ -30,7 +30,6 @@
 #include "stdlib.h"
 #include "sw_timers.h"
 #include "fir_filter_taps.h"
-
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -41,8 +40,8 @@
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
 #define CONVERSION_NUM 4
-#define DATA_AMOUNT 250
-#define BLOCK_SIZE 25
+#define DATA_AMOUNT 256
+#define BLOCK_SIZE 16
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -73,17 +72,17 @@ update_value uv;
 volatile int msg_counter	=	0;
 volatile int onsend_counter = 0;
 volatile int buffer_counter = 0;
-volatile float adjusted_data = 0;
+volatile int adjusted_data = 0;
 
-float data_insert[DATA_AMOUNT];
-int data_pow[DATA_AMOUNT];
-
-float data_compute[DATA_AMOUNT];
+int data_insert[DATA_AMOUNT];
+int data_compute[DATA_AMOUNT];
+int data_onsend[DATA_AMOUNT];
+int data_filter[DATA_AMOUNT];
 int data_qrs_peaks[DATA_AMOUNT];
 
-static float firStateF32[DATA_AMOUNT + NUM_TAPS - 1];
-static int NUMBLOCKS = DATA_AMOUNT/BLOCK_SIZE;
-float data_onsend[DATA_AMOUNT];
+static int firStateF32[DATA_AMOUNT + NUM_TAPS - 1];
+static int NUM_BLOCKS = DATA_AMOUNT/BLOCK_SIZE;
+
 
 volatile bool OnSend = false;
 
@@ -154,13 +153,8 @@ void t_Converter_callback(void)
 		if(ret != HAL_OK)
 			__nop();
 		//uv.update_buff_f[buffer_counter++] = (float)(conversion_raw&0x0FFF)*1.25f/4096.0f/80.53f;
-		adjusted_data = (float)(conversion_raw&0x0FFF)*1.25f/4096.0f/80.53f;
-		if(adjusted_data > 0.1f || adjusted_data < 0.001f)
-//		if(adjusted_data > 1024 || adjusted_data < 200)
-		{
-			__nop();
-			return;
-		}
+		//adjusted_data = (float)(conversion_raw&0x0FFF)*1.25f/4096.0f/80.53f;
+		adjusted_data = (int)(conversion_raw&0x0FFF)*1.25f/4096.0f*1000000;
 		data_insert[buffer_counter++] = adjusted_data;
 	}
 	else if(buffer_counter >= DATA_AMOUNT)
@@ -168,19 +162,22 @@ void t_Converter_callback(void)
 }
 //
 
-
 void t_Sender_callback(void)
 {
 	if(onsend_counter < DATA_AMOUNT && OnSend)
 		{
-			memcpy(uv.update_buff_f, data_onsend+onsend_counter, CONVERSION_NUM*sizeof(float));
-			memcpy(R_peaks, data_qrs_peaks+onsend_counter, CONVERSION_NUM*sizeof(uint16_t));
-			
-			sprintf(send_str, "%d::%f%s %f%s %f%s %f%s ::END\r\n", msg_counter, 
-																									uv.update_buff_f[0],	R_peaks[0]	? "R" : "N",
-																									uv.update_buff_f[1],	R_peaks[1]	? "R" : "N",
-																									uv.update_buff_f[2],	R_peaks[2]	? "R" : "N",
-																									uv.update_buff_f[3],	R_peaks[3]	? "R" : "N");
+			memcpy(uv.update_buff_u32, data_onsend+onsend_counter, CONVERSION_NUM*sizeof(data_onsend[0]));
+			memcpy(R_peaks, data_qrs_peaks+onsend_counter, CONVERSION_NUM*sizeof(data_qrs_peaks[0]));
+//			for(int i = 0; i < CONVERSION_NUM; i++)
+//			{
+//				if(uv.update_buff_f[i] == 0)
+//					__nop();
+//			}
+			sprintf(send_str, "%d::%d%s %d%s %d%s %d%s ::END\r\n", msg_counter, 
+																									uv.update_buff_u32[0],	R_peaks[0]	? "R" : "N",
+																									uv.update_buff_u32[1],	R_peaks[1]	? "R" : "N",
+																									uv.update_buff_u32[2],	R_peaks[2]	? "R" : "N",
+																									uv.update_buff_u32[3],	R_peaks[3]	? "R" : "N");
 			onsend_counter+=CONVERSION_NUM;
 			msg_counter++;
 			ret = HAL_UART_Transmit_DMA(&huart2, (uint8_t*)send_str, strlen(send_str));
@@ -191,6 +188,50 @@ void t_Sender_callback(void)
 		}
 }
 //
+
+#define threshold0 564000
+const int eps = 20;
+#define OVERLAP 20
+int shift[OVERLAP] = {0};
+int window[DATA_AMOUNT+OVERLAP] = {0};
+int heartbeat = 0;
+void Thresholding(int* data, int* data_shifted, int* peak_holder, int size)
+{
+	int x_m1 = 0;
+	int x_p1 = 0;
+	int x = 0;
+	int x_m2 = 0;
+	int x_p2 = 0;
+	
+	memcpy(window, shift, sizeof(int)*OVERLAP);
+	memcpy(window+OVERLAP, data, sizeof(int)*size);
+	for(int i = OVERLAP/2; i < size+OVERLAP/2; i++)
+	{
+			x_m2 = window[i-2];
+			x_m1 = window[i-1];
+			x = window[i];
+			x_p1 = window[i+1];
+			x_p2 = window[i+2];
+			
+			if(x >= threshold0)
+			{
+				if((x - x_m1 >= 0 && x - x_m2 > 0) && 
+					(x - x_p1 >= 0 && x - x_p2 > 0))
+				{
+					peak_holder[i-OVERLAP/2] = 1;
+					heartbeat++;
+				}
+				else
+				{
+					peak_holder[i-OVERLAP/2] = 0;
+				}
+			}
+	}
+	memcpy(shift, data+(size-OVERLAP), sizeof(int)*OVERLAP);
+	memcpy(data_shifted, window+OVERLAP/2, sizeof(int)*size);
+}
+//
+
 /* USER CODE END 0 */
 
 /**
@@ -231,26 +272,30 @@ int main(void)
 	Timer_set(&t_converter, 4, sw_timer_base_ms, &t_Converter_callback, true, true);
 	Timer_set(&t_sender, 16, sw_timer_base_ms, &t_Sender_callback, true, true);
 	
-	arm_fir_instance_f32 S;
-	arm_fir_init_f32(&S, NUM_TAPS, (float32_t *)&firCoeffs32[0], &firStateF32[0], BLOCK_SIZE);
+	arm_fir_instance_q31 S;
+	arm_fir_init_q31(&S, NUM_TAPS, &firCoeffs32[0], &firStateF32[0], BLOCK_SIZE);
 	
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
 	int counter = 0;
+	float max = 0.0f;
+	uint32_t max_index = 0;
   while (1)
   {
 		t_OnDigitCompleteContinuous();
 		if(!OnSend && buffer_counter >= DATA_AMOUNT)
 		{
-			memcpy(data_compute, data_insert, sizeof(float)*DATA_AMOUNT);	//копируем массив данных в массив для обсчета пиков QRS 
-			
+			memcpy(data_compute, data_insert, sizeof(int)*DATA_AMOUNT);	//копируем массив данных в массив для обсчета пиков QRS 
+			memcpy(data_onsend, data_insert, sizeof(int)*DATA_AMOUNT);
 			buffer_counter = 0;		//позволяем записывать новый массив
-			for(counter = 0; counter < NUMBLOCKS; counter++)
+			for(counter = 0; counter < NUM_BLOCKS; counter++)
 			{
-				arm_fir_f32(&S, data_compute + (counter * BLOCK_SIZE), data_onsend + (counter * BLOCK_SIZE), BLOCK_SIZE);
+				arm_fir_q31(&S, data_compute + (counter * BLOCK_SIZE), data_filter + (counter * BLOCK_SIZE), BLOCK_SIZE);
 			}
+			memset(data_qrs_peaks, 0, sizeof(int)*DATA_AMOUNT);
+			Thresholding(data_filter, data_onsend, data_qrs_peaks, DATA_AMOUNT);
 			
 			onsend_counter = 0;
 			OnSend = true;

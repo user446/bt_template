@@ -55,7 +55,7 @@ class BlueCardioGraph(pg.GraphicsWindow):
         self.plotItem = self.addPlot(title="BlueCardio Output")
 
         self.plotDataItem = self.plotItem.plot([], pen=pg.mkPen('b', width=1),
-                                               symbolBrush=(255, 0, 0), symbolSize=1, symbolPen=None)
+                                               symbolBrush=(255, 0, 0), symbolSize=3, symbolPen=None)
 
         self.plotDataQ = self.plotItem.plot(
             [], pen=None, symbol='o', symbolBrush='c', symbolSize=5)
