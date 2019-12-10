@@ -30,6 +30,7 @@
 #include "stdlib.h"
 #include "sw_timers.h"
 #include "fir_filter_taps.h"
+#include "ecg_array.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -39,9 +40,26 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+//Predefined packet, detection and transmission settings
 #define CONVERSION_NUM 4
 #define DATA_AMOUNT 256
-#define BLOCK_SIZE 16
+#define BLOCK_SIZE 16		//FIR filter block size
+#define FREQ 200
+#define OVERLAP 32			//window overlap in detection algorithm
+#define PREDEFINE_AMOUNT 2
+
+//Predefined settings of Threshold algorithm
+//#define THRESHOLD 786000
+//#define THRESHOLD 566000
+
+//Predefined markers
+#define NO_MARKER 0
+#define NO_MARKER_CHAR 'N'
+#define	R_PEAK		'R'
+#define	WINDOW_MARK	'W'
+#define	SR_PEAK		'S'
+#define	A_MARK		'A'
+#define	B_MARK		'B'
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -65,29 +83,41 @@ typedef union {
 	uint8_t update_buff_u8[CONVERSION_NUM*4+sizeof(int)];
 }update_value;
 //
+update_value uv; //simple conversion variable
 
 struct timer t_converter;
 struct timer t_sender;
-update_value uv;
 volatile int msg_counter	=	0;
 volatile int onsend_counter = 0;
 volatile int buffer_counter = 0;
 volatile int adjusted_data = 0;
+volatile int preset_counter = 0;
 
-int data_insert[DATA_AMOUNT];
-int data_compute[DATA_AMOUNT];
-int data_onsend[DATA_AMOUNT];
-int data_filter[DATA_AMOUNT];
-int data_qrs_peaks[DATA_AMOUNT];
-
-static int firStateF32[DATA_AMOUNT + NUM_TAPS - 1];
-static int NUM_BLOCKS = DATA_AMOUNT/BLOCK_SIZE;
-
-
+volatile int data_switch = 1;
 volatile bool OnSend = false;
 
+
+int data_insert[DATA_AMOUNT] = {0};		//array to contain data from ADC
+int data_onsend[DATA_AMOUNT] = {0};		//array to forward data on transmitter
+int data_markers[DATA_AMOUNT] = {0};	//array to contain markers data
+
+int heartbeat = 0;
+int window[DATA_AMOUNT+OVERLAP] = {0};
+int window_markers[DATA_AMOUNT+OVERLAP] = {0};
+int data_filter[DATA_AMOUNT+OVERLAP];		//array to contain data from filter
+static int firStateF32[DATA_AMOUNT + OVERLAP + NUM_TAPS - 1];
+static int NUM_BLOCKS = (DATA_AMOUNT+OVERLAP)/BLOCK_SIZE;
+
+
+//Transmission variables
+const char* packet_begin = "ECG";
+const char* packet_end = "END\r\n";
+const char* packet_delimiter = "::";
+
 char send_str[DATA_AMOUNT];
-int R_peaks[CONVERSION_NUM];
+int markers[CONVERSION_NUM] = {0};
+char parsed_markers[CONVERSION_NUM][CONVERSION_NUM];
+
 uint32_t conversion_raw;
 HAL_StatusTypeDef ret;
 /* USER CODE END PV */
@@ -100,7 +130,9 @@ static void MX_ADC1_Init(void);
 static void MX_USART2_UART_Init(void);
 static void MX_TIM3_Init(void);
 /* USER CODE BEGIN PFP */
-
+void Thresholding(int* data, int* peak_holder, int threshold, int size);
+void AppendIntMarker(int* dest, int marker);
+void ParseMarkers(int marker_signs, char* markers,	int size);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -145,20 +177,57 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef *UartHandle)
 }
 //
 
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+	if(GPIO_Pin == GPIO_PIN_13)
+	{
+		data_switch = (data_switch+1)%PREDEFINE_AMOUNT;
+	}
+}
+//
+
+int sample_index = 0;
 void t_Converter_callback(void)
 {
-	if((HAL_ADC_GetState(&hadc1) & HAL_ADC_STATE_READY) != 0 && buffer_counter < DATA_AMOUNT)
+	switch(data_switch)
 	{
-		ret = HAL_ADC_Start_DMA(&hadc1,	&conversion_raw, 1);
-		if(ret != HAL_OK)
-			__nop();
-		//uv.update_buff_f[buffer_counter++] = (float)(conversion_raw&0x0FFF)*1.25f/4096.0f/80.53f;
-		//adjusted_data = (float)(conversion_raw&0x0FFF)*1.25f/4096.0f/80.53f;
-		adjusted_data = (int)(conversion_raw&0x0FFF)*1.25f/4096.0f*1000000;
-		data_insert[buffer_counter++] = adjusted_data;
+		case 0:
+		{
+			if((HAL_ADC_GetState(&hadc1) & HAL_ADC_STATE_READY) != 0 && buffer_counter < DATA_AMOUNT)
+			{
+				ret = HAL_ADC_Start_DMA(&hadc1,	&conversion_raw, 1);
+				if(ret != HAL_OK)
+					__nop();
+				//uv.update_buff_f[buffer_counter++] = (float)(conversion_raw&0x0FFF)*1.25f/4096.0f/80.53f;
+				//adjusted_data = (float)(conversion_raw&0x0FFF)*1.25f/4096.0f/80.53f;
+				adjusted_data = (int)(conversion_raw&0x0FFF)*1.25f/4096.0f*1000000;
+				data_insert[buffer_counter++] = adjusted_data;
+			}
+			else if(buffer_counter >= DATA_AMOUNT)
+				OnSend = false;
+			break;
+		}
+		case 1:
+		{
+			if(buffer_counter < DATA_AMOUNT)
+			{
+				ret = HAL_ADC_Start_DMA(&hadc1,	&conversion_raw, 1);
+				if(ret != HAL_OK)
+					__nop();
+				adjusted_data = ecg_samples[preset_counter++];
+				if(preset_counter > PRESET_LENGTH)
+				{
+					preset_counter = 0;
+					buffer_counter = 0;
+				}
+				data_insert[buffer_counter++] = adjusted_data;
+			}
+			else if(buffer_counter >= DATA_AMOUNT)
+				OnSend = false;
+			break;
+		}
+		default: break;
 	}
-	else if(buffer_counter >= DATA_AMOUNT)
-		OnSend = false;
 }
 //
 
@@ -167,17 +236,18 @@ void t_Sender_callback(void)
 	if(onsend_counter < DATA_AMOUNT && OnSend)
 		{
 			memcpy(uv.update_buff_u32, data_onsend+onsend_counter, CONVERSION_NUM*sizeof(data_onsend[0]));
-			memcpy(R_peaks, data_qrs_peaks+onsend_counter, CONVERSION_NUM*sizeof(data_qrs_peaks[0]));
-//			for(int i = 0; i < CONVERSION_NUM; i++)
-//			{
-//				if(uv.update_buff_f[i] == 0)
-//					__nop();
-//			}
-			sprintf(send_str, "%d::%d%s %d%s %d%s %d%s ::END\r\n", msg_counter, 
-																									uv.update_buff_u32[0],	R_peaks[0]	? "R" : "N",
-																									uv.update_buff_u32[1],	R_peaks[1]	? "R" : "N",
-																									uv.update_buff_u32[2],	R_peaks[2]	? "R" : "N",
-																									uv.update_buff_u32[3],	R_peaks[3]	? "R" : "N");
+			memcpy(markers, data_markers+onsend_counter, CONVERSION_NUM*sizeof(data_markers[0]));
+			
+			for(int i = 0; i < CONVERSION_NUM; i++)
+				ParseMarkers(markers[i], parsed_markers[i], CONVERSION_NUM);
+			sprintf(send_str, "%s %d%s%d%s %d%s %d%s %d%s %s%s", 
+				packet_begin,	msg_counter,	packet_delimiter, 
+											uv.update_buff_u32[0], parsed_markers[0],
+											uv.update_buff_u32[1], parsed_markers[1],
+											uv.update_buff_u32[2], parsed_markers[2],
+											uv.update_buff_u32[3], parsed_markers[3],
+																		packet_delimiter, packet_end);
+											
 			onsend_counter+=CONVERSION_NUM;
 			msg_counter++;
 			ret = HAL_UART_Transmit_DMA(&huart2, (uint8_t*)send_str, strlen(send_str));
@@ -189,13 +259,7 @@ void t_Sender_callback(void)
 }
 //
 
-#define threshold0 564000
-const int eps = 20;
-#define OVERLAP 20
-int shift[OVERLAP] = {0};
-int window[DATA_AMOUNT+OVERLAP] = {0};
-int heartbeat = 0;
-void Thresholding(int* data, int* data_shifted, int* peak_holder, int size)
+void Thresholding(int* data, int* peak_holder, int threshold, int size)
 {
 	int x_m1 = 0;
 	int x_p1 = 0;
@@ -203,35 +267,82 @@ void Thresholding(int* data, int* data_shifted, int* peak_holder, int size)
 	int x_m2 = 0;
 	int x_p2 = 0;
 	
-	memcpy(window, shift, sizeof(int)*OVERLAP);
-	memcpy(window+OVERLAP, data, sizeof(int)*size);
 	for(int i = OVERLAP/2; i < size+OVERLAP/2; i++)
 	{
-			x_m2 = window[i-2];
-			x_m1 = window[i-1];
-			x = window[i];
-			x_p1 = window[i+1];
-			x_p2 = window[i+2];
+			x_m2 = data[i-2];
+			x_m1 = data[i-1];
+			x = data[i];
+			x_p1 = data[i+1];
+			x_p2 = data[i+2];
 			
-			if(x >= threshold0)
+			if(x >= threshold)
 			{
 				if((x - x_m1 >= 0 && x - x_m2 > 0) && 
 					(x - x_p1 >= 0 && x - x_p2 > 0))
 				{
-					peak_holder[i-OVERLAP/2] = 1;
+					AppendIntMarker(&peak_holder[i-OVERLAP/2], R_PEAK);
 					heartbeat++;
-				}
-				else
-				{
-					peak_holder[i-OVERLAP/2] = 0;
 				}
 			}
 	}
-	memcpy(shift, data+(size-OVERLAP), sizeof(int)*OVERLAP);
-	memcpy(data_shifted, window+OVERLAP/2, sizeof(int)*size);
 }
 //
 
+
+//void AppendPresetMarkers(void)
+//{
+	//Версия Сергея
+////	while( //&&  
+////				RpeakSamples[sample_index] <= preset_counter + DATA_AMOUNT && 
+////							sample_index < RPEAK_LENGTH)
+////	{
+////			if (RpeakSamples[sample_index] >= preset_counter) { 
+////					data_markers[RpeakSamples[sample_index] - preset_counter] = SR_PEAK;
+////			
+////				}
+////    	sample_index = (sample_index+1)%RPEAK_LENGTH;
+////   }
+// Моя версия
+//	if(preset_counter == RpeakSamples[sample_index])
+//		{
+//			AppendIntMarker(&data_markers[(RpeakSamples[sample_index]+OVERLAP)%DATA_AMOUNT], SR_PEAK);
+//			sample_index = (sample_index+1)%RPEAK_LENGTH;
+//		}
+//}
+//
+
+void AppendIntMarker(int* dest, int marker)
+{
+	int free_pos = 0;
+	uint32_t mask = 0x00FF;
+	while(((*dest)&mask) != 0)
+	{
+		free_pos++;
+		mask = mask << 8;
+	}
+	(*dest) = (*dest)|(marker<<(free_pos*8));
+}
+//
+
+void ParseMarkers(int marker_signs, char* markers,	int size)
+{
+	int tmp = 0;
+	int n = 0;
+	memset(markers, 0, sizeof(markers[0])*size);
+	markers[0] = NO_MARKER_CHAR;
+	tmp = marker_signs;
+	for(int i = 0; i < size; i++)
+	{
+		n = 0;
+		while(tmp)
+		{
+			markers[i+n] = (char)(tmp&0x00FF);
+			tmp = tmp >> 8;
+			n++;
+		}
+	}
+}
+//
 /* USER CODE END 0 */
 
 /**
@@ -269,33 +380,72 @@ int main(void)
   MX_TIM3_Init();
   /* USER CODE BEGIN 2 */
 	HAL_TIM_Base_Start_IT(&htim3);
-	Timer_set(&t_converter, 4, sw_timer_base_ms, &t_Converter_callback, true, true);
-	Timer_set(&t_sender, 16, sw_timer_base_ms, &t_Sender_callback, true, true);
+	Timer_set(&t_converter, sw_timer_100us_insec/FREQ, sw_timer_base_100us, &t_Converter_callback, true, true);
+	Timer_set(&t_sender, sw_timer_100us_insec/FREQ*4, sw_timer_base_100us, &t_Sender_callback, true, true);
 	
 	arm_fir_instance_q31 S;
 	arm_fir_init_q31(&S, NUM_TAPS, &firCoeffs32[0], &firStateF32[0], BLOCK_SIZE);
+	
+	HAL_GPIO_WritePin(Enable_Indicator_GPIO_Port, Enable_Indicator_Pin, GPIO_PIN_SET);
 	
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
 	int counter = 0;
-	float max = 0.0f;
-	uint32_t max_index = 0;
+	int out = 0;
+	int rest = 0;
   while (1)
   {
 		t_OnDigitCompleteContinuous();
+		
 		if(!OnSend && buffer_counter >= DATA_AMOUNT)
 		{
-			memcpy(data_compute, data_insert, sizeof(int)*DATA_AMOUNT);	//копируем массив данных в массив для обсчета пиков QRS 
-			memcpy(data_onsend, data_insert, sizeof(int)*DATA_AMOUNT);
+			memcpy(window, window+DATA_AMOUNT, sizeof(window[0])*OVERLAP);
+			memcpy(window+OVERLAP, data_insert, sizeof(data_insert[0])*DATA_AMOUNT);
+			
+			memcpy(window_markers, window_markers+DATA_AMOUNT, sizeof(window_markers[0])*OVERLAP);
+			memset(window_markers+OVERLAP, 0, sizeof(data_markers[0])*(DATA_AMOUNT));
+			
 			buffer_counter = 0;		//позволяем записывать новый массив
-			for(counter = 0; counter < NUM_BLOCKS; counter++)
+			if(data_switch)
 			{
-				arm_fir_q31(&S, data_compute + (counter * BLOCK_SIZE), data_filter + (counter * BLOCK_SIZE), BLOCK_SIZE);
+					out = DATA_AMOUNT;
+					while(out > 0)
+					{
+						if(preset_counter - out == RpeakSamples[sample_index] && preset_counter - out >= 0)
+						{
+							if(HAL_GPIO_ReadPin(Filter_Switch_GPIO_Port, Filter_Switch_Pin) == GPIO_PIN_RESET)
+							{
+								AppendIntMarker(&window_markers[(RpeakSamples[sample_index])%DATA_AMOUNT + OVERLAP], SR_PEAK);
+							}
+							else
+							{
+								AppendIntMarker(&window_markers[(RpeakSamples[sample_index])%DATA_AMOUNT + OVERLAP + NUM_TAPS/2], SR_PEAK);
+							}
+							sample_index = (sample_index+1)%RPEAK_LENGTH;
+						}
+						out--;
+					}
 			}
-			memset(data_qrs_peaks, 0, sizeof(int)*DATA_AMOUNT);
-			Thresholding(data_filter, data_onsend, data_qrs_peaks, DATA_AMOUNT);
+			
+			if(HAL_GPIO_ReadPin(Filter_Switch_GPIO_Port, Filter_Switch_Pin) == GPIO_PIN_RESET)
+			{
+				//Thresholding(window, data_markers, 786000, DATA_AMOUNT);
+				Thresholding(window, window_markers+OVERLAP/2, 400000, DATA_AMOUNT);
+				memcpy(data_onsend, window+OVERLAP/2, sizeof(data_onsend[0])*DATA_AMOUNT);
+			}
+			else
+			{
+				for(counter = 0; counter < NUM_BLOCKS; counter++)
+				{
+					arm_fir_q31(&S, window + (counter * BLOCK_SIZE), data_filter + (counter * BLOCK_SIZE), BLOCK_SIZE);
+				}
+				Thresholding(data_filter, window_markers+OVERLAP/2, 400000, DATA_AMOUNT);
+				memcpy(data_onsend, data_filter+OVERLAP/2, sizeof(data_onsend[0])*DATA_AMOUNT);
+			}
+			memcpy(data_markers, window_markers+OVERLAP/2, sizeof(data_markers[0])*DATA_AMOUNT);
+			AppendIntMarker(&data_markers[0], WINDOW_MARK);
 			
 			onsend_counter = 0;
 			OnSend = true;
@@ -545,7 +695,7 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIOA, SMPS_EN_Pin|SMPS_V1_Pin|SMPS_SW_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(LD4_GPIO_Port, LD4_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, LD4_Pin|Enable_Indicator_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin : B1_Pin */
   GPIO_InitStruct.Pin = B1_Pin;
@@ -566,12 +716,22 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(SMPS_PG_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : LD4_Pin */
-  GPIO_InitStruct.Pin = LD4_Pin;
+  /*Configure GPIO pins : LD4_Pin Enable_Indicator_Pin */
+  GPIO_InitStruct.Pin = LD4_Pin|Enable_Indicator_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(LD4_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : Filter_Switch_Pin */
+  GPIO_InitStruct.Pin = Filter_Switch_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(Filter_Switch_GPIO_Port, &GPIO_InitStruct);
+
+  /* EXTI interrupt init*/
+  HAL_NVIC_SetPriority(EXTI15_10_IRQn, 3, 0);
+  HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
 
 }
 

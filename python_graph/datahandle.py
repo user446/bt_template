@@ -148,19 +148,20 @@ class SerialPort(QtCore.QThread):
             raise RuntimeError         #сбрасываем
         
         try:
-            if (self.datacount+1) != int(data[0]):
+            counter = data[0].split()
+            if (self.datacount+1) != int(counter[1]):
                 self.logger.warning(
-                    "Seems like previous packet was lost: %s : %s", data[0], self.data)
-                if data[0] != self.previous_lost_count:
+                    "Seems like previous packet was lost: %s : %s", counter[1], self.data)
+                if counter[1] != self.previous_lost_count:
                     self.previous_lost = self.data
-                    self.previous_lost_count = data[0]
+                    self.previous_lost_count = counter[1]
                 else:
                     self.logger.error("Seems like same broken package was sent!")
                     raise RuntimeError
-            self.datacount = int(data[0])
+            self.datacount = int(counter[1])
             #self.logger.warning("Received number of package is: %s", self.datacount)
         except ValueError as e:      #не удалось распарсить счетчик сообщения
-            self.logger.warning("Invalid literal was received: %s", data[0])
+            self.logger.warning("Invalid literal was received: %s", counter[1])
             raise e
         
         self.received = self.received + 1

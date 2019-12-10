@@ -13,6 +13,7 @@ import argparse
 import logging
 import struct
 import serial
+import datetime
 import re
 import numpy as np
 import pygatt
@@ -77,6 +78,7 @@ def main(args):
             raise RuntimeError
         logger.info("Connected!")
 
+    logger.info("Program started at %s", datetime.datetime.now().time())
     app = QtGui.QApplication([])
 
     pg.setConfigOptions(antialias=False)  # True seems to work as well
@@ -112,6 +114,7 @@ def main(args):
         adapter.stop()
     elif cm is not None:
         sock.close()
+    logger.info("Program finished at %s", datetime.datetime.now().time())
     logger.info("info: Abort action received from user")
 
 

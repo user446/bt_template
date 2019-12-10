@@ -3,8 +3,13 @@
 
 #include <stdbool.h>
 
+#define sw_timer_base_100us 1
 #define sw_timer_base_ms 10
 #define sw_timer_base_s 10000
+
+#define sw_timer_100us_insec 10000
+#define sw_timer_ms_insec 1000
+#define sw_timer_s_insec 1
 
 /**
 	*	@brief	структура таймера
