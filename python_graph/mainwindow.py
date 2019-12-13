@@ -22,5 +22,5 @@ class MainWindow(QtGui.QMainWindow):
         self.Layout = layout
         self.centralWidget.setLayout(layout)
 
-    def AddNewVidget(self, vidget, gridpos_x=0, gridpos_y=0):
-        self.Layout.addWidget(vidget, gridpos_x, gridpos_y)
+    def AddNewWidget(self, widget, gridpos_x=0, gridpos_y=0):
+        self.Layout.addWidget(widget, gridpos_x, gridpos_y)

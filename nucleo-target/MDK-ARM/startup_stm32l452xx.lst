@@ -666,8 +666,9 @@ erwork --depend=nucleo-target\startup_stm32l452xx.d -onucleo-target\startup_stm
 arget" -IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.6.0\CMSIS\Core\Include -IC:\Keil_v5\AR
 M\PACK\ARM\CMSIS\5.6.0\CMSIS\DSP\Include -IC:\Keil_v5\ARM\PACK\Keil\STM32L4xx_D
 FP\2.2.0\Drivers\CMSIS\Device\ST\STM32L4xx\Include --predefine="__MICROLIB SETA
- 1" --predefine="__UVISION_VERSION SETA 522" --predefine="_RTE_ SETA 1" --list=
-startup_stm32l452xx.lst RTE\Device\STM32L452RETxP\startup_stm32l452xx.s
+ 1" --predefine="__UVISION_VERSION SETA 522" --predefine="_RTE_ SETA 1" --prede
+fine="STM32L452xx SETA 1" --list=startup_stm32l452xx.lst RTE\Device\STM32L452RE
+TxP\startup_stm32l452xx.s
 
 
 
@@ -1632,4 +1633,4 @@ Symbol: __main
       At line 192 in file RTE\Device\STM32L452RETxP\startup_stm32l452xx.s
 Comment: __main used once
 2 symbols
-432 symbols in table
+433 symbols in table

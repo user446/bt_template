@@ -22,16 +22,32 @@ class BlueCardioGraph(pg.GraphicsWindow):
         self.showlen = showlen
         self.x_data = np.array([])
         self.y_data = np.array([])
+        
         self.R_peak_data = np.array([])
         self.R_peak_time = np.array([])
         self.SR_peak_data = np.array([])
         self.SR_peak_time = np.array([])
         self.Window_markers = np.array([])
         self.Window_time = np.array([])
+        
         self.max_y = 0
         self.min_y = 0
         self.time_data = 0
+        
         self.data_switch = True
+        
+        self.info_string = ""
+        self.label_pointer = None
+        self.accuracy = 0
+        self.predicrive_positive = 0
+        self.sensitivity = 0
+        self.totalbeats = 0
+        self.Fn = 0
+        self.Fp = 0
+        self.Tp = 0
+        self.pass_time = 4
+        self.pass_amount = 2
+        
         if mark == 'internal':
             self.markers = mark
         elif isinstance(mark, str) or not isinstance(mark, bool):
@@ -57,16 +73,19 @@ class BlueCardioGraph(pg.GraphicsWindow):
             self.mark_timer.timeout.connect(self.OnQRSCompute)
 
         self.plotItem = self.addPlot(title="BlueCardio Output")
-
+        
+        self.plotItem.addLegend()
+        
         self.plotDataItem = self.plotItem.plot([], pen=pg.mkPen('b', width=1),
-                                               symbolBrush=(255, 0, 0), symbolSize=3, symbolPen=None)
+                                               symbolBrush=(255, 0, 0), symbolSize=3, symbolPen=None,  name = "Data")
+        
 
-        self.plotDataQ = self.plotItem.plot(
-            [], pen=None, symbol='x', symbolBrush='b', symbolSize=14)
+        self.plotDataSR = self.plotItem.plot(
+            [], pen=None, symbol='x', symbolBrush='b', symbolSize=14, name = "Predefined Peaks")
         self.plotDataR = self.plotItem.plot( 
-            [], pen=None, symbol='o', symbolBrush='r', symbolSize=10)
-        self.plotDataS = self.plotItem.plot(
-            [], pen=None, symbol='s', symbolBrush='g', symbolSize=12)
+            [], pen=None, symbol='o', symbolBrush='r', symbolSize=10, name = "Detected Peaks")
+        self.plotDataW = self.plotItem.plot(
+            [], pen=None,  symbol='s', symbolBrush='g', symbolSize=12, name = "Window markers")
         if(showlen >= 4):
             self.plotItem.setXRange(0, showlen)
 
@@ -94,6 +113,16 @@ class BlueCardioGraph(pg.GraphicsWindow):
             if self.markers != 'internal' and self.markers:
                 self.mark_timer.start()
             self.data_switch = True
+            
+    def GetInfoLabel(self, label):
+        if isinstance(label, QtGui.QLabel):
+            self.label_pointer = label
+        else:
+            raise RuntimeError
+        # if isinstance(label, QtGui.QLabel):
+        #     label.setText(self.info_string)
+        # else:
+        #     raise RuntimeError
 
     def OnQRSCompute(self):
         if self.markers is True and self.x_data[-1] > self.showlen:
@@ -103,9 +132,41 @@ class BlueCardioGraph(pg.GraphicsWindow):
                 self.setQRS(self.x_data, R = R_peaks0, S = R_peaks1)
 
     def setQRS(self, x, R, S):
-        #self.plotDataQ.setData(x[Q], self.y_data[Q])
+        #self.plotDataSR.setData(x[Q], self.y_data[Q])
         self.plotDataR.setData(x[R], self.y_data[R])
-        self.plotDataS.setData(x[S], self.y_data[S])
+        self.plotDataW.setData(x[S], self.y_data[S])
+        
+    def OnAnalyseData(self):
+        outside = -self.pass_time*self.pass_amount
+        detected = False
+        tmp = 0
+        if self.SR_peak_time.size:
+            for x in self.SR_peak_time :
+                while x + outside < x + self.pass_time*4 and outside <= self.pass_time*4:
+                    if x + outside in self.R_peak_time:
+                        self.Tp = self.Tp + 1
+                        tmp = self.Tp
+                        detected = True
+                        break
+                    outside = outside + self.pass_time
+                if tmp != self.Tp:
+                    detected = False
+                if not detected:
+                    self.Fp = self.Fp + 1
+        else:
+            return
+        
+        try:
+            self.Fn = self.R_peak_time.size - self.SR_peak_time.size
+            self.accuracy = (1 - (self.Fn + self.Fp)/self.SR_peak_time.size)*100
+            self.sensitivity = (self.Tp/(self.Tp + self.Fn))*100
+            self.predicrive_positive = (self.Tp/(self.Tp + self.Fp))*100
+        except:
+            return
+        
+        if self.label_pointer is not None:
+            message = "Acc: %d, S: %d, P:%d, Tp(Д): %d, Fp(нД): %d, Fn(лД): %d" % (self.accuracy, self.sensitivity, self.predicrive_positive, self.Tp, self.Fp, self.Fn)
+            self.label_pointer.setText(message)
 
     def setData(self, x, y):
         self.plotDataItem.setData(x, y)
@@ -144,13 +205,15 @@ class BlueCardioGraph(pg.GraphicsWindow):
         if self.markers == 'internal':
             i = 0
             
-            n = 0
+            parse_list = list()
             for x in data:
                 parsable = False
+                n = 0
                 while not parsable:
                     try:
                         int(x[:n])
                         parsable = True
+                        parse_list.append(n)
                     except:
                         parsable = False
                         n = n - 1
@@ -159,13 +222,12 @@ class BlueCardioGraph(pg.GraphicsWindow):
             
             num_data = list()
             marks = list()
+
+            parse_count = 0
             for x in data:
-                if x[-1:] != 'N':
-                    num_data.append(x[:n])
-                    marks.append(x[n:])
-                else:
-                    num_data.append(x[:-1])
-                    marks.append(x[-1:])
+                num_data.append(x[:parse_list[parse_count]])
+                marks.append(x[parse_list[parse_count]:])
+                parse_count = parse_count + 1
             
             for mk in marks:
                 for x in mk:
@@ -189,22 +251,23 @@ class BlueCardioGraph(pg.GraphicsWindow):
         if self.x_data[-1] > self.showlen and self.showlen >= 4:
             self.x_data = np.delete(self.x_data, [0, 1, 2, 3])
             self.y_data = np.delete(self.y_data, [0, 1, 2, 3])
-            if self.Window_time.size:
-                if self.Window_time[0] < self.x_data[0]:
-                    self.Window_time = np.delete(self.Window_time, [0])
-                    self.Window_markers = np.delete(self.Window_markers, [0])
-            if self.R_peak_time.size:
-                if self.R_peak_time[0] < self.x_data[0]:
-                    self.R_peak_time = np.delete(self.R_peak_time, [0])
-                    self.R_peak_data = np.delete(self.R_peak_data, [0])
-            if self.SR_peak_time.size:
-                if self.SR_peak_time[0] < self.x_data[0]:
-                    self.SR_peak_time = np.delete(self.SR_peak_time, [0])
-                    self.SR_peak_data = np.delete(self.SR_peak_data, [0])
+            # if self.Window_time.size:
+            #     if self.Window_time[0] < self.x_data[0]:
+            #         self.Window_time = np.delete(self.Window_time, [0])
+            #         self.Window_markers = np.delete(self.Window_markers, [0])
+            # if self.R_peak_time.size:
+            #     if self.R_peak_time[0] < self.x_data[0]:
+            #         self.R_peak_time = np.delete(self.R_peak_time, [0])
+            #         self.R_peak_data = np.delete(self.R_peak_data, [0])
+            # if self.SR_peak_time.size:
+            #     if self.SR_peak_time[0] < self.x_data[0]:
+            #         self.SR_peak_time = np.delete(self.SR_peak_time, [0])
+            #         self.SR_peak_data = np.delete(self.SR_peak_data, [0])
+            self.OnAnalyseData()
             self.plotItem.setXRange(
                 self.x_data[-1] - self.showlen, self.x_data[-1])
         if self.markers == 'internal':
             self.plotDataR.setData(self.R_peak_time, self.R_peak_data)
-            self.plotDataS.setData(self.Window_time, self.Window_markers)
-            self.plotDataQ.setData(self.SR_peak_time, self.SR_peak_data)
+            self.plotDataW.setData(self.Window_time, self.Window_markers)
+            self.plotDataSR.setData(self.SR_peak_time, self.SR_peak_data)
         self.setData(self.x_data, self.y_data)

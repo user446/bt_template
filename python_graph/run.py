@@ -98,12 +98,23 @@ def main(args):
     win = MainWindow()
     plot = BlueCardioGraph(comm, qrs_compute, args.length, logger)
 
+    bt_layout = QtWidgets.QHBoxLayout()
     bt_stopupdate = QtWidgets.QPushButton('Stop')
     bt_stopupdate.setToolTip('Stop updating data on a plot')
     bt_stopupdate.clicked.connect(plot.DataUpdSwitch)
+    bt_layout.addStretch(1)
+    bt_layout.addWidget(bt_stopupdate)
+    
+    label_layout = QtWidgets.QHBoxLayout()
+    label_info = QtWidgets.QLabel()
+    label_layout.addStretch()
+    label_layout.addWidget(label_info)
+    
+    plot.GetInfoLabel(label_info)
 
-    win.AddNewVidget(plot)
-    win.AddNewVidget(bt_stopupdate, 1, 0)
+    win.AddNewWidget(plot, 0, 0)
+    win.Layout.addLayout(label_layout, 1, 0)
+    win.Layout.addLayout(bt_layout, 2, 0)
     win.show()
     win.resize(800, 600)
     win.raise_()

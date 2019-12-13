@@ -30,7 +30,6 @@
 #include "stdlib.h"
 #include "sw_timers.h"
 #include "fir_filter_taps.h"
-#include "ecg_array.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -46,8 +45,20 @@
 #define BLOCK_SIZE 16		//FIR filter block size
 #define FREQ 200
 #define OVERLAP 32			//window overlap in detection algorithm
-#define PREDEFINE_AMOUNT 2
 
+#define MODE_INTERNAL 1
+#define MODE_EXTERNAL 0
+
+#define USE_MEMORY 1
+#if USE_MEMORY
+const short* ECG_SAMPLES = (const short*)0x08019000;
+#else
+extern const short ECG_SAMPLES[];
+#endif
+
+const int PRESET_LENGTH = 172800;
+extern const int RpeakSamples[];
+extern const int RPEAK_LENGTH;
 //Predefined settings of Threshold algorithm
 //#define THRESHOLD 786000
 //#define THRESHOLD 566000
@@ -71,6 +82,8 @@
 ADC_HandleTypeDef hadc1;
 DMA_HandleTypeDef hdma_adc1;
 
+SPI_HandleTypeDef hspi3;
+
 TIM_HandleTypeDef htim3;
 
 UART_HandleTypeDef huart2;
@@ -90,11 +103,14 @@ struct timer t_sender;
 volatile int msg_counter	=	0;
 volatile int onsend_counter = 0;
 volatile int buffer_counter = 0;
+volatile int preset_buffer_counter = 0;
+	
 volatile int adjusted_data = 0;
 volatile int preset_counter = 0;
 
-volatile int data_switch = 1;
+volatile int data_switch = MODE_INTERNAL;
 volatile bool OnSend = false;
+volatile bool OnStop = false;
 
 
 int data_insert[DATA_AMOUNT] = {0};		//array to contain data from ADC
@@ -129,10 +145,12 @@ static void MX_DMA_Init(void);
 static void MX_ADC1_Init(void);
 static void MX_USART2_UART_Init(void);
 static void MX_TIM3_Init(void);
+static void MX_SPI3_Init(void);
 /* USER CODE BEGIN PFP */
 void Thresholding(int* data, int* peak_holder, int threshold, int size);
 void AppendIntMarker(int* dest, int marker);
 void ParseMarkers(int marker_signs, char* markers,	int size);
+void ClearBuffers(void);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -181,17 +199,36 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
 	if(GPIO_Pin == GPIO_PIN_13)
 	{
-		data_switch = (data_switch+1)%PREDEFINE_AMOUNT;
+		if(!OnStop)
+		{
+			data_switch = (data_switch+1)%2;
+			buffer_counter = 0;
+			preset_buffer_counter = 0;
+			preset_counter = 0;
+			ClearBuffers();
+		}
+		OnStop ? (OnStop = false) : (OnStop = true);
 	}
+}
+//
+
+void ClearBuffers(void)
+{
+	memset(window_markers, 0, sizeof(window_markers[0])*(DATA_AMOUNT+OVERLAP));
+	memset(window, 0, sizeof(window[0])*(DATA_AMOUNT+OVERLAP));
+	memset(data_filter, 0, sizeof(data_filter[0])*(DATA_AMOUNT+OVERLAP));
+	memset(data_markers, 0, sizeof(data_markers[0])*(DATA_AMOUNT));
+	memset(data_insert, 0, sizeof(data_insert[0])*(DATA_AMOUNT));
 }
 //
 
 int sample_index = 0;
 void t_Converter_callback(void)
 {
+	if(!OnStop)
 	switch(data_switch)
 	{
-		case 0:
+		case MODE_EXTERNAL:
 		{
 			if((HAL_ADC_GetState(&hadc1) & HAL_ADC_STATE_READY) != 0 && buffer_counter < DATA_AMOUNT)
 			{
@@ -207,22 +244,22 @@ void t_Converter_callback(void)
 				OnSend = false;
 			break;
 		}
-		case 1:
+		case MODE_INTERNAL:
 		{
-			if(buffer_counter < DATA_AMOUNT)
+			if(preset_buffer_counter < DATA_AMOUNT)
 			{
-				ret = HAL_ADC_Start_DMA(&hadc1,	&conversion_raw, 1);
-				if(ret != HAL_OK)
-					__nop();
-				adjusted_data = ecg_samples[preset_counter++];
+//				ret = HAL_ADC_Start_DMA(&hadc1,	&conversion_raw, 1);
+//				if(ret != HAL_OK)
+//					__nop();
+				adjusted_data = ECG_SAMPLES[preset_counter++];
 				if(preset_counter > PRESET_LENGTH)
 				{
 					preset_counter = 0;
-					buffer_counter = 0;
+					preset_buffer_counter = 0;
 				}
-				data_insert[buffer_counter++] = adjusted_data;
+				data_insert[preset_buffer_counter++] = adjusted_data;
 			}
-			else if(buffer_counter >= DATA_AMOUNT)
+			else if(preset_buffer_counter >= DATA_AMOUNT)
 				OnSend = false;
 			break;
 		}
@@ -233,7 +270,7 @@ void t_Converter_callback(void)
 
 void t_Sender_callback(void)
 {
-	if(onsend_counter < DATA_AMOUNT && OnSend)
+	if(onsend_counter < DATA_AMOUNT && OnSend && !OnStop)
 		{
 			memcpy(uv.update_buff_u32, data_onsend+onsend_counter, CONVERSION_NUM*sizeof(data_onsend[0]));
 			memcpy(markers, data_markers+onsend_counter, CONVERSION_NUM*sizeof(data_markers[0]));
@@ -378,6 +415,7 @@ int main(void)
   MX_ADC1_Init();
   MX_USART2_UART_Init();
   MX_TIM3_Init();
+  MX_SPI3_Init();
   /* USER CODE BEGIN 2 */
 	HAL_TIM_Base_Start_IT(&htim3);
 	Timer_set(&t_converter, sw_timer_100us_insec/FREQ, sw_timer_base_100us, &t_Converter_callback, true, true);
@@ -399,7 +437,8 @@ int main(void)
   {
 		t_OnDigitCompleteContinuous();
 		
-		if(!OnSend && buffer_counter >= DATA_AMOUNT)
+		//if(!OnSend && buffer_counter >= DATA_AMOUNT)
+		if(!OnSend)
 		{
 			memcpy(window, window+DATA_AMOUNT, sizeof(window[0])*OVERLAP);
 			memcpy(window+OVERLAP, data_insert, sizeof(data_insert[0])*DATA_AMOUNT);
@@ -407,10 +446,14 @@ int main(void)
 			memcpy(window_markers, window_markers+DATA_AMOUNT, sizeof(window_markers[0])*OVERLAP);
 			memset(window_markers+OVERLAP, 0, sizeof(data_markers[0])*(DATA_AMOUNT));
 			
-			buffer_counter = 0;		//позволяем записывать новый массив
-			if(data_switch)
+			if (buffer_counter >= DATA_AMOUNT && data_switch == MODE_EXTERNAL)
+				buffer_counter = 0;		//позволяем записывать новый массив
+			if (preset_buffer_counter >= DATA_AMOUNT && data_switch == MODE_INTERNAL)
+				preset_buffer_counter = 0;
+			
+			if(data_switch == MODE_INTERNAL)
 			{
-					out = DATA_AMOUNT;
+					out = DATA_AMOUNT-1;
 					while(out > 0)
 					{
 						if(preset_counter - out == RpeakSamples[sample_index] && preset_counter - out >= 0)
@@ -431,8 +474,7 @@ int main(void)
 			
 			if(HAL_GPIO_ReadPin(Filter_Switch_GPIO_Port, Filter_Switch_Pin) == GPIO_PIN_RESET)
 			{
-				//Thresholding(window, data_markers, 786000, DATA_AMOUNT);
-				Thresholding(window, window_markers+OVERLAP/2, 400000, DATA_AMOUNT);
+				Thresholding(window, window_markers+OVERLAP/2, 4000, DATA_AMOUNT);
 				memcpy(data_onsend, window+OVERLAP/2, sizeof(data_onsend[0])*DATA_AMOUNT);
 			}
 			else
@@ -441,7 +483,8 @@ int main(void)
 				{
 					arm_fir_q31(&S, window + (counter * BLOCK_SIZE), data_filter + (counter * BLOCK_SIZE), BLOCK_SIZE);
 				}
-				Thresholding(data_filter, window_markers+OVERLAP/2, 400000, DATA_AMOUNT);
+				
+				Thresholding(data_filter, window_markers+OVERLAP/2, 4000, DATA_AMOUNT);
 				memcpy(data_onsend, data_filter+OVERLAP/2, sizeof(data_onsend[0])*DATA_AMOUNT);
 			}
 			memcpy(data_markers, window_markers+OVERLAP/2, sizeof(data_markers[0])*DATA_AMOUNT);
@@ -578,6 +621,46 @@ static void MX_ADC1_Init(void)
 }
 
 /**
+  * @brief SPI3 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_SPI3_Init(void)
+{
+
+  /* USER CODE BEGIN SPI3_Init 0 */
+
+  /* USER CODE END SPI3_Init 0 */
+
+  /* USER CODE BEGIN SPI3_Init 1 */
+
+  /* USER CODE END SPI3_Init 1 */
+  /* SPI3 parameter configuration*/
+  hspi3.Instance = SPI3;
+  hspi3.Init.Mode = SPI_MODE_MASTER;
+  hspi3.Init.Direction = SPI_DIRECTION_2LINES;
+  hspi3.Init.DataSize = SPI_DATASIZE_4BIT;
+  hspi3.Init.CLKPolarity = SPI_POLARITY_LOW;
+  hspi3.Init.CLKPhase = SPI_PHASE_1EDGE;
+  hspi3.Init.NSS = SPI_NSS_SOFT;
+  hspi3.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_2;
+  hspi3.Init.FirstBit = SPI_FIRSTBIT_MSB;
+  hspi3.Init.TIMode = SPI_TIMODE_DISABLE;
+  hspi3.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
+  hspi3.Init.CRCPolynomial = 7;
+  hspi3.Init.CRCLength = SPI_CRC_LENGTH_DATASIZE;
+  hspi3.Init.NSSPMode = SPI_NSS_PULSE_ENABLE;
+  if (HAL_SPI_Init(&hspi3) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN SPI3_Init 2 */
+
+  /* USER CODE END SPI3_Init 2 */
+
+}
+
+/**
   * @brief TIM3 Initialization Function
   * @param None
   * @retval None
@@ -695,7 +778,7 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIOA, SMPS_EN_Pin|SMPS_V1_Pin|SMPS_SW_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, LD4_Pin|Enable_Indicator_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, SPI_EN_Pin|LD4_Pin|Enable_Indicator_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin : B1_Pin */
   GPIO_InitStruct.Pin = B1_Pin;
@@ -716,8 +799,8 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(SMPS_PG_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : LD4_Pin Enable_Indicator_Pin */
-  GPIO_InitStruct.Pin = LD4_Pin|Enable_Indicator_Pin;
+  /*Configure GPIO pins : SPI_EN_Pin LD4_Pin Enable_Indicator_Pin */
+  GPIO_InitStruct.Pin = SPI_EN_Pin|LD4_Pin|Enable_Indicator_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
