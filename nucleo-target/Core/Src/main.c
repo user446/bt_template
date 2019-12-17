@@ -111,6 +111,7 @@ volatile int preset_counter = 0;
 volatile int data_switch = MODE_INTERNAL;
 volatile bool OnSend = false;
 volatile bool OnStop = false;
+volatile int sample_index = 0;
 
 
 int data_insert[DATA_AMOUNT] = {0};		//array to contain data from ADC
@@ -205,6 +206,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 			buffer_counter = 0;
 			preset_buffer_counter = 0;
 			preset_counter = 0;
+			sample_index = 0;
 			ClearBuffers();
 		}
 		OnStop ? (OnStop = false) : (OnStop = true);
@@ -222,7 +224,6 @@ void ClearBuffers(void)
 }
 //
 
-int sample_index = 0;
 void t_Converter_callback(void)
 {
 	if(!OnStop)
@@ -252,10 +253,12 @@ void t_Converter_callback(void)
 //				if(ret != HAL_OK)
 //					__nop();
 				adjusted_data = ECG_SAMPLES[preset_counter++];
-				if(preset_counter > PRESET_LENGTH)
+				if(preset_counter >= PRESET_LENGTH)
 				{
 					preset_counter = 0;
 					preset_buffer_counter = 0;
+					sample_index = 0;
+					ClearBuffers();
 				}
 				data_insert[preset_buffer_counter++] = adjusted_data;
 			}
@@ -319,6 +322,40 @@ void Thresholding(int* data, int* peak_holder, int threshold, int size)
 				{
 					AppendIntMarker(&peak_holder[i-OVERLAP/2], R_PEAK);
 					heartbeat++;
+				}
+			}
+	}
+}
+//
+
+volatile int threshold = 4000;
+const float alpha = 1.0;
+const float gamma = 0.2;
+
+void AdaptiveThresholding(int* data, int* peak_holder, int size)
+{
+	int x_m1 = 0;
+	int x_p1 = 0;
+	int x = 0;
+	int x_m2 = 0;
+	int x_p2 = 0;
+	
+	for(int i = OVERLAP/2; i < size+OVERLAP/2; i++)
+	{
+			x_m2 = data[i-2];
+			x_m1 = data[i-1];
+			x = data[i];
+			x_p1 = data[i+1];
+			x_p2 = data[i+2];
+			
+			if(x >= threshold)
+			{
+				if((x - x_m1 >= 0 && x - x_m2 > 0) && 
+					(x - x_p1 >= 0 && x - x_p2 > 0))
+				{
+					AppendIntMarker(&peak_holder[i-OVERLAP/2], R_PEAK);
+					heartbeat++;
+					threshold = (int)(alpha*gamma*((float)x) - (1 - alpha)*(float)threshold);
 				}
 			}
 	}
@@ -426,12 +463,13 @@ int main(void)
 	
 	HAL_GPIO_WritePin(Enable_Indicator_GPIO_Port, Enable_Indicator_Pin, GPIO_PIN_SET);
 	
+	
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
 	int counter = 0;
-	int out = 0;
+	volatile int out = 0;
 	int rest = 0;
   while (1)
   {
@@ -446,17 +484,12 @@ int main(void)
 			memcpy(window_markers, window_markers+DATA_AMOUNT, sizeof(window_markers[0])*OVERLAP);
 			memset(window_markers+OVERLAP, 0, sizeof(data_markers[0])*(DATA_AMOUNT));
 			
-			if (buffer_counter >= DATA_AMOUNT && data_switch == MODE_EXTERNAL)
-				buffer_counter = 0;		//позволяем записывать новый массив
-			if (preset_buffer_counter >= DATA_AMOUNT && data_switch == MODE_INTERNAL)
-				preset_buffer_counter = 0;
-			
 			if(data_switch == MODE_INTERNAL)
 			{
-					out = DATA_AMOUNT-1;
+					out = DATA_AMOUNT;
 					while(out > 0)
 					{
-						if(preset_counter - out == RpeakSamples[sample_index] && preset_counter - out >= 0)
+						if(preset_counter - preset_counter%DATA_AMOUNT - out == RpeakSamples[sample_index])
 						{
 							if(HAL_GPIO_ReadPin(Filter_Switch_GPIO_Port, Filter_Switch_Pin) == GPIO_PIN_RESET)
 							{
@@ -472,9 +505,15 @@ int main(void)
 					}
 			}
 			
+			if (buffer_counter >= DATA_AMOUNT && data_switch == MODE_EXTERNAL)
+				buffer_counter = 0;		//позволяем записывать новый массив
+			if (preset_buffer_counter >= DATA_AMOUNT && data_switch == MODE_INTERNAL)
+				preset_buffer_counter = 0;
+			
 			if(HAL_GPIO_ReadPin(Filter_Switch_GPIO_Port, Filter_Switch_Pin) == GPIO_PIN_RESET)
 			{
-				Thresholding(window, window_markers+OVERLAP/2, 4000, DATA_AMOUNT);
+				//Thresholding(window, window_markers+OVERLAP/2, 4000, DATA_AMOUNT);
+				AdaptiveThresholding(window, window_markers+OVERLAP/2, DATA_AMOUNT);
 				memcpy(data_onsend, window+OVERLAP/2, sizeof(data_onsend[0])*DATA_AMOUNT);
 			}
 			else
@@ -483,8 +522,8 @@ int main(void)
 				{
 					arm_fir_q31(&S, window + (counter * BLOCK_SIZE), data_filter + (counter * BLOCK_SIZE), BLOCK_SIZE);
 				}
-				
-				Thresholding(data_filter, window_markers+OVERLAP/2, 4000, DATA_AMOUNT);
+				//Thresholding(data_filter, window_markers+OVERLAP/2, 4000, DATA_AMOUNT);
+				AdaptiveThresholding(data_filter, window_markers+OVERLAP/2, DATA_AMOUNT);
 				memcpy(data_onsend, data_filter+OVERLAP/2, sizeof(data_onsend[0])*DATA_AMOUNT);
 			}
 			memcpy(data_markers, window_markers+OVERLAP/2, sizeof(data_markers[0])*DATA_AMOUNT);
@@ -639,7 +678,7 @@ static void MX_SPI3_Init(void)
   hspi3.Instance = SPI3;
   hspi3.Init.Mode = SPI_MODE_MASTER;
   hspi3.Init.Direction = SPI_DIRECTION_2LINES;
-  hspi3.Init.DataSize = SPI_DATASIZE_4BIT;
+  hspi3.Init.DataSize = SPI_DATASIZE_8BIT;
   hspi3.Init.CLKPolarity = SPI_POLARITY_LOW;
   hspi3.Init.CLKPhase = SPI_PHASE_1EDGE;
   hspi3.Init.NSS = SPI_NSS_SOFT;

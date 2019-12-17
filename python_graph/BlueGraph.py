@@ -25,10 +25,13 @@ class BlueCardioGraph(pg.GraphicsWindow):
         
         self.R_peak_data = np.array([])
         self.R_peak_time = np.array([])
-        self.SR_peak_data = np.array([])
-        self.SR_peak_time = np.array([])
+        self.S_peak_data = np.array([])
+        self.S_peak_time = np.array([])
         self.Window_markers = np.array([])
         self.Window_time = np.array([])
+        self.last_S_peak = 0
+        self.last_R_peak = 0
+        self.peak_total = 0
         
         self.max_y = 0
         self.min_y = 0
@@ -135,38 +138,6 @@ class BlueCardioGraph(pg.GraphicsWindow):
         #self.plotDataSR.setData(x[Q], self.y_data[Q])
         self.plotDataR.setData(x[R], self.y_data[R])
         self.plotDataW.setData(x[S], self.y_data[S])
-        
-    def OnAnalyseData(self):
-        outside = -self.pass_time*self.pass_amount
-        detected = False
-        tmp = 0
-        if self.SR_peak_time.size:
-            for x in self.SR_peak_time :
-                while x + outside < x + self.pass_time*4 and outside <= self.pass_time*4:
-                    if x + outside in self.R_peak_time:
-                        self.Tp = self.Tp + 1
-                        tmp = self.Tp
-                        detected = True
-                        break
-                    outside = outside + self.pass_time
-                if tmp != self.Tp:
-                    detected = False
-                if not detected:
-                    self.Fp = self.Fp + 1
-        else:
-            return
-        
-        try:
-            self.Fn = self.R_peak_time.size - self.SR_peak_time.size
-            self.accuracy = (1 - (self.Fn + self.Fp)/self.SR_peak_time.size)*100
-            self.sensitivity = (self.Tp/(self.Tp + self.Fn))*100
-            self.predicrive_positive = (self.Tp/(self.Tp + self.Fp))*100
-        except:
-            return
-        
-        if self.label_pointer is not None:
-            message = "Acc: %d, S: %d, P:%d, Tp(Д): %d, Fp(нД): %d, Fn(лД): %d" % (self.accuracy, self.sensitivity, self.predicrive_positive, self.Tp, self.Fp, self.Fn)
-            self.label_pointer.setText(message)
 
     def setData(self, x, y):
         self.plotDataItem.setData(x, y)
@@ -206,6 +177,9 @@ class BlueCardioGraph(pg.GraphicsWindow):
             i = 0
             
             parse_list = list()
+            num_data = list()
+            marks = list()
+            
             for x in data:
                 parsable = False
                 n = 0
@@ -220,54 +194,86 @@ class BlueCardioGraph(pg.GraphicsWindow):
                     if n == -5:
                         raise RuntimeError
             
-            num_data = list()
-            marks = list()
-
+            #можно сократить
             parse_count = 0
             for x in data:
                 num_data.append(x[:parse_list[parse_count]])
                 marks.append(x[parse_list[parse_count]:])
                 parse_count = parse_count + 1
             
+            sr_tmp = self.last_S_peak
+            r_tmp = self.last_R_peak
             for mk in marks:
                 for x in mk:
                     if x == 'R':
                         self.R_peak_data = np.append(self.R_peak_data, num_data[i])
                         self.R_peak_time = np.append(self.R_peak_time, t_list[i])
+                        self.last_R_peak = t_list[i]
                     if x == 'W':
                         self.Window_markers = np.append(self.Window_markers, num_data[i])
                         self.Window_time = np.append(self.Window_time, t_list[i])
                     if x == 'S':
-                        self.SR_peak_data = np.append(self.SR_peak_data, num_data[i])
-                        self.SR_peak_time = np.append(self.SR_peak_time, t_list[i])
+                        self.S_peak_data = np.append(self.S_peak_data, num_data[i])
+                        self.S_peak_time = np.append(self.S_peak_time, t_list[i])
+                        self.last_S_peak = t_list[i]
+                        self.peak_total = self.peak_total + 1
                 i+=1
+                #алгоритм анализа качества детекции
+                if self.last_S_peak != sr_tmp and self.last_R_peak != r_tmp:
+                    outside = -self.pass_time*self.pass_amount
+                    detected1 = False
+                    
+                    while self.last_R_peak + outside <= self.last_R_peak + self.pass_time*self.pass_amount and outside <= self.pass_time*self.pass_amount:
+                        if self.last_R_peak + outside == self.last_S_peak:
+                            detected1 = True
+                            break
+                        outside = outside + self.pass_time
+
+                    if detected1:
+                        self.Tp = self.Tp + 1
+                    elif not detected1:
+                        self.Fp = self.Fp + 1
+                    else:
+                        self.Fn = self.Fn + 1
+
+                    try:
+                        self.accuracy = (1 - (self.Fn + self.Fp) /
+                                        self.peak_total)*100
+                        self.sensitivity = (self.Tp/(self.Tp + self.Fn))*100
+                        self.predicrive_positive = (self.Tp/(self.Tp + self.Fp))*100
+                    except:
+                        return
+
+                    if self.label_pointer is not None:
+                        message = "Acc: %d, S: %d, P:%d, Tp(Д): %d, Fp(нД): %d, Fn(лД): %d, Total: %d" % (
+                            self.accuracy, self.sensitivity, self.predicrive_positive, self.Tp, self.Fp, self.Fn, self.peak_total)
+                        self.label_pointer.setText(message)
+            
             self.y_data = np.append(
                 self.y_data, np.array(num_data).astype(np.float))
         else:
             self.y_data = np.append(
                 self.y_data, np.array(data).astype(np.float))
         
-        
         if self.x_data[-1] > self.showlen and self.showlen >= 4:
             self.x_data = np.delete(self.x_data, [0, 1, 2, 3])
             self.y_data = np.delete(self.y_data, [0, 1, 2, 3])
-            # if self.Window_time.size:
-            #     if self.Window_time[0] < self.x_data[0]:
-            #         self.Window_time = np.delete(self.Window_time, [0])
-            #         self.Window_markers = np.delete(self.Window_markers, [0])
-            # if self.R_peak_time.size:
-            #     if self.R_peak_time[0] < self.x_data[0]:
-            #         self.R_peak_time = np.delete(self.R_peak_time, [0])
-            #         self.R_peak_data = np.delete(self.R_peak_data, [0])
-            # if self.SR_peak_time.size:
-            #     if self.SR_peak_time[0] < self.x_data[0]:
-            #         self.SR_peak_time = np.delete(self.SR_peak_time, [0])
-            #         self.SR_peak_data = np.delete(self.SR_peak_data, [0])
-            self.OnAnalyseData()
+            if self.Window_time.size:
+                if self.Window_time[0] < self.x_data[0]:
+                    self.Window_time = np.delete(self.Window_time, [0])
+                    self.Window_markers = np.delete(self.Window_markers, [0])
+            if self.R_peak_time.size:
+                if self.R_peak_time[0] < self.x_data[0]:
+                    self.R_peak_time = np.delete(self.R_peak_time, [0])
+                    self.R_peak_data = np.delete(self.R_peak_data, [0])
+            if self.S_peak_time.size:
+                if self.S_peak_time[0] < self.x_data[0]:
+                    self.S_peak_time = np.delete(self.S_peak_time, [0])
+                    self.S_peak_data = np.delete(self.S_peak_data, [0])
             self.plotItem.setXRange(
                 self.x_data[-1] - self.showlen, self.x_data[-1])
         if self.markers == 'internal':
             self.plotDataR.setData(self.R_peak_time, self.R_peak_data)
             self.plotDataW.setData(self.Window_time, self.Window_markers)
-            self.plotDataSR.setData(self.SR_peak_time, self.SR_peak_data)
+            self.plotDataSR.setData(self.S_peak_time, self.S_peak_data)
         self.setData(self.x_data, self.y_data)
