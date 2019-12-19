@@ -65,6 +65,7 @@ uint8_t THROUGHPUT_DeviceInit(void)
   uint16_t dev_name_char_handle;
   uint16_t appearance_char_handle;
   uint8_t name[] = {'B', 'l', 'u', 'e', 'N', 'R', 'G', '1'};
+  //uint8_t name[] = {'A', 'u', 'r', 'o', 'r', 'a', ' ', 'C', 'a', 'r', 'd', 'i', 'o'};
   
   uint8_t role = GAP_PERIPHERAL_ROLE;
   uint8_t bdaddr[] = {SERVER_ADDRESS};
@@ -99,7 +100,7 @@ uint8_t THROUGHPUT_DeviceInit(void)
   }
 
   /* Set the device name */
-  ret = aci_gatt_update_char_value_ext(0, service_handle, dev_name_char_handle, 0,sizeof(name), 0, sizeof(name), name);
+  ret = aci_gatt_update_char_value_ext(0, service_handle, dev_name_char_handle, 0, sizeof(name), 0, sizeof(name), name);
   if (ret != BLE_STATUS_SUCCESS) {
     printf ("Error in Gatt Update characteristic value 0x%02x\r\n", ret);
     return ret;
@@ -128,7 +129,8 @@ void Make_Connection(void)
 {  
   tBleStatus ret;
   
-  uint8_t local_name[] = {AD_TYPE_COMPLETE_LOCAL_NAME,'B','l','u','e','C','a','r','d','i','o'};
+  //uint8_t local_name[] = {AD_TYPE_COMPLETE_LOCAL_NAME,'B','l','u','e','C','a','r','d','i','o'};
+  uint8_t local_name[] = {AD_TYPE_COMPLETE_LOCAL_NAME, 'A', 'U', 'R', 'O', 'R', 'A', ' ', 'C', 'A', 'R', 'D', 'I', 'O'};
   
   /* disable scan response */
   hci_le_set_scan_response_data(0,NULL);

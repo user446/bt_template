@@ -335,7 +335,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32L452xx,ARM_MATH_CM4</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;       ../Drivers/STM32L4xx_HAL_Driver/Inc;       ../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy;       ../Drivers/CMSIS/Device/ST/STM32L4xx/Include;       ../Drivers/CMSIS/Include;       ../Drivers/CMSIS/DSP/Include</IncludePath>
+              <IncludePath>../Core/Inc;../Drivers/STM32L4xx_HAL_Driver/Inc;../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32L4xx/Include;../Drivers/CMSIS/Include;../Drivers/CMSIS/DSP/Include;..\Core\slld</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -478,6 +478,16 @@
               <FileName>stm32l4xx_hal_msp.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Core/Src/stm32l4xx_hal_msp.c</FilePath>
+            </File>
+            <File>
+              <FileName>slld.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\slld\slld.c</FilePath>
+            </File>
+            <File>
+              <FileName>slld_hal.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\slld\slld_hal.c</FilePath>
             </File>
           </Files>
         </Group>

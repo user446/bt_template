@@ -1,19 +1,23 @@
-2019-12-17 12:52:28,858 info: Starting BlueCardio graph application
-2019-12-17 12:52:28,859 info: BlueCardio started with arguments: Namespace(communication='COM29', length=4096, logging='n', qrs='int')
-2019-12-17 12:52:28,859 info: Trying to open port COM29...
-2019-12-17 12:52:28,885 info: Port entity initialised for COM29
-2019-12-17 12:52:28,885 error: Port is already open. trying to open again...
-2019-12-17 12:52:28,913 info: Port COM29 is opened!
-2019-12-17 12:52:28,914 Program started at 12:52:28.914897
-2019-12-17 12:52:28,930 info: QtWidget initialised!
-2019-12-17 12:52:29,148 Message wasn't completely received: ['0N ', 'END\r']
-2019-12-17 12:52:29,149 Seems like previous packet was lost: 160 : ['7200N', '8750N', '9400SR', '9050N']
-2019-12-17 12:52:33,956 Percentage of received messages: 0.9959514170040485
-2019-12-17 12:52:38,969 Percentage of received messages: 1.0
-2019-12-17 12:52:43,972 Percentage of received messages: 1.0
-2019-12-17 12:52:48,993 Percentage of received messages: 1.0
-2019-12-17 12:52:53,997 Percentage of received messages: 1.0
-2019-12-17 12:52:58,996 Percentage of received messages: 1.0
-2019-12-17 12:53:04,013 Percentage of received messages: 1.0
-2019-12-17 12:53:09,034 Percentage of received messages: 1.0
-2019-12-17 12:53:14,035 Percentage of received messages: 1.0
+2019-12-18 20:28:44,555 info: Starting BlueCardio graph application
+2019-12-18 20:28:44,556 info: BlueCardio started with arguments: Namespace(communication='COM29', length=4096, logging='n', qrs='int')
+2019-12-18 20:28:44,556 info: Trying to open port COM29...
+2019-12-18 20:28:44,582 info: Port entity initialised for COM29
+2019-12-18 20:28:44,582 error: Port is already open. trying to open again...
+2019-12-18 20:28:44,610 info: Port COM29 is opened!
+2019-12-18 20:28:44,610 Program started at 20:28:44.610160
+2019-12-18 20:28:44,626 info: QtWidget initialised!
+2019-12-18 20:28:44,856 Message wasn't completely received: ['0N -3350N ', 'END\r']
+2019-12-18 20:28:44,857 Seems like previous packet was lost: 225 : ['-3550N', '-3700N', '-3600N', '-3449N']
+2019-12-18 20:28:44,858 Message wasn't completely received: ['D\r']
+2019-12-18 20:28:49,661 Percentage of received messages: 0.9919354838709677
+2019-12-18 20:28:54,685 Percentage of received messages: 1.0
+2019-12-18 20:28:59,692 Percentage of received messages: 1.0
+2019-12-18 20:29:04,702 Percentage of received messages: 1.0
+2019-12-18 20:29:09,706 Percentage of received messages: 1.0
+2019-12-18 20:29:14,704 Percentage of received messages: 1.0
+2019-12-18 20:29:19,717 Percentage of received messages: 1.0
+2019-12-18 20:29:24,720 Percentage of received messages: 1.0
+2019-12-18 20:29:29,722 Percentage of received messages: 1.0
+2019-12-18 20:29:30,884 Message wasn't completely received: ['ECG']
+2019-12-18 20:29:30,907 Seems like previous packet was lost: 2484 : ['-2750N', '-3100N', '-3050N', '-3200N']
+2019-12-18 20:29:34,756 Percentage of received messages: 0.991869918699187

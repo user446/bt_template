@@ -144,13 +144,13 @@ void SdkEvalComUartInit(uint32_t baudrate)
   GPIO_InitType GPIO_InitStructure;
   
   /* Configure GPIO_Pin_8 and GPIO_Pin_11 as UART_TXD and UART_RXD*/
-  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_5;
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_8; //GPIO_Pin_5; //измененные пины
   GPIO_InitStructure.GPIO_Mode = Serial1_Mode;
   GPIO_InitStructure.GPIO_Pull = DISABLE;
   GPIO_InitStructure.GPIO_HighPwr = DISABLE;
   GPIO_Init(&GPIO_InitStructure);
 
-  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_4;
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_11; //GPIO_Pin_4;
   GPIO_InitStructure.GPIO_Mode = Serial1_Mode;
   GPIO_Init(&GPIO_InitStructure);
 

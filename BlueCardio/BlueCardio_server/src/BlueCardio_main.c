@@ -175,6 +175,7 @@ int main(void)
 //					Timer_Restart(&t_elapsed_send);
 					
 					}
+					printf("Hello!\n");
 //				printf("%d :: ", conv_counter);
 //				for(int i = 0; i < CONVERSION_NUM; i++)
 //						printf("%f ", uv.update_buffer_f[i]);
@@ -183,18 +184,18 @@ int main(void)
 //				printf("\r\n");
 				}
 			}
-			if(on_sleep)
-			{
-				wakeup_source = WAKEUP_IO11;
-				wakeup_level = (WAKEUP_IOx_HIGH << WAKEUP_IO11_SHIFT_MASK);
-				BlueNRG_Sleep(SLEEPMODE_NOTIMER, wakeup_source, wakeup_level);
-				if (ret != BLE_STATUS_SUCCESS) {
-					printf("BlueNRG_Sleep() error 0x%02x\r\n", ret);
-					while(1);
-				}
-				APP_FLAG_SET(SET_CONNECTABLE);
-				on_sleep = FALSE;
-			}
+//			if(on_sleep)
+//			{
+//				wakeup_source = WAKEUP_IO11;
+//				wakeup_level = (WAKEUP_IOx_HIGH << WAKEUP_IO11_SHIFT_MASK);
+//				BlueNRG_Sleep(SLEEPMODE_NOTIMER, wakeup_source, wakeup_level);
+//				if (ret != BLE_STATUS_SUCCESS) {
+//					printf("BlueNRG_Sleep() error 0x%02x\r\n", ret);
+//					while(1);
+//				}
+//				APP_FLAG_SET(SET_CONNECTABLE);
+//				on_sleep = FALSE;
+//			}
   }
   
 } /* end main() */

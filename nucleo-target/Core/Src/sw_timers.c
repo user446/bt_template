@@ -73,17 +73,17 @@ void t_OnDigitCompleteContinuous(void)
 	*	@brief	Установка таймера
 	*	@note		
 	*	@param	*t указатель на структуру таймера
-	*	@param	interval период работы таймера
+	*	@param	frequency частота срабатываний таймера в секунду
 	*	@param	time_base позволяет выбрать базу для отсчета, в секундах или в милисекундах
 	*	@param	callback указатель на функцию, которую следует исполнить по окончанию периода таймера
 	* @param	on_interrupt вызывать callback таймера только по прерыванию
 	*	@retval	нет
 **/
 //
-void Timer_set(struct timer* t, uint32_t interval, uint32_t time_base, void (*callback)(void), bool on_interrupt, bool autorestart)
+void Timer_set(struct timer* t, float frequency, void (*callback)(void), bool on_interrupt, bool autorestart)
 {
 	t->set = true;
-	t->interval = interval * time_base;
+	t->interval = (uint32_t)(sw_timer_100us_insec/frequency * sw_timer_base_100us);
 	t->start = sys_tick_count;
 	t->callback = callback;
 	timer_stack[t_counter] = t;

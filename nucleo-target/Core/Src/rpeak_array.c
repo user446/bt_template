@@ -1,6 +1,8 @@
-#include "main.h"
+#include "main.h"
+
 const int RPEAK_LENGTH = 608;
 const int RpeakSamples[RPEAK_LENGTH] = {
+//18 - describes beat change: (N
 77,
 370,
 662,
