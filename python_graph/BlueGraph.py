@@ -219,23 +219,16 @@ class BlueCardioGraph(pg.GraphicsWindow):
                         self.peak_total = self.peak_total + 1
                 i+=1
                 #алгоритм анализа качества детекции
-                if self.last_S_peak != sr_tmp and self.last_R_peak != r_tmp:
-                    outside = -self.pass_time*self.pass_amount
-                    detected1 = False
-                    
-                    while self.last_R_peak + outside <= self.last_R_peak + self.pass_time*self.pass_amount and outside <= self.pass_time*self.pass_amount:
-                        if self.last_R_peak + outside == self.last_S_peak:
-                            detected1 = True
-                            break
-                        outside = outside + self.pass_time
-
-                    if detected1:
+                if self.last_S_peak != sr_tmp or self.last_R_peak != r_tmp:
+                    sr_tmp = self.last_S_peak
+                    r_tmp = self.last_R_peak
+                    if self.last_R_peak == self.last_S_peak:
                         self.Tp = self.Tp + 1
-                    elif not detected1:
+                    elif self.last_S_peak > self.last_R_peak:
                         self.Fp = self.Fp + 1
-                    else:
+                    elif self.last_R_peak > self.last_S_peak:
                         self.Fn = self.Fn + 1
-
+                        
                     try:
                         self.accuracy = (1 - (self.Fn + self.Fp) /
                                         self.peak_total)*100

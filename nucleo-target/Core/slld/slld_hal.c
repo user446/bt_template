@@ -71,7 +71,7 @@ int      Number_Of_Read_Bytes            /* number of bytes to be read */
     
     // Write the command
     SPIDATA = command;
-		if(HAL_SPI_Transmit(&hspi3, &SPIDATA, 1, 10) != HAL_OK)
+		if(HAL_SPI_Transmit_DMA(&hspi3, &SPIDATA, 1) != HAL_OK)
 			status = SLLD_ERROR;
 
     // Write the address
@@ -85,7 +85,7 @@ int      Number_Of_Read_Bytes            /* number of bytes to be read */
                 SPIDATA_D = (BYTE)((sys_addr >> 16) & 0x000000FF);
                 SPIDATA_D = (BYTE)((sys_addr >>  8) & 0x000000FF);
                 SPIDATA_D = (BYTE) (sys_addr        & 0x000000FF);
-								if(HAL_SPI_Transmit(&hspi3, &SPIDATA_D, 1, 10) != HAL_OK)
+								if(HAL_SPI_Transmit_DMA(&hspi3, &SPIDATA_D, 1) != HAL_OK)
 									status = SLLD_ERROR;
                 break;
             }
@@ -95,7 +95,7 @@ int      Number_Of_Read_Bytes            /* number of bytes to be read */
                 SPIDATA_Q = (BYTE)((sys_addr >> 16) & 0x000000FF);
                 SPIDATA_Q = (BYTE)((sys_addr >>  8) & 0x000000FF);
                 SPIDATA_Q = (BYTE) (sys_addr        & 0x000000FF);
-								if(HAL_SPI_Transmit(&hspi3, &SPIDATA_Q, 1, 10) != HAL_OK)
+								if(HAL_SPI_Transmit_DMA(&hspi3, &SPIDATA_Q, 1) != HAL_OK)
 									status = SLLD_ERROR;
                 break;
             }
@@ -104,7 +104,7 @@ int      Number_Of_Read_Bytes            /* number of bytes to be read */
                 SPIDATA = (BYTE)((sys_addr >> 16) & 0x000000FF);
                 SPIDATA = (BYTE)((sys_addr >>  8) & 0x000000FF);
                 SPIDATA = (BYTE) (sys_addr        & 0x000000FF);
-								if(HAL_SPI_Transmit(&hspi3, &SPIDATA, 1, 10) != HAL_OK)
+								if(HAL_SPI_Transmit_DMA(&hspi3, &SPIDATA, 1) != HAL_OK)
 									status = SLLD_ERROR;
                 break;
             }
@@ -127,7 +127,7 @@ int      Number_Of_Read_Bytes            /* number of bytes to be read */
             for (data_cycle = 0; data_cycle < Number_Of_Dummy_Bytes; data_cycle++)
 						{
                 SPIDATA = 0x0;
-								if(HAL_SPI_Transmit(&hspi3, &SPIDATA, 1, 10) != HAL_OK)
+								if(HAL_SPI_Transmit_DMA(&hspi3, &SPIDATA, 1) != HAL_OK)
 									status = SLLD_ERROR;
 						}
             break;
@@ -140,7 +140,7 @@ int      Number_Of_Read_Bytes            /* number of bytes to be read */
             for (data_cycle = 0; data_cycle < Number_Of_Dummy_Bytes; data_cycle++)
 						{
                 SPIDATA_D = 0x0;
-								if(HAL_SPI_Transmit(&hspi3, &SPIDATA, 1, 10) != HAL_OK)
+								if(HAL_SPI_Transmit_DMA(&hspi3, &SPIDATA, 1) != HAL_OK)
 									status = SLLD_ERROR;
 						}
             break;
@@ -153,7 +153,7 @@ int      Number_Of_Read_Bytes            /* number of bytes to be read */
             for (data_cycle = 0; data_cycle < Number_Of_Dummy_Bytes; data_cycle++)
 						{
                 SPIDATA_Q = 0x0;
-								if(HAL_SPI_Transmit(&hspi3, &SPIDATA_Q, 1, 10) != HAL_OK)
+								if(HAL_SPI_Transmit_DMA(&hspi3, &SPIDATA_Q, 1) != HAL_OK)
 									status = SLLD_ERROR;
 						}
             break;
@@ -165,7 +165,7 @@ int      Number_Of_Read_Bytes            /* number of bytes to be read */
             for (data_cycle = 0; data_cycle < Number_Of_Dummy_Bytes; data_cycle++)
 						{
                 SPIDATA = 0x0;
-								if(HAL_SPI_Transmit(&hspi3, &SPIDATA, 1, 10) != HAL_OK)
+								if(HAL_SPI_Transmit_DMA(&hspi3, &SPIDATA, 1) != HAL_OK)
 									status = SLLD_ERROR;
 						}
             break;
@@ -190,7 +190,7 @@ int      Number_Of_Read_Bytes            /* number of bytes to be read */
                 // Read the data using the relevant mode
                 for (data_cycle = 0; data_cycle < Number_Of_Read_Bytes; data_cycle++)
 								{
-										if(HAL_SPI_Receive(&hspi3, &SPIDATA_D, 1, 10)!= HAL_OK)
+										if(HAL_SPI_Receive_DMA(&hspi3, &SPIDATA_D, 1)!= HAL_OK)
 											status = SLLD_ERROR;
                     *(data_buffer + data_cycle) = SPIDATA_D;
 								}
@@ -204,7 +204,7 @@ int      Number_Of_Read_Bytes            /* number of bytes to be read */
                 // Read the data using the relevant mode
                 for (data_cycle = 0; data_cycle < Number_Of_Read_Bytes; data_cycle++)
 								{
-										if(HAL_SPI_Receive(&hspi3, &SPIDATA_Q, 1, 10)!= HAL_OK)
+										if(HAL_SPI_Receive_DMA(&hspi3, &SPIDATA_Q, 1)!= HAL_OK)
 											status = SLLD_ERROR;
                     *(data_buffer + data_cycle) = SPIDATA_Q;
 								}
@@ -215,7 +215,7 @@ int      Number_Of_Read_Bytes            /* number of bytes to be read */
                 // Read the data using the relevant mode
                 for (data_cycle = 0; data_cycle < Number_Of_Read_Bytes; data_cycle++)
 								{
-										if(HAL_SPI_Receive(&hspi3, &SPIDATA, 1, 10)!= HAL_OK)
+										if(HAL_SPI_Receive_DMA(&hspi3, &SPIDATA, 1)!= HAL_OK)
 											status = SLLD_ERROR;
                     *(data_buffer + data_cycle) = SPIDATA;
 								}
@@ -266,7 +266,7 @@ int      Number_Of_Written_Bytes         /* number of bytes to be written */
 		
     // Write the command
     SPIDATA = command;
-		if(HAL_SPI_Transmit(&hspi3, &SPIDATA, 1, 10) != HAL_OK)
+		if(HAL_SPI_Transmit_DMA(&hspi3, &SPIDATA, 1) != HAL_OK)
 			status = SLLD_ERROR;
 	
     // Write the address
@@ -275,7 +275,7 @@ int      Number_Of_Written_Bytes         /* number of bytes to be written */
         SPIDATA = (BYTE)((sys_addr >> 16) & 0x000000FF);
         SPIDATA = (BYTE)((sys_addr >>  8) & 0x000000FF);
         SPIDATA = (BYTE) (sys_addr        & 0x000000FF);
-				if(HAL_SPI_Transmit(&hspi3, &SPIDATA, 1, 10) != HAL_OK)
+				if(HAL_SPI_Transmit_DMA(&hspi3, &SPIDATA, 1) != HAL_OK)
 					status = SLLD_ERROR;
     }
 
@@ -290,7 +290,7 @@ int      Number_Of_Written_Bytes         /* number of bytes to be written */
                 // Write the data using the relevant mode
                 for (data_cycle = 0; data_cycle < Number_Of_Written_Bytes; data_cycle++)
 								{
-										if(HAL_SPI_Receive(&hspi3, &SPIDATA_Q, 1, 10) != HAL_OK)
+										if(HAL_SPI_Receive_DMA(&hspi3, &SPIDATA_Q, 1) != HAL_OK)
 											status = SLLD_ERROR;
                     SPIDATA_Q = *(data_buffer + data_cycle);
 								}
@@ -301,7 +301,7 @@ int      Number_Of_Written_Bytes         /* number of bytes to be written */
                 // Write the data using the relevant mode
                 for (data_cycle = 0; data_cycle < Number_Of_Written_Bytes; data_cycle++)
 								{
-										if(HAL_SPI_Receive(&hspi3, &SPIDATA, 1, 10) != HAL_OK)
+										if(HAL_SPI_Receive_DMA(&hspi3, &SPIDATA, 1) != HAL_OK)
 											status = SLLD_ERROR;
                     SPIDATA = *(data_buffer + data_cycle);
 								}

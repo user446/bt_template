@@ -34,7 +34,7 @@ def main(args):
     record = wfdb.rdrecord(args.input, sampto=l)
     annotation = wfdb.rdann(args.input, 'atr', sampto=l)
     
-    
+    txt = open("ecg_array.txt", "w+")
     f = open("ecg_array.c","w+")
     f.flush()
     
@@ -43,10 +43,13 @@ def main(args):
     full_data = record.p_signal[:,args.channel]
     for dt in full_data:
         f.write("%d,\n" % int(dt*args.adjust))
+        txt.write("%d,\n" % int(dt*args.adjust))
     f.write("};\r\n")
     
     f.close()
+    txt.close()
     
+    txt = open("rpeak_array.txt", "w+")
     f = open("rpeak_array.c","w+")
     f.flush()
     f.write('#include "main.h"\r\n')
@@ -55,16 +58,27 @@ def main(args):
     f.write("const int RpeakSamples[RPEAK_LENGTH] = {\n")
     marks = annotation.sample[:]
     i = 0
+    error_shift = 0
     for dt in marks:
         if annotation.symbol[i] in Non_Beat_list:
             if annotation.symbol[i] is '+':
                 f.write("//%d - describes beat change: %s\n" % (int(dt), annotation.aux_note[i]))
             i = i + 1
             continue
-        f.write("%d,\n" % int(dt))
+        if full_data[dt + 1] > full_data[dt]:
+            while full_data[dt + error_shift + 1] > full_data[dt + error_shift]:
+                error_shift = error_shift + 1
+            dt = dt + error_shift
+            f.write("%d, //%d\n" % (int(dt), error_shift))
+            txt.write("%d, #%d\n" % (int(dt), error_shift))
+            error_shift = 0
+        else:
+            f.write("%d,\n" % int(dt))
+            txt.write("%d,\n" % int(dt))
         i = i + 1
     f.write("};\n")
     f.close()
+    txt.close()
         
 
 
@@ -78,7 +92,7 @@ if __name__ == "__main__":
                         help='Pass time in seconds or print "n" to print all')
     parser.add_argument('-ch', action='store', dest='channel', type=int, default=0,
                         help='Pass number of channel to parse')
-    parser.add_argument('-j', action='store', dest='adjust', type=int, default=10000,
+    parser.add_argument('-j', action='store', dest='adjust', type=float, default=10000,
                         help='Pass number of channel to parse')
     args = parser.parse_args()
     

@@ -1,23 +1,14 @@
-2019-12-18 20:28:44,555 info: Starting BlueCardio graph application
-2019-12-18 20:28:44,556 info: BlueCardio started with arguments: Namespace(communication='COM29', length=4096, logging='n', qrs='int')
-2019-12-18 20:28:44,556 info: Trying to open port COM29...
-2019-12-18 20:28:44,582 info: Port entity initialised for COM29
-2019-12-18 20:28:44,582 error: Port is already open. trying to open again...
-2019-12-18 20:28:44,610 info: Port COM29 is opened!
-2019-12-18 20:28:44,610 Program started at 20:28:44.610160
-2019-12-18 20:28:44,626 info: QtWidget initialised!
-2019-12-18 20:28:44,856 Message wasn't completely received: ['0N -3350N ', 'END\r']
-2019-12-18 20:28:44,857 Seems like previous packet was lost: 225 : ['-3550N', '-3700N', '-3600N', '-3449N']
-2019-12-18 20:28:44,858 Message wasn't completely received: ['D\r']
-2019-12-18 20:28:49,661 Percentage of received messages: 0.9919354838709677
-2019-12-18 20:28:54,685 Percentage of received messages: 1.0
-2019-12-18 20:28:59,692 Percentage of received messages: 1.0
-2019-12-18 20:29:04,702 Percentage of received messages: 1.0
-2019-12-18 20:29:09,706 Percentage of received messages: 1.0
-2019-12-18 20:29:14,704 Percentage of received messages: 1.0
-2019-12-18 20:29:19,717 Percentage of received messages: 1.0
-2019-12-18 20:29:24,720 Percentage of received messages: 1.0
-2019-12-18 20:29:29,722 Percentage of received messages: 1.0
-2019-12-18 20:29:30,884 Message wasn't completely received: ['ECG']
-2019-12-18 20:29:30,907 Seems like previous packet was lost: 2484 : ['-2750N', '-3100N', '-3050N', '-3200N']
-2019-12-18 20:29:34,756 Percentage of received messages: 0.991869918699187
+2019-12-19 19:41:44,457 info: Starting BlueCardio graph application
+2019-12-19 19:41:44,458 info: BlueCardio started with arguments: Namespace(communication='COM29', length=4096, logging='n', qrs='int')
+2019-12-19 19:41:44,458 info: Trying to open port COM29...
+2019-12-19 19:41:44,484 info: Port entity initialised for COM29
+2019-12-19 19:41:44,484 error: Port is already open. trying to open again...
+2019-12-19 19:41:44,512 info: Port COM29 is opened!
+2019-12-19 19:41:44,512 Program started at 19:41:44.512336
+2019-12-19 19:41:44,525 info: QtWidget initialised!
+2019-12-19 19:41:47,038 Seems like previous packet was lost: 0 : ['0N', '0N', '0N', '0N']
+2019-12-19 19:41:49,555 Percentage of received messages: 1.0
+2019-12-19 19:41:54,568 Percentage of received messages: 1.0
+2019-12-19 19:41:59,603 Percentage of received messages: 1.0
+2019-12-19 19:42:04,599 Percentage of received messages: 1.0
+2019-12-19 19:42:04,954 warning: ClearCommError failed (OSError(9, 'Неверный дескриптор.', None, 6))
