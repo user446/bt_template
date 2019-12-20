@@ -489,6 +489,16 @@
               <FileType>1</FileType>
               <FilePath>../Core/Src/stm32l4xx_hal_msp.c</FilePath>
             </File>
+            <File>
+              <FileName>fvt_detector.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\fvt_detector.c</FilePath>
+            </File>
+            <File>
+              <FileName>fvt_detector.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Core\Inc\fvt_detector.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

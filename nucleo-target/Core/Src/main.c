@@ -31,6 +31,7 @@
 #include "sw_timers.h"
 #include "fir_filter_taps.h"
 #include "slld.h"
+#include "fvt_detector.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -44,7 +45,7 @@
 #define CONVERSION_NUM 4
 #define DATA_AMOUNT 256
 #define BLOCK_SIZE 16		//FIR filter block size
-#define FREQ 200.0f
+#define FREQ 250.0f
 #define OVERLAP 32			//window overlap in detection algorithm
 
 #define MODE_INTERNAL 1
@@ -101,6 +102,7 @@ typedef union {
 //
 update_value uv; //simple conversion variable
 
+struct fvt_detector fvt;
 struct timer t_converter;
 struct timer t_sender;
 volatile int msg_counter	=	0;
@@ -508,6 +510,7 @@ int main(void)
 	HAL_TIM_Base_Start_IT(&htim3);
 	Timer_set(&t_converter, FREQ, &t_Converter_callback, true, true);
 	Timer_set(&t_sender, FREQ/4.0f, &t_Sender_callback, true, true);
+	fvt_InitDetector(&fvt, FREQ, 0.5f, 10, true);
 	
 	arm_fir_instance_q31 S;
 	arm_fir_init_q31(&S, NUM_TAPS, &firCoeffs32[0], &firStateF32[0], BLOCK_SIZE);
@@ -542,6 +545,9 @@ int main(void)
 					AdaptiveThresholding(window, window_markers+OVERLAP/2, DATA_AMOUNT);
 					memcpy(data_onsend, window+OVERLAP/2, sizeof(data_onsend[0])*DATA_AMOUNT);
 					memcpy(marker_onsend, window_markers+OVERLAP/2, sizeof(marker_onsend[0])*DATA_AMOUNT);
+					fvt_FindLast(&fvt, marker_onsend, DATA_AMOUNT);
+					if(fvt.window_fill == fvt.fvt_window_size)
+						fvt_CheckWindow(&fvt);
 				}
 				else
 				{

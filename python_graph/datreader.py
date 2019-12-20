@@ -25,14 +25,17 @@ def main(args):
     
     try:
        l = int(args.length)*360
+       b = int(args.begin)*360
     except:
         if isinstance(args.length, str) and args.length == 'n':
             l = None
         else:
             raise RuntimeError
+        if not isinstance(int(args.begin), int):
+            raise RuntimeError
 
-    record = wfdb.rdrecord(args.input, sampto=l)
-    annotation = wfdb.rdann(args.input, 'atr', sampto=l)
+    record = wfdb.rdrecord(args.input, sampfrom=b, sampto=b+l)
+    annotation = wfdb.rdann(args.input, 'atr', sampfrom=b, sampto=b+l)
     
     txt = open("ecg_array.txt", "w+")
     f = open("ecg_array.c","w+")
@@ -61,20 +64,34 @@ def main(args):
     error_shift = 0
     for dt in marks:
         if annotation.symbol[i] in Non_Beat_list:
-            if annotation.symbol[i] is '+':
-                f.write("//%d - describes beat change: %s\n" % (int(dt), annotation.aux_note[i]))
+            #if annotation.symbol[i] is '+':
+            f.write("//%d - describes beat change: %s, mark %s\n" % (int(dt - b), annotation.aux_note[i], annotation.symbol[i]))
+            txt.write("#%d - describes beat change: %s, mark %s\n" % (int(dt - b), annotation.aux_note[i], annotation.symbol[i]))
             i = i + 1
             continue
-        if full_data[dt + 1] > full_data[dt]:
-            while full_data[dt + error_shift + 1] > full_data[dt + error_shift]:
-                error_shift = error_shift + 1
-            dt = dt + error_shift
-            f.write("%d, //%d\n" % (int(dt), error_shift))
-            txt.write("%d, #%d\n" % (int(dt), error_shift))
-            error_shift = 0
+        
+        if full_data[dt - b] > 0:
+            if abs(full_data[dt - b + 1]) > abs(full_data[dt - b]):
+                while abs(full_data[dt - b + error_shift + 1]) > abs(full_data[dt - b + error_shift]):
+                    error_shift = error_shift + 1
+                dt = dt + error_shift
+                f.write("%d, //%d, mark:%s\n" % (int(dt - b), error_shift, annotation.symbol[i]))
+                txt.write("%d, #%d, mark:%s\n" % (int(dt - b), error_shift, annotation.symbol[i]))
+                error_shift = 0
+            else:
+                f.write("%d,\n" % int(dt - b))
+                txt.write("%d,\n" % int(dt - b))
         else:
-            f.write("%d,\n" % int(dt))
-            txt.write("%d,\n" % int(dt))
+            if abs(full_data[dt - b + 1]) < abs(full_data[dt - b]):
+                while abs(full_data[dt - b + error_shift + 1]) < abs(full_data[dt - b + error_shift]):
+                    error_shift = error_shift + 1
+                dt = dt + error_shift
+                f.write("%d, //%d, mark:%s\n" % (int(dt - b), error_shift, annotation.symbol[i]))
+                txt.write("%d, #%d, mark:%s\n" % (int(dt - b), error_shift, annotation.symbol[i]))
+                error_shift = 0
+            else:
+                f.write("%d,\n" % int(dt - b))
+                txt.write("%d,\n" % int(dt - b))
         i = i + 1
     f.write("};\n")
     f.close()
@@ -87,7 +104,9 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description='MIDdb to .c file parser')
     parser.add_argument('-i', action='store', dest='input', type=str,
-                        default='mitdb/100', help='Pass path to input file')
+                        default='mitdb/203', help='Pass path to input file')
+    parser.add_argument('-b', action='store', dest='begin', type=str, default='300',
+                        help='Pass beginning timestamp in seconds, default = 0')
     parser.add_argument('-l', action='store', dest='length', type=str, default='480',
                         help='Pass time in seconds or print "n" to print all')
     parser.add_argument('-ch', action='store', dest='channel', type=int, default=0,
