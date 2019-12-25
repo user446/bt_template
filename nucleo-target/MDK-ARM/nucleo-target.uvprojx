@@ -137,7 +137,7 @@
           </Flash1>
           <bUseTDR>1</bUseTDR>
           <Flash2>BIN\UL2CM3.DLL</Flash2>
-          <Flash3></Flash3>
+          <Flash3>"" ()</Flash3>
           <Flash4></Flash4>
           <pFcarmOut></pFcarmOut>
           <pFcarmGrp></pFcarmGrp>
@@ -498,6 +498,26 @@
               <FileName>fvt_detector.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\Core\Inc\fvt_detector.h</FilePath>
+            </File>
+            <File>
+              <FileName>markers.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\markers.c</FilePath>
+            </File>
+            <File>
+              <FileName>markers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Core\Inc\markers.h</FilePath>
+            </File>
+            <File>
+              <FileName>r_detector.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Core\Inc\r_detector.h</FilePath>
+            </File>
+            <File>
+              <FileName>r_detector.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\r_detector.c</FilePath>
             </File>
           </Files>
         </Group>

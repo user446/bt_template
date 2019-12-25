@@ -171,6 +171,7 @@ class BlueCardioGraph(pg.GraphicsWindow):
             self.x_data = np.append(
                 self.x_data, np.array(t_list).astype(np.int))
         except ValueError:
+            self.logger.warning("Unable to add new time data")
             return None
         # преобразуем лист в float и записываем его в данные оси y
         if self.markers == 'internal':
@@ -188,18 +189,22 @@ class BlueCardioGraph(pg.GraphicsWindow):
                         int(x[:n])
                         parsable = True
                         parse_list.append(n)
+                        num_data.append(x[:n])
+                        marks.append(x[n:])
                     except:
                         parsable = False
                         n = n - 1
                     if n == -5:
                         raise RuntimeError
-            
+                    
+            self.y_data = np.append(
+                self.y_data, np.array(num_data).astype(np.float))
             #можно сократить
-            parse_count = 0
-            for x in data:
-                num_data.append(x[:parse_list[parse_count]])
-                marks.append(x[parse_list[parse_count]:])
-                parse_count = parse_count + 1
+            # parse_count = 0
+            # for x in data:
+            #     num_data.append(x[:parse_list[parse_count]])
+            #     marks.append(x[parse_list[parse_count]:])
+            #     parse_count = parse_count + 1
             
             sr_tmp = self.last_S_peak
             r_tmp = self.last_R_peak
@@ -230,8 +235,7 @@ class BlueCardioGraph(pg.GraphicsWindow):
                         self.Fn = self.Fn + 1
                         
                     try:
-                        self.accuracy = (1 - (self.Fn + self.Fp) /
-                                        self.peak_total)*100
+                        self.accuracy = (1 - ((self.Fn + self.Fp)/self.peak_total))*100
                         self.sensitivity = (self.Tp/(self.Tp + self.Fn))*100
                         self.predicrive_positive = (self.Tp/(self.Tp + self.Fp))*100
                     except:
@@ -241,9 +245,6 @@ class BlueCardioGraph(pg.GraphicsWindow):
                         message = "Acc: %d, S: %d, P:%d, Tp(Д): %d, Fp(нД): %d, Fn(лД): %d, Total: %d" % (
                             self.accuracy, self.sensitivity, self.predicrive_positive, self.Tp, self.Fp, self.Fn, self.peak_total)
                         self.label_pointer.setText(message)
-            
-            self.y_data = np.append(
-                self.y_data, np.array(num_data).astype(np.float))
         else:
             self.y_data = np.append(
                 self.y_data, np.array(data).astype(np.float))
@@ -269,4 +270,8 @@ class BlueCardioGraph(pg.GraphicsWindow):
             self.plotDataR.setData(self.R_peak_time, self.R_peak_data)
             self.plotDataW.setData(self.Window_time, self.Window_markers)
             self.plotDataSR.setData(self.S_peak_time, self.S_peak_data)
-        self.setData(self.x_data, self.y_data)
+        try:
+            self.setData(self.x_data, self.y_data)
+        except:
+            self.logger.warning("Unable to set new data!")
+            raise RuntimeError

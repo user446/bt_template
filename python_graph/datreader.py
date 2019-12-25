@@ -45,8 +45,8 @@ def main(args):
     
     full_data = record.p_signal[:,args.channel]
     for dt in full_data:
-        f.write("%d,\n" % int(dt*args.adjust))
-        txt.write("%d,\n" % int(dt*args.adjust))
+        f.write("%d,\n" % int(dt*args.multiply))
+        txt.write("%d,\n" % int(dt*args.multiply))
     f.write("};\r\n")
     
     f.close()
@@ -70,28 +70,32 @@ def main(args):
             i = i + 1
             continue
         
-        if full_data[dt - b] > 0:
-            if abs(full_data[dt - b + 1]) > abs(full_data[dt - b]):
-                while abs(full_data[dt - b + error_shift + 1]) > abs(full_data[dt - b + error_shift]):
-                    error_shift = error_shift + 1
-                dt = dt + error_shift
-                f.write("%d, //%d, mark:%s\n" % (int(dt - b), error_shift, annotation.symbol[i]))
-                txt.write("%d, #%d, mark:%s\n" % (int(dt - b), error_shift, annotation.symbol[i]))
-                error_shift = 0
+        if(args.adjust):
+            if full_data[dt - b] > 0:
+                if abs(full_data[dt - b + 1]) > abs(full_data[dt - b]):
+                    while abs(full_data[dt - b + error_shift + 1]) > abs(full_data[dt - b + error_shift]):
+                        error_shift = error_shift + 1
+                    dt = dt + error_shift
+                    f.write("%d, //%d, mark:%s\n" % (int(dt - b), error_shift, annotation.symbol[i]))
+                    txt.write("%d, #%d, mark:%s\n" % (int(dt - b), error_shift, annotation.symbol[i]))
+                    error_shift = 0
+                else:
+                    f.write("%d,\n" % int(dt - b))
+                    txt.write("%d,\n" % int(dt - b))
             else:
-                f.write("%d,\n" % int(dt - b))
-                txt.write("%d,\n" % int(dt - b))
+                if abs(full_data[dt - b + 1]) < abs(full_data[dt - b]):
+                    while abs(full_data[dt - b + error_shift + 1]) < abs(full_data[dt - b + error_shift]):
+                        error_shift = error_shift - 1
+                    dt = dt + error_shift
+                    f.write("%d, //%d, mark:%s\n" % (int(dt - b), error_shift, annotation.symbol[i]))
+                    txt.write("%d, #%d, mark:%s\n" % (int(dt - b), error_shift, annotation.symbol[i]))
+                    error_shift = 0
+                else:
+                    f.write("%d,\n" % int(dt - b))
+                    txt.write("%d,\n" % int(dt - b))
         else:
-            if abs(full_data[dt - b + 1]) < abs(full_data[dt - b]):
-                while abs(full_data[dt - b + error_shift + 1]) < abs(full_data[dt - b + error_shift]):
-                    error_shift = error_shift + 1
-                dt = dt + error_shift
-                f.write("%d, //%d, mark:%s\n" % (int(dt - b), error_shift, annotation.symbol[i]))
-                txt.write("%d, #%d, mark:%s\n" % (int(dt - b), error_shift, annotation.symbol[i]))
-                error_shift = 0
-            else:
-                f.write("%d,\n" % int(dt - b))
-                txt.write("%d,\n" % int(dt - b))
+            f.write("%d,\n" % int(dt - b))
+            txt.write("%d,\n" % int(dt - b))
         i = i + 1
     f.write("};\n")
     f.close()
@@ -104,15 +108,17 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description='MIDdb to .c file parser')
     parser.add_argument('-i', action='store', dest='input', type=str,
-                        default='mitdb/203', help='Pass path to input file')
-    parser.add_argument('-b', action='store', dest='begin', type=str, default='300',
+                        default='mitdb/205', help='Pass path to input file')
+    parser.add_argument('-b', action='store', dest='begin', type=str, default='1398',
                         help='Pass beginning timestamp in seconds, default = 0')
-    parser.add_argument('-l', action='store', dest='length', type=str, default='480',
+    parser.add_argument('-l', action='store', dest='length', type=str, default='360',
                         help='Pass time in seconds or print "n" to print all')
-    parser.add_argument('-ch', action='store', dest='channel', type=int, default=0,
+    parser.add_argument('-ch', action='store', dest='channel', type=int, default=1,
                         help='Pass number of channel to parse')
-    parser.add_argument('-j', action='store', dest='adjust', type=float, default=10000,
-                        help='Pass number of channel to parse')
+    parser.add_argument('-m', action='store', dest='multiply', type=float, default=1000,
+                        help='Multiplier for values in ECG array')
+    parser.add_argument('-j', action='store', dest='adjust', type=bool, default=False,
+                        help='Adjustion of positions of R marks')
     args = parser.parse_args()
     
     main(args)

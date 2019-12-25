@@ -16,7 +16,7 @@ static struct timer* timer_stack[128];
 //
 static void CheckTimer(struct timer* t) 
 {
-	if(Timer_expired(t) == true && t->set == true) 
+	if(Timer_expired(t) == true) 
 	{ 
 		if(t->autorestart)
 			Timer_restart(t);
@@ -41,7 +41,7 @@ void t_OnDigitCompleteInterrupt(void)
 	timer_counter_int = 0;
  	while(timer_counter_int < t_counter)
 	{
-		if(timer_stack[timer_counter_int]->on_interrupt == true)
+		if(timer_stack[timer_counter_int]->on_interrupt == true && timer_stack[timer_counter_int]->set == true)
 			CheckTimer(timer_stack[timer_counter_int]);
 		timer_counter_int++;
 	}
@@ -62,7 +62,7 @@ void t_OnDigitCompleteContinuous(void)
 	timer_counter_cont = 0;
  	while(timer_counter_cont < t_counter)
 	{
-		if(timer_stack[timer_counter_cont]->on_interrupt == false)
+		if(timer_stack[timer_counter_cont]->on_interrupt == false && timer_stack[timer_counter_int]->set == true)
 			CheckTimer(timer_stack[timer_counter_cont]);
 		timer_counter_cont++;
 	}
@@ -80,9 +80,9 @@ void t_OnDigitCompleteContinuous(void)
 	*	@retval	нет
 **/
 //
-void Timer_set(struct timer* t, float frequency, void (*callback)(void), bool on_interrupt, bool autorestart)
+void Timer_set(struct timer* t, float frequency, void (*callback)(void), bool on_interrupt, bool autorestart, bool is_set)
 {
-	t->set = true;
+	t->set = is_set;
 	t->interval = (uint32_t)(sw_timer_100us_insec/frequency * sw_timer_base_100us);
 	t->start = sys_tick_count;
 	t->callback = callback;
@@ -146,3 +146,43 @@ uint32_t Timer_remaining(struct timer* t)
 }
 //
 
+/**
+	*	@brief	Включить таймер в проверку
+	*	@note		Перезапускает таймер
+	*	@param	*t указатель на структуру таймера
+	*	@retval	нет
+**/
+//
+void Timer_enable(struct timer* t)
+{
+	t->set = true;
+	Timer_restart(t);
+}
+//
+
+/**
+	*	@brief	Исключить таймер из проверки
+	*	@note		
+	*	@param	*t указатель на структуру таймера
+	*	@retval	нет
+**/
+//
+void Timer_disable(struct timer* t)
+{
+	t->set = false;
+}
+//
+
+/**
+	*	@brief	Изменить чстоту срабатывания таймера
+	*	@note		
+	*	@param	*t указатель на структуру таймера
+	*	@param	freq частота
+	*	@retval	нет
+**/
+//
+void Timer_frequency(struct timer* t, float frequency)
+{
+	t->interval = (uint32_t)(sw_timer_100us_insec/frequency * sw_timer_base_100us);
+}
+//
