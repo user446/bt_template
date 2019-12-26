@@ -29,6 +29,14 @@ class BlueCardioGraph(pg.GraphicsWindow):
         self.S_peak_time = np.array([])
         self.Window_markers = np.array([])
         self.Window_time = np.array([])
+        
+        self.FVTbegin_markers = np.array([])
+        self.FVTbegin_time = np.array([])
+        self.FVTong_markers = np.array([])
+        self.FVTong_time = np.array([])
+        self.FVTstop_markers = np.array([])
+        self.FVTstop_time = np.array([])
+        
         self.last_S_peak = 0
         self.last_R_peak = 0
         self.peak_total = 0
@@ -89,6 +97,12 @@ class BlueCardioGraph(pg.GraphicsWindow):
             [], pen=None, symbol='o', symbolBrush='r', symbolSize=10, name = "Detected Peaks")
         self.plotDataW = self.plotItem.plot(
             [], pen=None,  symbol='s', symbolBrush='g', symbolSize=12, name = "Window markers")
+        self.plotDataFVT_begin = self.plotItem.plot(
+            [], pen=None,  symbol='s', symbolBrush='r', symbolSize=15, name = "FVT markers begin")
+        self.plotDataFVT_ongoing = self.plotItem.plot(
+            [], pen=None,  symbol='s', symbolBrush='y', symbolSize=15, name = "FVT markers ongoing")
+        self.plotDataFVT_finish = self.plotItem.plot(
+            [], pen=None,  symbol='s', symbolBrush='b', symbolSize=15, name = "FVT markers finish")
         if(showlen >= 4):
             self.plotItem.setXRange(0, showlen)
 
@@ -222,6 +236,16 @@ class BlueCardioGraph(pg.GraphicsWindow):
                         self.S_peak_time = np.append(self.S_peak_time, t_list[i])
                         self.last_S_peak = t_list[i]
                         self.peak_total = self.peak_total + 1
+                    if x == 'B':
+                        self.FVTbegin_markers = np.append(self.FVTbegin_markers, num_data[i])
+                        self.FVTbegin_time = np.append(self.FVTbegin_time, t_list[i])
+                    if x == 'O':
+                        self.FVTong_markers = np.append(self.FVTong_markers, num_data[i])
+                        self.FVTong_time = np.append(self.FVTong_time, t_list[i])
+                    if x == 'P':
+                        self.FVTstop_markers = np.append(self.FVTstop_markers, num_data[i])
+                        self.FVTstop_time = np.append(self.FVTstop_time, t_list[i])
+                    
                 i+=1
                 #алгоритм анализа качества детекции
                 if self.last_S_peak != sr_tmp or self.last_R_peak != r_tmp:
@@ -270,6 +294,9 @@ class BlueCardioGraph(pg.GraphicsWindow):
             self.plotDataR.setData(self.R_peak_time, self.R_peak_data)
             self.plotDataW.setData(self.Window_time, self.Window_markers)
             self.plotDataSR.setData(self.S_peak_time, self.S_peak_data)
+            self.plotDataFVT_begin.setData(self.FVTbegin_markers, self.FVTbegin_time)
+            self.plotDataFVT_ongoing.setData(self.FVTong_markers, self.FVTong_time)
+            self.plotDataFVT_finish.setData(self.FVTstop_markers, self.FVTstop_time)
         try:
             self.setData(self.x_data, self.y_data)
         except:

@@ -175,7 +175,6 @@ int main(void)
 //					Timer_Restart(&t_elapsed_send);
 					
 					}
-					printf("Hello!\n");
 //				printf("%d :: ", conv_counter);
 //				for(int i = 0; i < CONVERSION_NUM; i++)
 //						printf("%f ", uv.update_buffer_f[i]);

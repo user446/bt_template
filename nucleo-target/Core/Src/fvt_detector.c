@@ -6,6 +6,7 @@
 #include "string.h"
 #include "markers.h"
 #include "sw_timers.h"
+#include "math.h"
 
 static float	fvt_disc_frequency = 0;	///	частота дискретизации, позволяет простым умножением подсчитывать интервал R пика
 
@@ -15,28 +16,27 @@ static int 		fvt_window_fullness = 0;				///заполненность окна, нужна для запуск
 static int		fvt_window_fail_counter	=	0;		///счетчик отрицательных проверок в окне
 static int 		fvt_window_last_part_count = 0;	///хранит количество позиций с последнего R пика до конца окна в окне маркеров
 
-static bool 	fvt_detected = false;	///Флаг обозначающий то, что БЖТ было задетектировано
-static bool		fvt_onfinish = false;	///Флаг, включаемый когда необходимо обработать возможное завершение БЖТ
+static int 		fvt_detected = FVT_UNDEFINED;	///Флаг обозначающий то, что БЖТ было задетектировано
 
 static float 	fvt_last_r_peak = 0;				///Дельта между предыдущим и последним R пиком
 static float 	fvt_interval = 0;						///критический интервал, с которым сравниваются дельты в окне БЖТ
 static float	fvt_average_period = 0;			///средний интервал между пиками, позволяет расчитать частоту сердцебиения
 static float 	fvt_peak_time_sum = 0;			///используется для хранения суммы дельт R пиков
-static float	fvt_onfinish_time_sum = 0;	///сумма дельт R пиков для второго условия остановки (по таймеру за 20 секунд)
 static int		fvt_detect_after_count = 0;	///число положительных срабатываний детектора, после которого БЖТ считается задетектированным
 static int*		fvt_markers_ptr;						///указатель на массив маркеров, по которому проводится проверка
 static int		fvt_markers_size	= 0;			///размер массива маркеров
-static int		fvt_onfinish_count = 0;			///счетчик сброса детекции для первого условия остановки (число последовательных R пиков)
 
-static void fvt_CheckWindow(void);
+static float 	fvt_20_second_r_peak_sum = 0;
+static int		fvt_20_second_r_peak_count = 0;			///счетчик сброса детекции для первого условия остановки (число последовательных R пиков)
+static float		fvt_timer = 0;							///считает время по проверенным позициям в маркерах
+static float		fvt_10_second_mark_time = 0;
+static float		fvt_20_second_mark_time = 0;
+
+static int fvt_CheckWindow(void);
 static void InsertInWindow(float data);
-static void CheckFinishFVT(void);
-static void OnNoRpeaks(void);
 
-struct timer t_finish_fvt;				///таймер для второго условия остановки
-struct timer t_tensec_period;			///таймер для третьего условия остановки
-static const float timer_freq = 1/20;
-static const float onfinish_time = 20.0f; //секунды
+static const float t20_seconds_normal = 20.0f; //секунды
+static const float t10_seconds_no_r = 10.0f;
 
 void fvt_InitDetector(float* fvt_window, int window_size, int* markers, int mk_size, float dfreq, float interval, int fvt_count)
 {
@@ -47,11 +47,6 @@ void fvt_InitDetector(float* fvt_window, int window_size, int* markers, int mk_s
 	fvt_window_size = window_size;
 	fvt_interval = interval;
 	fvt_detect_after_count = fvt_count;
-	
-	//инициализация таймера, срабатывание раз в 20 секунд, без автоперезагрузки, изначально выключен
-	Timer_set(&t_finish_fvt, timer_freq, &CheckFinishFVT, true, false, false);
-	//инициализация таймера, срабатывание раз в 10 секунд
-	Timer_set(&t_tensec_period, 1/10, &OnNoRpeaks, true, true, true);
 }
 //
 
@@ -69,85 +64,77 @@ static void InsertInWindow(float data)
 }
 //
 
-//обработчик таймера, срабатывает через timer_freq после запуска таймера
-static void CheckFinishFVT(void)
-{
-	if(fvt_onfinish)
-	{
-		if(fvt_interval <= fvt_onfinish_time_sum/onfinish_time)
-			fvt_detected = false;		//второе условие сброса
-		else
-			fvt_detected = true;
-		fvt_onfinish_time_sum = 0;
-		fvt_onfinish = false;
-	}
-}
-//
-
-//обработчик таймера, срабатывает каждые 10 секунд, если не был сброшен
-static void OnNoRpeaks(void)
-{
-	fvt_detected = false;
-	fvt_onfinish = false;
-}
-//
-
+t_fvt_result ret;
 t_fvt_result fvt_SeekForFVT(void)
 {
 	int i_delta = 0;
-	t_fvt_result ret;
 	
+	if(fvt_detected == FVT_FINISH)
+		fvt_detected = FVT_UNDEFINED;
+		
 	for(int i = 0; i < fvt_markers_size; i++)
 	{
+		fvt_timer += 1/fvt_disc_frequency;
 		if(SearchFor(MARK_R_PEAK, fvt_markers_ptr[i]))
 		{
 			fvt_last_r_peak = ((float)(fvt_window_last_part_count + i - i_delta)*(1/fvt_disc_frequency));
 			i_delta = i;
 			InsertInWindow(fvt_last_r_peak);
-			Timer_restart(&t_tensec_period);
+			fvt_10_second_mark_time = fvt_timer + t10_seconds_no_r;
 			if(fvt_window_fullness < fvt_window_size)	//считаем, пока окно не заполнится целиком
 			{
 				fvt_window_fullness++;
 			}
-			else			//если окно заполнено, то начинаем проверять окна с каждым найденным r пиком
+			else if(fvt_CheckWindow() >= fvt_detect_after_count)
 			{
-				fvt_CheckWindow();
+				if(fvt_detected == FVT_UNDEFINED)
+					fvt_detected = FVT_BEGIN;
+				else fvt_detected = FVT_ONGOING;
+				ret.index = i;
+				fvt_20_second_r_peak_count = 0;
+				fvt_20_second_r_peak_sum = 0;
+				fvt_20_second_mark_time = fvt_timer + t20_seconds_normal;
 			}
+			if(fvt_detected && fvt_20_second_mark_time >= fvt_timer)
+			{
+				fvt_20_second_r_peak_count++;
+				fvt_20_second_r_peak_sum += fvt_last_r_peak;
+			}
+			else if(fvt_detected && fvt_20_second_mark_time <= fvt_timer)
+			{
+				if(fvt_20_second_r_peak_sum/fvt_20_second_r_peak_count >= fvt_interval && fvt_detected == FVT_ONGOING)
+				{
+					fvt_detected = FVT_FINISH;
+					ret.index = i;
+				}
+			}
+		}
+		if(fvt_timer >= fvt_10_second_mark_time && fvt_detected == FVT_ONGOING)
+		{
+			fvt_detected = FVT_FINISH;
+			ret.index = i;
 		}
 	}
 	fvt_window_last_part_count = fvt_markers_size - i_delta;
+	
+	ret.found = fvt_detected;
+	return ret;
 }
 //
 
-void fvt_CheckWindow(void)
+int fvt_CheckWindow(void)
 {
-	fvt_window_fail_counter = 0;
-	fvt_onfinish_count = 0;
-	fvt_peak_time_sum = 0;
+	int peak_time_sum = 0;
+	int interval_too_small = 0;
 	for(int i = 0; i < fvt_window_size; i++)
 	{
 		fvt_peak_time_sum += fvt_window_ptr[i];
-		if(fvt_onfinish)
-			fvt_onfinish_time_sum += fvt_window_ptr[i];
 		if(fvt_window_ptr[i] <= fvt_interval)
-			fvt_window_fail_counter++;
-		else
-		{
-			fvt_onfinish_count++;
-		}
+			interval_too_small++;
 	}
-	
-	if(fvt_window_fail_counter >= fvt_detect_after_count)	//если в окне зафиксированы только пики меньше нормального периода
-	{
-		fvt_detected = true;		//условие начала подсчета
-		fvt_onfinish = true;
-		Timer_enable(&t_finish_fvt);
-	}
-	if(fvt_onfinish_count >= fvt_detect_after_count) //если в окне зафиксированы только пики с нормальным периодом
-		fvt_detected = false;	//первое условие сброса
-	
-	fvt_peak_time_sum += fvt_window_ptr[0];
-	fvt_average_period = fvt_peak_time_sum/fvt_window_size;
+	fvt_average_period = peak_time_sum/fvt_window_size;
+	fvt_window_fail_counter = interval_too_small;
+	return interval_too_small;
 }
 //
 

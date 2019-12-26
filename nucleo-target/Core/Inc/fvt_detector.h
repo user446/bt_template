@@ -3,9 +3,10 @@
 
 #include "stdbool.h"
 
-#define FVT_NO 			0
-#define FVT_BEGIN 	-1
-#define FVT_START		1
+#define FVT_UNDEFINED	0
+#define FVT_ONGOING		3
+#define FVT_BEGIN 		1
+#define FVT_FINISH		2
 
 typedef struct fvt_result
 {

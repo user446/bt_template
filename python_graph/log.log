@@ -1,36 +1,22 @@
-2019-12-25 18:53:02,748 info: Starting BlueCardio graph application
-2019-12-25 18:53:02,749 info: BlueCardio started with arguments: Namespace(communication='COM29', length=4096, logging='n', qrs='int')
-2019-12-25 18:53:02,749 info: Trying to open port COM29...
-2019-12-25 18:53:02,775 info: Port entity initialised for COM29
-2019-12-25 18:53:02,775 error: Port is already open. trying to open again...
-2019-12-25 18:53:02,803 info: Port COM29 is opened!
-2019-12-25 18:53:02,803 Program started at 18:53:02.803370
-2019-12-25 18:53:02,818 info: QtWidget initialised!
-2019-12-25 18:53:04,044 Seems like previous packet was lost: 0 : ['0N', '0N', '0N', '0N']
-2019-12-25 18:53:07,872 Percentage of received messages: 1.0
-2019-12-25 18:53:12,902 Percentage of received messages: 1.0
-2019-12-25 18:53:17,895 Percentage of received messages: 1.0
-2019-12-25 18:53:22,894 Percentage of received messages: 1.0
-2019-12-25 18:53:27,916 Percentage of received messages: 1.0
-2019-12-25 18:53:32,915 Percentage of received messages: 1.0
-2019-12-25 18:53:37,920 Percentage of received messages: 1.0
-2019-12-25 18:53:42,950 Percentage of received messages: 1.0
-2019-12-25 18:53:47,942 Percentage of received messages: 1.0
-2019-12-25 18:53:52,956 Percentage of received messages: 1.0
-2019-12-25 18:53:57,937 Percentage of received messages: 1.0
-2019-12-25 18:54:02,946 Percentage of received messages: 1.0
-2019-12-25 18:54:07,983 Percentage of received messages: 1.0
-2019-12-25 18:54:12,962 Percentage of received messages: 1.0
-2019-12-25 18:54:17,964 Percentage of received messages: 1.0
-2019-12-25 18:54:22,978 Percentage of received messages: 1.0
-2019-12-25 18:54:27,984 Percentage of received messages: 1.0
-2019-12-25 18:54:33,016 Percentage of received messages: 1.0
-2019-12-25 18:54:37,995 Percentage of received messages: 1.0
-2019-12-25 18:54:43,041 Percentage of received messages: 1.0
-2019-12-25 18:54:48,023 Percentage of received messages: 1.0
-2019-12-25 18:54:53,064 Percentage of received messages: 1.0
-2019-12-25 18:54:56,996 Message wasn't completely received: ['ECG 6894', '1830N 1835N']
-2019-12-25 18:54:56,998 Message wasn't completely received: [' 1860N 1855N ', 'END\r']
-2019-12-25 18:54:57,022 Seems like previous packet was lost: 6895 : ['1870N', '1880N', '1870N', '1875N']
-2019-12-25 18:54:58,029 Percentage of received messages: 0.9933774834437086
-2019-12-25 18:55:02,478 warning: ClearCommError failed (OSError(9, 'Неверный дескриптор.', None, 6))
+2019-12-26 15:03:56,333 info: Starting BlueCardio graph application
+2019-12-26 15:03:56,334 info: BlueCardio started with arguments: Namespace(communication='COM29', length=4096, logging='n', qrs='int')
+2019-12-26 15:03:56,334 info: Trying to open port COM29...
+2019-12-26 15:03:56,361 info: Port entity initialised for COM29
+2019-12-26 15:03:56,361 error: Port is already open. trying to open again...
+2019-12-26 15:03:56,389 info: Port COM29 is opened!
+2019-12-26 15:03:56,389 Program started at 15:03:56.389520
+2019-12-26 15:03:56,405 info: QtWidget initialised!
+2019-12-26 15:03:56,649 Seems like previous packet was lost: 21 : ['0N', '0N', '0N', '0N']
+2019-12-26 15:03:59,045 Message wasn't completely received: ['D\r']
+2019-12-26 15:04:01,476 Percentage of received messages: 0.9967845659163987
+2019-12-26 15:04:06,503 Percentage of received messages: 1.0
+2019-12-26 15:04:11,507 Percentage of received messages: 1.0
+2019-12-26 15:04:16,470 Percentage of received messages: 1.0
+2019-12-26 15:04:21,515 Percentage of received messages: 1.0
+2019-12-26 15:04:26,508 Percentage of received messages: 1.0
+2019-12-26 15:04:31,527 Percentage of received messages: 1.0
+2019-12-26 15:04:36,514 Percentage of received messages: 1.0
+2019-12-26 15:04:38,597 Message wasn't completely received: ['E']
+2019-12-26 15:04:41,576 Percentage of received messages: 0.9967637540453075
+2019-12-26 15:04:46,509 Percentage of received messages: 1.0
+2019-12-26 15:04:47,678 warning: ClearCommError failed (OSError(9, 'Неверный дескриптор.', None, 6))

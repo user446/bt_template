@@ -10,7 +10,8 @@
 #define	MARK_WINDOW	'W'
 #define	MARK_S_PEAK		'S'
 #define MARK_FVT_START	'B'
-#define MARK_FVT_FINISH	'O'
+#define MARK_FVT_ONGOING	'O'
+#define	MARK_FVT_FINISH		'P'
 
 void AppendMarker(int* dest, int marker);
 void ParseMarkers(int marker_signs, char* markers,	int size);

@@ -399,7 +399,7 @@ int main(void)
 	HAL_TIM_Base_Start_IT(&htim3);
 	Timer_set(&t_converter, FREQ, &t_Converter_callback, true, true, true);
 	Timer_set(&t_sender, FREQ/4.0f, &t_Sender_callback, true, true, true);
-	fvt_InitDetector(fvt_container, 10, marker_onsend, DATA_AMOUNT, FREQ, 0.2, 4);
+	fvt_InitDetector(fvt_container, 10, marker_onsend, DATA_AMOUNT, FREQ, 0.9f, 4);
 	
 	arm_fir_instance_q31 S;
 	arm_fir_init_q31(&S, NUM_TAPS, &firCoeffs32[0], &firStateF32[0], BLOCK_SIZE);
@@ -431,10 +431,16 @@ int main(void)
 				{
 					//AdaptiveThresholding(window, window_markers+OVERLAP/2, DATA_AMOUNT);
 					AdaptiveThresholding_high(window, window_markers+OVERLAP/2, DATA_AMOUNT,
-						FREQ, 0.4, 1.5, 0.5);
+						FREQ, 0.2, 0.3, 0.5);
 					memcpy(data_onsend, window+OVERLAP/2, sizeof(data_onsend[0])*DATA_AMOUNT);
 					memcpy(marker_onsend, window_markers+OVERLAP/2, sizeof(marker_onsend[0])*DATA_AMOUNT);
 					fvt_result = fvt_SeekForFVT();
+					if(fvt_result.found == FVT_BEGIN)
+						AppendMarker(&marker_onsend[fvt_result.index], MARK_FVT_START);
+					else if(fvt_result.found == FVT_FINISH)
+						AppendMarker(&marker_onsend[fvt_result.index], MARK_FVT_FINISH);
+					else if(fvt_result.found == FVT_ONGOING)
+						AppendMarker(&marker_onsend[fvt_result.index], MARK_FVT_ONGOING);
 				}
 				else
 				{

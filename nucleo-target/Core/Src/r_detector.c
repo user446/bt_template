@@ -34,7 +34,7 @@ static int state = 0;
 //2 - период снижения time + blind_period + low_det_period + 1с - x*0.30
 //3 - time + blind_period + low_det_period + 1с + 0.5 - x*0.2
 //возврат к 0 на любой стадии
-
+//алгоритм Medtronic
 
 void AdaptiveThresholding_high(int* data, int* peak_holder, int size, float d_freq, float blind_period, float low_det_period, float sensitivity)
 {
@@ -61,7 +61,7 @@ void AdaptiveThresholding_high(int* data, int* peak_holder, int size, float d_fr
 					AppendMarker(&peak_holder[i-OVERLAP/2], MARK_R_PEAK);
 					heartbeat++;
 					r_peak = x;
-					current_threshold = (int)(r_peak - last_mean)*0.80 + last_mean;
+					current_threshold = (int)(r_peak - last_mean)*0.65 + last_mean;
 					time_compare = time + blind_period;
 					detected = true;
 					state = 0;
@@ -71,7 +71,7 @@ void AdaptiveThresholding_high(int* data, int* peak_holder, int size, float d_fr
 						case 0:
 							if(time >= time_compare && detected == true)
 							{
-								current_threshold = (int)(r_peak - last_mean)*0.65 + last_mean;
+								//current_threshold = (int)(r_peak - last_mean)*0.65 + last_mean;
 								time_compare += low_det_period;
 								detected = false;
 								state = 1;
