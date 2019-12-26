@@ -267,7 +267,7 @@ void t_Converter_callback(void)
 					sample_index = 0;
 					ClearBuffers();
 				}
-				adjusted_data = ECG_SAMPLES[preset_counter] + 1200;
+				adjusted_data = abs(ECG_SAMPLES[preset_counter] - 1200);
 				data_insert[preset_buffer_counter] = adjusted_data;
 				
 				// SSB 
@@ -429,7 +429,9 @@ int main(void)
 			
 				if(HAL_GPIO_ReadPin(Filter_Switch_GPIO_Port, Filter_Switch_Pin) == GPIO_PIN_RESET)
 				{
-					AdaptiveThresholding(window, window_markers+OVERLAP/2, DATA_AMOUNT);
+					//AdaptiveThresholding(window, window_markers+OVERLAP/2, DATA_AMOUNT);
+					AdaptiveThresholding_high(window, window_markers+OVERLAP/2, DATA_AMOUNT,
+						FREQ, 0.4, 1.5, 0.5);
 					memcpy(data_onsend, window+OVERLAP/2, sizeof(data_onsend[0])*DATA_AMOUNT);
 					memcpy(marker_onsend, window_markers+OVERLAP/2, sizeof(marker_onsend[0])*DATA_AMOUNT);
 					fvt_result = fvt_SeekForFVT();

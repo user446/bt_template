@@ -5,5 +5,6 @@
 
 void Thresholding(int* data, int* peak_holder, int threshold, int size);
 void AdaptiveThresholding(int* data, int* peak_holder, int size);
+void AdaptiveThresholding_high(int* data, int* peak_holder, int size, float d_freq, float blind_period, float low_det_period, float sensitivity);
 
 #endif

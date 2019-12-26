@@ -1,160 +1,36 @@
-2019-12-25 14:29:23,596 info: Starting BlueCardio graph application
-2019-12-25 14:29:23,597 info: BlueCardio started with arguments: Namespace(communication='COM29', length=4096, logging='n', qrs='int')
-2019-12-25 14:29:23,598 info: Trying to open port COM29...
-2019-12-25 14:29:23,624 info: Port entity initialised for COM29
-2019-12-25 14:29:23,634 error: Port is already open. trying to open again...
-2019-12-25 14:29:23,662 info: Port COM29 is opened!
-2019-12-25 14:29:23,662 Program started at 14:29:23.662566
-2019-12-25 14:29:24,007 info: QtWidget initialised!
-2019-12-25 14:29:30,163 Seems like previous packet was lost: 526 : ['855N', '875N', '870N', '865N']
-2019-12-25 14:29:30,179 Message wasn't completely received: ['ECG 867', '850N 860N 860N 865N ']
-2019-12-25 14:29:30,180 Message wasn't completely received: ['', 'END\r']
-2019-12-25 14:29:30,180 Seems like previous packet was lost: 868 : ['880N', '875N', '875N', '870N']
-2019-12-25 14:29:30,182 Message wasn't completely received: ['ECG 881', '865N 875N 86ECG 923', '860N 875N 860N 860N ', 'END\r']
-2019-12-25 14:29:30,185 Seems like previous packet was lost: 924 : ['860N', '860N', '870N', '875N']
-2019-12-25 14:29:33,092 Percentage of received messages: 0.994392523364486
-2019-12-25 14:29:39,439 Percentage of received messages: 1.0
-2019-12-25 14:29:44,455 Percentage of received messages: 1.0
-2019-12-25 14:29:49,459 Percentage of received messages: 1.0
-2019-12-25 14:29:54,483 Percentage of received messages: 1.0
-2019-12-25 14:29:59,497 Percentage of received messages: 1.0
-2019-12-25 14:30:04,491 Percentage of received messages: 1.0
-2019-12-25 14:30:09,519 Percentage of received messages: 1.0
-2019-12-25 14:30:14,513 Percentage of received messages: 1.0
-2019-12-25 14:30:19,534 Percentage of received messages: 1.0
-2019-12-25 14:30:22,413 Message wasn't completely received: ['ECG 4111', '690N 690N 695N 6']
-2019-12-25 14:30:22,417 Message wasn't completely received: ['85N ', 'END\r']
-2019-12-25 14:30:22,430 Seems like previous packet was lost: 4112 : ['685N', '685N', '695N', '695N']
-2019-12-25 14:30:24,517 Percentage of received messages: 0.9934426229508196
-2019-12-25 14:30:29,526 Percentage of received messages: 1.0
-2019-12-25 14:30:34,568 Percentage of received messages: 1.0
-2019-12-25 14:30:39,568 Percentage of received messages: 1.0
-2019-12-25 14:30:42,606 Message wasn't completely received: ['ECG 5344', '820N ']
-2019-12-25 14:30:42,610 Message wasn't completely received: ['825N 830N 825N ', 'END\r']
-2019-12-25 14:30:42,620 Seems like previous packet was lost: 5345 : ['820N', '820N', '810N', '805N']
-2019-12-25 14:30:44,553 Percentage of received messages: 0.9934426229508196
-2019-12-25 14:30:49,592 Percentage of received messages: 1.0
-2019-12-25 14:30:54,546 Percentage of received messages: 1.0
-2019-12-25 14:30:59,633 Percentage of received messages: 1.0
-2019-12-25 14:31:04,586 Percentage of received messages: 1.0
-2019-12-25 14:31:09,630 Percentage of received messages: 1.0
-2019-12-25 14:31:14,608 Percentage of received messages: 1.0
-2019-12-25 14:31:19,599 Percentage of received messages: 1.0
-2019-12-25 14:31:24,610 Percentage of received messages: 1.0
-2019-12-25 14:31:29,608 Percentage of received messages: 1.0
-2019-12-25 14:31:34,630 Percentage of received messages: 1.0
-2019-12-25 14:31:39,633 Percentage of received messages: 1.0
-2019-12-25 14:31:44,634 Percentage of received messages: 1.0
-2019-12-25 14:31:49,640 Percentage of received messages: 1.0
-2019-12-25 14:31:54,661 Percentage of received messages: 1.0
-2019-12-25 14:31:56,475 Message wasn't completely received: ['ECG 9']
-2019-12-25 14:31:56,506 Seems like previous packet was lost: 9852 : ['795N', '800N', '810N', '805N']
-2019-12-25 14:31:58,385 Message wasn't completely received: ['EC']
-2019-12-25 14:31:59,823 Percentage of received messages: 0.9905362776025236
-2019-12-25 14:32:04,132 Message wasn't completely received: ['ECG 10']
-2019-12-25 14:32:04,156 Seems like previous packet was lost: 10319 : ['825N', '845N', '855N', '845N']
-2019-12-25 14:32:04,691 Percentage of received messages: 0.9932885906040269
-2019-12-25 14:32:04,899 Message wasn't completely received: ['ECG']
-2019-12-25 14:32:04,924 Seems like previous packet was lost: 10366 : ['865N', '875N', '890N', '900N']
-2019-12-25 14:32:07,251 Message wasn't completely received: ['ECG 10508', '7']
-2019-12-25 14:32:07,258 Message wasn't completely received: ['90N 800N 795N 785N ', 'END\r']
-2019-12-25 14:32:07,277 Seems like previous packet was lost: 10509 : ['785N', '775N', '780N', '775N']
-2019-12-25 14:32:07,660 Message wasn't completely received: ['ECG 10533', '715N 710N ']
-2019-12-25 14:32:07,674 Message wasn't completely received: ['720N 720N ', 'END\r']
-2019-12-25 14:32:07,688 Seems like previous packet was lost: 10534 : ['710N', '715N', '720N', '715N']
-2019-12-25 14:32:07,741 Message wasn't completely received: ['EC']
-2019-12-25 14:32:09,855 Percentage of received messages: 0.9779874213836478
-2019-12-25 14:32:10,143 Message wasn't completely received: ['ECG 1068']
-2019-12-25 14:32:10,182 Seems like previous packet was lost: 10686 : ['820N', '825N', '810N', '815N']
-2019-12-25 14:32:10,191 Message wasn't completely received: ['ECG 10688', '850W 855N']
-2019-12-25 14:32:10,207 Message wasn't completely received: [' 840N 825N ', 'END\r']
-2019-12-25 14:32:10,210 Seems like previous packet was lost: 10689 : ['820N', '810N', '815N', '825N']
-2019-12-25 14:32:10,241 Message wasn't completely received: ['ECG 10691', '850N 850']
-2019-12-25 14:32:10,253 Message wasn't completely received: ['N 840N 830N ', 'END\r']
-2019-12-25 14:32:10,258 Seems like previous packet was lost: 10692 : ['825N', '820N', '815N', '820N']
-2019-12-25 14:32:11,171 Message wasn't completely received: ['E']
-2019-12-25 14:32:13,521 Message wasn't completely received: ['ECG 108']
-2019-12-25 14:32:13,538 Message wasn't completely received: ['ECG']
-2019-12-25 14:32:13,563 Seems like previous packet was lost: 10893 : ['805N', '795N', '790N', '795N']
-2019-12-25 14:32:13,586 Message wasn't completely received: ['ECG']
-2019-12-25 14:32:13,618 Seems like previous packet was lost: 10896 : ['840N', '830N', '830N', '835N']
-2019-12-25 14:32:14,062 Message wasn't completely received: ['ECG 109']
-2019-12-25 14:32:14,079 Seems like previous packet was lost: 10925 : ['820N', '815N', '815N', '800N']
-2019-12-25 14:32:14,836 Percentage of received messages: 0.9519230769230769
-2019-12-25 14:32:15,188 Message wasn't completely received: ['ECG 10993']
-2019-12-25 14:32:15,206 Seems like previous packet was lost: 10994 : ['800N', '790N', '790N', '785N']
-2019-12-25 14:32:19,679 Percentage of received messages: 0.9932203389830508
-2019-12-25 14:32:23,155 Message wasn't completely received: ['ECG 11479', '850N 855N']
-2019-12-25 14:32:23,164 Message wasn't completely received: [' 865N 880N ', 'END\r']
-2019-12-25 14:32:23,179 Seems like previous packet was lost: 11480 : ['865N', '885N', '880N', '880N']
-2019-12-25 14:32:24,624 Message wasn't completely received: ['ECG 11568', '830N 820N ']
-2019-12-25 14:32:24,637 Message wasn't completely received: ['820N 820N ', 'END\r']
-2019-12-25 14:32:24,642 Seems like previous packet was lost: 11569 : ['815N', '825N', '830N', '830N']
-2019-12-25 14:32:24,704 Percentage of received messages: 0.987012987012987
-2019-12-25 14:32:30,011 Percentage of received messages: 1.0
-2019-12-25 14:32:32,655 Message wasn't completely received: ['ECG 120']
-2019-12-25 14:32:32,672 Seems like previous packet was lost: 12059 : ['840N', '840N', '855N', '850N']
-2019-12-25 14:32:35,045 Percentage of received messages: 0.9935064935064936
-2019-12-25 14:32:35,575 Message wasn't completely received: ['ECG 12237:']
-2019-12-25 14:32:35,588 Message wasn't completely received: [':825N 825N 820N 805N ', 'END\r']
-2019-12-25 14:32:35,594 Seems like previous packet was lost: 12238 : ['805N', '805N', '810N', '815N']
-2019-12-25 14:32:38,123 Message wasn't completely received: ['ECG 12392', '760N 775N']
-2019-12-25 14:32:38,139 Message wasn't completely received: [' 785N 800N ', 'END\r']
-2019-12-25 14:32:38,140 Message wasn't completely received: ['ECG 12393', '775N 7']
-2019-12-25 14:32:38,147 Message wasn't completely received: ['75N 770N 760N ', 'END\r']
-2019-12-25 14:32:38,165 Seems like previous packet was lost: 12394 : ['755N', '755N', '740N', '760N']
-2019-12-25 14:32:39,737 Message wasn't completely received: ['ECG 12491']
-2019-12-25 14:32:39,772 Seems like previous packet was lost: 12492 : ['790N', '790N', '780N', '785N']
-2019-12-25 14:32:40,269 Percentage of received messages: 0.9751552795031055
-2019-12-25 14:32:44,097 Message wasn't completely received: ['EC']
-2019-12-25 14:32:44,635 Message wasn't completely received: ['ECG 12']
-2019-12-25 14:32:44,654 Seems like previous packet was lost: 12791 : ['780N', '800N', '800N', '800N']
-2019-12-25 14:32:45,151 Percentage of received messages: 0.9899328859060402
-2019-12-25 14:32:46,952 Message wasn't completely received: ['ECG 1293']
-2019-12-25 14:32:46,983 Seems like previous packet was lost: 12932 : ['720N', '720N', '725N', '725N']
-2019-12-25 14:32:48,976 Message wasn't completely received: ['ECG 130']
-2019-12-25 14:32:49,023 Seems like previous packet was lost: 13056 : ['720W', '720N', '725N', '725N']
-2019-12-25 14:32:49,906 Message wasn't completely received: ['ECG 13111', '750']
-2019-12-25 14:32:49,913 Message wasn't completely received: ['N 755N 745N 740N ', 'END\r']
-2019-12-25 14:32:49,941 Seems like previous packet was lost: 13112 : ['745N', '750N', '760N', '770N']
-2019-12-25 14:32:50,092 Percentage of received messages: 0.9802631578947368
-2019-12-25 14:32:50,349 Message wasn't completely received: ['ECG 13138', '705N 69']
-2019-12-25 14:32:50,350 Message wasn't completely received: ['0N 680N 685N ', 'END\r']
-2019-12-25 14:32:50,367 Seems like previous packet was lost: 13139 : ['680N', '685N', '695N', '690N']
-2019-12-25 14:32:54,476 Message wasn't completely received: ['ECG ']
-2019-12-25 14:32:54,502 Seems like previous packet was lost: 13391 : ['700N', '705N', '710N', '710N']
-2019-12-25 14:32:54,834 Percentage of received messages: 0.9862068965517241
-2019-12-25 14:32:55,848 Message wasn't completely received: ['ECG 13474', '720']
-2019-12-25 14:32:55,858 Message wasn't completely received: ['N 720N 705N 700N ', 'END\r']
-2019-12-25 14:32:55,867 Seems like previous packet was lost: 13475 : ['710N', '700N', '715N', '715N']
-2019-12-25 14:32:56,500 Message wasn't completely received: ['ECG 1351']
-2019-12-25 14:32:56,528 Seems like previous packet was lost: 13515 : ['715N', '735N', '725N', '715N']
-2019-12-25 14:32:57,186 Message wasn't completely received: ['ECG 13556', '700N 700N']
-2019-12-25 14:32:57,196 Message wasn't completely received: [' 695N 705N ', 'END\r']
-2019-12-25 14:32:57,204 Seems like previous packet was lost: 13557 : ['725N', '730N', '755N', '745N']
-2019-12-25 14:32:57,740 Message wasn't completely received: ['ECG 13589']
-2019-12-25 14:32:57,756 Message wasn't completely received: ['ECG 1']
-2019-12-25 14:32:57,776 Seems like previous packet was lost: 13591 : ['660N', '645N', '630N', '630N']
-2019-12-25 14:32:58,360 Message wasn't completely received: ['ECG 13']
-2019-12-25 14:32:58,389 Seems like previous packet was lost: 13628 : ['650N', '650N', '655N', '660N']
-2019-12-25 14:32:58,965 Message wasn't completely received: ['ECG 13664', '570N 56']
-2019-12-25 14:32:58,975 Message wasn't completely received: ['5N 580N 575N ', 'END\r']
-2019-12-25 14:32:58,984 Seems like previous packet was lost: 13665 : ['585N', '585N', '600N', '600N']
-2019-12-25 14:33:00,285 Message wasn't completely received: ['ECG']
-2019-12-25 14:33:00,313 Seems like previous packet was lost: 13746 : ['755N', '755N', '775N', '765N']
-2019-12-25 14:33:00,445 Percentage of received messages: 0.9544159544159544
-2019-12-25 14:33:01,251 Message wasn't completely received: ['ECG 13804', '75']
-2019-12-25 14:33:01,258 Message wasn't completely received: ['5N 760N 765N 760N ', 'END\r']
-2019-12-25 14:33:01,270 Seems like previous packet was lost: 13805 : ['745N', '740N', '750N', '750N']
-2019-12-25 14:33:02,051 Message wasn't completely received: ['ECG 13852', '760N']
-2019-12-25 14:33:02,058 Message wasn't completely received: [' 750N 740N 740N ', 'END\r']
-2019-12-25 14:33:02,070 Seems like previous packet was lost: 13853 : ['720N', '715N', '725N', '735N']
-2019-12-25 14:33:03,293 Message wasn't completely received: ['ECG 139']
-2019-12-25 14:33:03,312 Seems like previous packet was lost: 13929 : ['640N', '640N', '640N', '645N']
-2019-12-25 14:33:03,528 Message wasn't completely received: ['\r']
-2019-12-25 14:33:05,771 Percentage of received messages: 0.9787234042553191
-2019-12-25 14:33:05,887 Message wasn't completely received: ['ECG 14086', '825N ']
-2019-12-25 14:33:05,904 Message wasn't completely received: ['805N 815N 790N ', 'END\r']
-2019-12-25 14:33:05,923 Seems like previous packet was lost: 14087 : ['800N', '785N', '790N', '795N']
-2019-12-25 14:33:05,936 Message wasn't completely received: ['ECG 1408']
-2019-12-25 14:33:05,941 Seems like previous packet was lost: 14089 : ['825N', '805N', '810N', '795N']
+2019-12-25 18:53:02,748 info: Starting BlueCardio graph application
+2019-12-25 18:53:02,749 info: BlueCardio started with arguments: Namespace(communication='COM29', length=4096, logging='n', qrs='int')
+2019-12-25 18:53:02,749 info: Trying to open port COM29...
+2019-12-25 18:53:02,775 info: Port entity initialised for COM29
+2019-12-25 18:53:02,775 error: Port is already open. trying to open again...
+2019-12-25 18:53:02,803 info: Port COM29 is opened!
+2019-12-25 18:53:02,803 Program started at 18:53:02.803370
+2019-12-25 18:53:02,818 info: QtWidget initialised!
+2019-12-25 18:53:04,044 Seems like previous packet was lost: 0 : ['0N', '0N', '0N', '0N']
+2019-12-25 18:53:07,872 Percentage of received messages: 1.0
+2019-12-25 18:53:12,902 Percentage of received messages: 1.0
+2019-12-25 18:53:17,895 Percentage of received messages: 1.0
+2019-12-25 18:53:22,894 Percentage of received messages: 1.0
+2019-12-25 18:53:27,916 Percentage of received messages: 1.0
+2019-12-25 18:53:32,915 Percentage of received messages: 1.0
+2019-12-25 18:53:37,920 Percentage of received messages: 1.0
+2019-12-25 18:53:42,950 Percentage of received messages: 1.0
+2019-12-25 18:53:47,942 Percentage of received messages: 1.0
+2019-12-25 18:53:52,956 Percentage of received messages: 1.0
+2019-12-25 18:53:57,937 Percentage of received messages: 1.0
+2019-12-25 18:54:02,946 Percentage of received messages: 1.0
+2019-12-25 18:54:07,983 Percentage of received messages: 1.0
+2019-12-25 18:54:12,962 Percentage of received messages: 1.0
+2019-12-25 18:54:17,964 Percentage of received messages: 1.0
+2019-12-25 18:54:22,978 Percentage of received messages: 1.0
+2019-12-25 18:54:27,984 Percentage of received messages: 1.0
+2019-12-25 18:54:33,016 Percentage of received messages: 1.0
+2019-12-25 18:54:37,995 Percentage of received messages: 1.0
+2019-12-25 18:54:43,041 Percentage of received messages: 1.0
+2019-12-25 18:54:48,023 Percentage of received messages: 1.0
+2019-12-25 18:54:53,064 Percentage of received messages: 1.0
+2019-12-25 18:54:56,996 Message wasn't completely received: ['ECG 6894', '1830N 1835N']
+2019-12-25 18:54:56,998 Message wasn't completely received: [' 1860N 1855N ', 'END\r']
+2019-12-25 18:54:57,022 Seems like previous packet was lost: 6895 : ['1870N', '1880N', '1870N', '1875N']
+2019-12-25 18:54:58,029 Percentage of received messages: 0.9933774834437086
+2019-12-25 18:55:02,478 warning: ClearCommError failed (OSError(9, 'Неверный дескриптор.', None, 6))

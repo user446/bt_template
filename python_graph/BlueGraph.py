@@ -227,7 +227,7 @@ class BlueCardioGraph(pg.GraphicsWindow):
                 if self.last_S_peak != sr_tmp or self.last_R_peak != r_tmp:
                     sr_tmp = self.last_S_peak
                     r_tmp = self.last_R_peak
-                    if self.last_R_peak == self.last_S_peak:
+                    if self.last_R_peak > self.last_S_peak - 12 and self.last_R_peak < self.last_S_peak + 12:
                         self.Tp = self.Tp + 1
                     elif self.last_S_peak > self.last_R_peak:
                         self.Fp = self.Fp + 1
