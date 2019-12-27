@@ -306,6 +306,7 @@ void t_Converter_callback(void)
 //
 
 volatile int onsend_counter = 0;
+volatile int window_mean = 0;
 void t_Sender_callback(void)
 {
 	if((!OnDataReady || OnHaltWork))
@@ -318,12 +319,13 @@ void t_Sender_callback(void)
 			
 			for(int i = 0; i < CONVERSION_NUM; i++)
 				ParseMarkers(markers[i], parsed_markers[i], CONVERSION_NUM);
-			sprintf(send_str, "%s %d%s%d%s %d%s %d%s %d%s %s%s", 
+			sprintf(send_str, "%s %d%s%d%s %d%s %d%s %d%s %s%d%s%s", 
 				packet_begin,	msg_counter,	packet_delimiter, 
 											uv.update_buff_u32[0], parsed_markers[0],
 											uv.update_buff_u32[1], parsed_markers[1],
 											uv.update_buff_u32[2], parsed_markers[2],
 											uv.update_buff_u32[3], parsed_markers[3],
+																		packet_delimiter, window_mean, 
 																		packet_delimiter, packet_end);
 											
 			onsend_counter+=CONVERSION_NUM;
@@ -434,6 +436,12 @@ int main(void)
 						FREQ, 0.2, 0.3, 0.5);
 					memcpy(data_onsend, window+OVERLAP/2, sizeof(data_onsend[0])*DATA_AMOUNT);
 					memcpy(marker_onsend, window_markers+OVERLAP/2, sizeof(marker_onsend[0])*DATA_AMOUNT);
+					int sum_tmp = 0;
+					for(int i = 0; i < DATA_AMOUNT; i++)
+					{
+						sum_tmp += data_onsend[i];
+					}
+					window_mean = sum_tmp/DATA_AMOUNT;
 					fvt_result = fvt_SeekForFVT();
 					if(fvt_result.found == FVT_BEGIN)
 						AppendMarker(&marker_onsend[fvt_result.index], MARK_FVT_START);

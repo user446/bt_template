@@ -1,22 +1,19 @@
-2019-12-26 15:03:56,333 info: Starting BlueCardio graph application
-2019-12-26 15:03:56,334 info: BlueCardio started with arguments: Namespace(communication='COM29', length=4096, logging='n', qrs='int')
-2019-12-26 15:03:56,334 info: Trying to open port COM29...
-2019-12-26 15:03:56,361 info: Port entity initialised for COM29
-2019-12-26 15:03:56,361 error: Port is already open. trying to open again...
-2019-12-26 15:03:56,389 info: Port COM29 is opened!
-2019-12-26 15:03:56,389 Program started at 15:03:56.389520
-2019-12-26 15:03:56,405 info: QtWidget initialised!
-2019-12-26 15:03:56,649 Seems like previous packet was lost: 21 : ['0N', '0N', '0N', '0N']
-2019-12-26 15:03:59,045 Message wasn't completely received: ['D\r']
-2019-12-26 15:04:01,476 Percentage of received messages: 0.9967845659163987
-2019-12-26 15:04:06,503 Percentage of received messages: 1.0
-2019-12-26 15:04:11,507 Percentage of received messages: 1.0
-2019-12-26 15:04:16,470 Percentage of received messages: 1.0
-2019-12-26 15:04:21,515 Percentage of received messages: 1.0
-2019-12-26 15:04:26,508 Percentage of received messages: 1.0
-2019-12-26 15:04:31,527 Percentage of received messages: 1.0
-2019-12-26 15:04:36,514 Percentage of received messages: 1.0
-2019-12-26 15:04:38,597 Message wasn't completely received: ['E']
-2019-12-26 15:04:41,576 Percentage of received messages: 0.9967637540453075
-2019-12-26 15:04:46,509 Percentage of received messages: 1.0
-2019-12-26 15:04:47,678 warning: ClearCommError failed (OSError(9, 'Неверный дескриптор.', None, 6))
+2019-12-27 14:49:58,849 info: Starting BlueCardio graph application
+2019-12-27 14:49:58,849 info: BlueCardio started with arguments: Namespace(communication='COM29', length=4096, logging='n', qrs='int')
+2019-12-27 14:49:58,850 info: Trying to open port COM29...
+2019-12-27 14:49:58,875 info: Port entity initialised for COM29
+2019-12-27 14:49:58,876 error: Port is already open. trying to open again...
+2019-12-27 14:49:58,903 info: Port COM29 is opened!
+2019-12-27 14:49:58,904 Program started at 14:49:58.904903
+2019-12-27 14:49:58,918 info: QtWidget initialised!
+2019-12-27 14:49:59,268 Seems like previous packet was lost: 528561 : ['1585N', '1575N', '1580N', '1560N']
+2019-12-27 14:50:03,942 Percentage of received messages: 0.9967532467532467
+2019-12-27 14:50:08,948 Percentage of received messages: 1.0
+2019-12-27 14:50:13,958 Percentage of received messages: 1.0
+2019-12-27 14:50:18,964 Percentage of received messages: 1.0
+2019-12-27 14:50:23,971 Percentage of received messages: 1.0
+2019-12-27 14:50:28,984 Percentage of received messages: 1.0
+2019-12-27 14:50:33,988 Percentage of received messages: 1.0
+2019-12-27 14:50:38,993 Percentage of received messages: 1.0
+2019-12-27 14:50:44,002 Percentage of received messages: 1.0
+2019-12-27 14:50:49,009 Percentage of received messages: 1.0

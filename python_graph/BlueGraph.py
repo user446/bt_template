@@ -22,6 +22,7 @@ class BlueCardioGraph(pg.GraphicsWindow):
         self.showlen = showlen
         self.x_data = np.array([])
         self.y_data = np.array([])
+        self.x_mean_data = 0
         
         self.R_peak_data = np.array([])
         self.R_peak_time = np.array([])
@@ -36,6 +37,8 @@ class BlueCardioGraph(pg.GraphicsWindow):
         self.FVTong_time = np.array([])
         self.FVTstop_markers = np.array([])
         self.FVTstop_time = np.array([])
+        self.Window_mean_data = np.array([])
+        self.Window_mean_time = np.array([])
         
         self.last_S_peak = 0
         self.last_R_peak = 0
@@ -90,6 +93,8 @@ class BlueCardioGraph(pg.GraphicsWindow):
         self.plotDataItem = self.plotItem.plot([], pen=pg.mkPen('b', width=1),
                                                symbolBrush=(255, 0, 0), symbolSize=3, symbolPen=None,  name = "Data")
         
+        self.plotDataMean = self.plotItem.plot([], pen=pg.mkPen('b', width=1),
+             symbolBrush=(1, 1, 1), symbolSize=1, symbolPen=None, name = "Window mean")
 
         self.plotDataSR = self.plotItem.plot(
             [], pen=None, symbol='x', symbolBrush='b', symbolSize=14, name = "Predefined Peaks")
@@ -103,6 +108,7 @@ class BlueCardioGraph(pg.GraphicsWindow):
             [], pen=None,  symbol='s', symbolBrush='y', symbolSize=15, name = "FVT markers ongoing")
         self.plotDataFVT_finish = self.plotItem.plot(
             [], pen=None,  symbol='s', symbolBrush='b', symbolSize=15, name = "FVT markers finish")
+
         if(showlen >= 4):
             self.plotItem.setXRange(0, showlen)
 
@@ -170,9 +176,10 @@ class BlueCardioGraph(pg.GraphicsWindow):
 
     def OnNewData(self, result):
         try:
-            (counter, data) = result
+            (counter, data, mean) = result
         except:
             return None
+        
         
         t_list = [0]*4
         i = 0
@@ -229,6 +236,11 @@ class BlueCardioGraph(pg.GraphicsWindow):
                         self.R_peak_time = np.append(self.R_peak_time, t_list[i])
                         self.last_R_peak = t_list[i]
                     if x == 'W':
+                        self.Window_mean_data = np.append(self.Window_mean_data, self.x_mean_data)
+                        self.Window_mean_time = np.append(self.Window_mean_time, t_list[i])
+                        self.x_mean_data = mean
+                        self.Window_mean_data = np.append(self.Window_mean_data, mean)
+                        self.Window_mean_time = np.append(self.Window_mean_time, t_list[i])
                         self.Window_markers = np.append(self.Window_markers, num_data[i])
                         self.Window_time = np.append(self.Window_time, t_list[i])
                     if x == 'S':
@@ -288,15 +300,32 @@ class BlueCardioGraph(pg.GraphicsWindow):
                 if self.S_peak_time[0] < self.x_data[0]:
                     self.S_peak_time = np.delete(self.S_peak_time, [0])
                     self.S_peak_data = np.delete(self.S_peak_data, [0])
+            if self.Window_mean_time.size:
+                if self.Window_mean_time[0] < self.x_data[0]:
+                    self.Window_mean_data = np.delete(self.Window_mean_data, [0,1])
+                    self.Window_mean_time = np.delete(self.Window_mean_time, [0,1])
+            if self.FVTbegin_time.size:
+                if self.FVTbegin_time[0] < self.x_data[0]:
+                    self.FVTbegin_markers = np.delete(self.FVTbegin_markers, [0])
+                    self.FVTbegin_time = np.delete(self.FVTbegin_time, [0])
+            if self.FVTong_time.size:
+                if self.FVTong_time[0] < self.x_data[0]:
+                    self.FVTong_markers = np.delete(self.FVTong_markers, [0])
+                    self.FVTong_time = np.delete(self.FVTong_time, [0])
+            if self.FVTstop_time.size:
+                if self.FVTstop_time[0] < self.x_data[0]:
+                    self.FVTstop_markers = np.delete(self.FVTstop_markers, [0])
+                    self.FVTstop_time = np.delete(self.FVTstop_time, [0])
             self.plotItem.setXRange(
                 self.x_data[-1] - self.showlen, self.x_data[-1])
         if self.markers == 'internal':
             self.plotDataR.setData(self.R_peak_time, self.R_peak_data)
             self.plotDataW.setData(self.Window_time, self.Window_markers)
             self.plotDataSR.setData(self.S_peak_time, self.S_peak_data)
-            self.plotDataFVT_begin.setData(self.FVTbegin_markers, self.FVTbegin_time)
-            self.plotDataFVT_ongoing.setData(self.FVTong_markers, self.FVTong_time)
-            self.plotDataFVT_finish.setData(self.FVTstop_markers, self.FVTstop_time)
+            self.plotDataFVT_begin.setData(self.FVTbegin_time, self.FVTbegin_markers)
+            self.plotDataFVT_ongoing.setData(self.FVTong_time, self.FVTong_markers)
+            self.plotDataFVT_finish.setData(self.FVTstop_time, self.FVTstop_markers)
+            self.plotDataMean.setData(self.Window_mean_time, self.Window_mean_data)
         try:
             self.setData(self.x_data, self.y_data)
         except:

@@ -31,6 +31,8 @@ static int		fvt_20_second_r_peak_count = 0;			///счетчик сброса детекции для пер
 static float		fvt_timer = 0;							///считает время по проверенным позициям в маркерах
 static float		fvt_10_second_mark_time = 0;
 static float		fvt_20_second_mark_time = 0;
+static int			last_normal_r_peak_count = 0;
+static const int			normal_stop_limit = 8;
 
 static int fvt_CheckWindow(void);
 static void InsertInWindow(float data);
@@ -64,7 +66,7 @@ static void InsertInWindow(float data)
 }
 //
 
-t_fvt_result ret;
+static t_fvt_result ret;
 t_fvt_result fvt_SeekForFVT(void)
 {
 	int i_delta = 0;
@@ -95,12 +97,14 @@ t_fvt_result fvt_SeekForFVT(void)
 				fvt_20_second_r_peak_sum = 0;
 				fvt_20_second_mark_time = fvt_timer + t20_seconds_normal;
 			}
-			if(fvt_detected && fvt_20_second_mark_time >= fvt_timer)
+			if(fvt_detected == FVT_ONGOING && last_normal_r_peak_count >= normal_stop_limit)
+					fvt_detected = FVT_FINISH;
+			if(fvt_detected == FVT_ONGOING && fvt_20_second_mark_time >= fvt_timer)
 			{
 				fvt_20_second_r_peak_count++;
 				fvt_20_second_r_peak_sum += fvt_last_r_peak;
 			}
-			else if(fvt_detected && fvt_20_second_mark_time <= fvt_timer)
+			else if(fvt_detected == FVT_ONGOING && fvt_20_second_mark_time <= fvt_timer)
 			{
 				if(fvt_20_second_r_peak_sum/fvt_20_second_r_peak_count >= fvt_interval && fvt_detected == FVT_ONGOING)
 				{
@@ -126,14 +130,18 @@ int fvt_CheckWindow(void)
 {
 	int peak_time_sum = 0;
 	int interval_too_small = 0;
+	int interval_is_normal = 0;
 	for(int i = 0; i < fvt_window_size; i++)
 	{
 		fvt_peak_time_sum += fvt_window_ptr[i];
 		if(fvt_window_ptr[i] <= fvt_interval)
 			interval_too_small++;
+		if(i >= fvt_window_size - normal_stop_limit && fvt_window_ptr[i] >= fvt_interval)
+			interval_is_normal++;
 	}
 	fvt_average_period = peak_time_sum/fvt_window_size;
 	fvt_window_fail_counter = interval_too_small;
+	last_normal_r_peak_count = interval_is_normal;
 	return interval_too_small;
 }
 //

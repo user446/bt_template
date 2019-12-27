@@ -18,8 +18,9 @@ static int current_threshold = 1800;
 static float percent65 = 0.65f;
 static float percent30 = 0.30f;
 static float percent20 = 0.20f;
-static int last_mean_sum = 0;;
-static int last_mean = 1800;
+
+static int r_peak_base_sum = 0;
+static int r_peak_base = 0;
 
 volatile int adaptive_threshold_high = 2000;
 volatile int adaptive_threshold_low = 600;
@@ -43,7 +44,7 @@ void AdaptiveThresholding_high(int* data, int* peak_holder, int size, float d_fr
 	int x = 0;
 	int x_m2 = 0;
 	int x_p2 = 0;
-	last_mean_sum = 0;
+	
 	for(int i = OVERLAP/2; i < size+OVERLAP/2; i++)
 	{
 			x_m2 = data[i-2];
@@ -52,16 +53,21 @@ void AdaptiveThresholding_high(int* data, int* peak_holder, int size, float d_fr
 			x_p1 = data[i+1];
 			x_p2 = data[i+2];
 			time += 1/d_freq;
-			last_mean_sum += x;
 		if(x >= current_threshold)
 			{
 				if((x - x_m1 > 0 && x - x_m2 > 0) &&
 					(x - x_p1 > 0 && x - x_p2 > 0) && detected == false)
 				{
 					AppendMarker(&peak_holder[i-OVERLAP/2], MARK_R_PEAK);
+					r_peak_base_sum = 0;
+					for(int y = i-5; y < i+5; y++)
+					{
+						r_peak_base_sum += data[y];
+					}
+					r_peak_base = r_peak_base_sum/11;
 					heartbeat++;
 					r_peak = x;
-					current_threshold = (int)(r_peak - last_mean)*0.65 + last_mean;
+					current_threshold = (int)(r_peak - r_peak_base)*0.65 + r_peak_base;
 					time_compare = time + blind_period;
 					detected = true;
 					state = 0;
@@ -81,7 +87,7 @@ void AdaptiveThresholding_high(int* data, int* peak_holder, int size, float d_fr
 							if(time >= time_compare && detected == false)
 							{
 								time_compare += 1.0f;
-								current_threshold = (int)(r_peak - last_mean)*0.30 + last_mean;
+								current_threshold = (int)(r_peak - r_peak_base)*0.30 + r_peak_base;
 								state = 2;
 							}
 							break;
@@ -89,13 +95,12 @@ void AdaptiveThresholding_high(int* data, int* peak_holder, int size, float d_fr
 							if(time >= time_compare && detected == false)
 							{
 								time_compare += 0.5f;
-								current_threshold = (int)(r_peak - last_mean)*0.20 + last_mean;
+								current_threshold = (int)(r_peak - r_peak_base)*0.20 + r_peak_base;
 							}
 							break;
 					}
 				}
 			}
-	last_mean = last_mean_sum/size;
 }
 //
 

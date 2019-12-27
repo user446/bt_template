@@ -108,6 +108,7 @@ class SerialPort(QtCore.QThread):
         self.linequeue = deque([])
         self.data = []
         self.datacount = 0
+        self.mean = 0
         self.logger = logger
         self.serial = serial
         self.total_messages = 0
@@ -133,10 +134,16 @@ class SerialPort(QtCore.QThread):
             raise RuntimeError
         
         data = ser_data.split('::')  # разделяем на составляющие
+        #3 поля - без среднего по окну
+        # if len(data) != 4:   # если сообщение не было принято целиком или имеет слишком много полей, то
+        #     self.logger.warning("Message wasn't completely received: %s", data)
+        #     raise RuntimeError              # сбрасываем
         
-        if len(data) != 3:   # если сообщение не было принято целиком или имеет слишком много полей, то
-            self.logger.warning("Message wasn't completely received: %s", data)
-            raise RuntimeError              # сбрасываем
+        try:
+            self.mean = int(data[2])
+        except:
+            self.logger.error("Unable to parse mean data: %s", data[2])
+            raise RuntimeError
         
         self.logger.info(ser_data)   # записываем сообщение в файл
         # разделяем числа по пробелам, выкидываем пустые элементы листа
@@ -178,7 +185,7 @@ class SerialPort(QtCore.QThread):
             #     self.logger.warning(
             #         "Seems like something went wrong in data: %s", np.array(self.data).astype(np.float))
             #     raise RuntimeError
-            return self.datacount, self.data #np.array(self.data).astype(np.float)
+            return self.datacount, self.data, self.mean #np.array(self.data).astype(np.float)
         
         except ValueError as e:
             self.logger.warning(
