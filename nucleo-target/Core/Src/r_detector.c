@@ -14,13 +14,15 @@ static float r_peak = 0;
 static float max_r_peak = 0;
 static float time = 0;
 static float time_compare = 0;
-static int current_threshold = 1800;
+
+static int current_threshold = 0;
+
 static float percent65 = 0.65f;
 static float percent30 = 0.30f;
 static float percent20 = 0.20f;
 
-static int r_peak_base_sum = 0;
-static int r_peak_base = 0;
+static int window_mean_sum = 0;
+static int window_mean = 0;
 
 volatile int adaptive_threshold_high = 2000;
 volatile int adaptive_threshold_low = 600;
@@ -45,6 +47,13 @@ void AdaptiveThresholding_high(int* data, int* peak_holder, int size, float d_fr
 	int x_m2 = 0;
 	int x_p2 = 0;
 	
+		window_mean_sum = 0;
+		for(int y = OVERLAP/2; y < size+OVERLAP/2; y++)
+		{
+			window_mean_sum += data[y];
+		}
+		window_mean = window_mean_sum/size;
+		
 	for(int i = OVERLAP/2; i < size+OVERLAP/2; i++)
 	{
 			x_m2 = data[i-2];
@@ -53,54 +62,51 @@ void AdaptiveThresholding_high(int* data, int* peak_holder, int size, float d_fr
 			x_p1 = data[i+1];
 			x_p2 = data[i+2];
 			time += 1/d_freq;
-		if(x >= current_threshold)
+		
+		if((x - x_m1 > 0 && x - x_m2 > 0) &&
+					((x - x_p1 > 0 && x - x_p2 > 0) || (x - x_p1 == 0 && x - x_p2 > 0))
+					&& detected == false
+				)
 			{
-				if((x - x_m1 > 0 && x - x_m2 > 0) &&
-					(x - x_p1 > 0 && x - x_p2 > 0) && detected == false)
+				if(x >= current_threshold + window_mean)
 				{
 					AppendMarker(&peak_holder[i-OVERLAP/2], MARK_R_PEAK);
-					r_peak_base_sum = 0;
-					for(int y = i-5; y < i+5; y++)
-					{
-						r_peak_base_sum += data[y];
-					}
-					r_peak_base = r_peak_base_sum/11;
 					heartbeat++;
 					r_peak = x;
-					current_threshold = (int)(r_peak - r_peak_base)*0.65 + r_peak_base;
+					current_threshold = (int)(r_peak - window_mean)*0.80;
 					time_compare = time + blind_period;
 					detected = true;
 					state = 0;
 				}
+			}
 					switch(state)
 					{
 						case 0:
-							if(time >= time_compare && detected == true)
+							if(time > time_compare && detected == true)
 							{
-								//current_threshold = (int)(r_peak - last_mean)*0.65 + last_mean;
+								//current_threshold = (int)(r_peak - window_mean)*0.65;
 								time_compare += low_det_period;
 								detected = false;
 								state = 1;
 							}
 							break;
 						case 1:
-							if(time >= time_compare && detected == false)
+							if(time > time_compare && detected == false)
 							{
 								time_compare += 1.0f;
-								current_threshold = (int)(r_peak - r_peak_base)*0.30 + r_peak_base;
+								current_threshold = (int)(r_peak - window_mean)*0.65;
 								state = 2;
 							}
 							break;
 						case 2:
-							if(time >= time_compare && detected == false)
+							if(time > time_compare && detected == false)
 							{
 								time_compare += 0.5f;
-								current_threshold = (int)(r_peak - r_peak_base)*0.20 + r_peak_base;
+								current_threshold = (int)(r_peak - window_mean)*0.5;
 							}
 							break;
 					}
-				}
-			}
+	}
 }
 //
 

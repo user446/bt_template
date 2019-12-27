@@ -267,7 +267,7 @@ void t_Converter_callback(void)
 					sample_index = 0;
 					ClearBuffers();
 				}
-				adjusted_data = abs(ECG_SAMPLES[preset_counter] - 1200);
+				adjusted_data = abs(ECG_SAMPLES[preset_counter%PRESET_LENGTH] - 1200);
 				data_insert[preset_buffer_counter] = adjusted_data;
 				
 				// SSB 
@@ -433,7 +433,7 @@ int main(void)
 				{
 					//AdaptiveThresholding(window, window_markers+OVERLAP/2, DATA_AMOUNT);
 					AdaptiveThresholding_high(window, window_markers+OVERLAP/2, DATA_AMOUNT,
-						FREQ, 0.2, 0.3, 0.5);
+						FREQ, 0.2, 0.3, 0.2);
 					memcpy(data_onsend, window+OVERLAP/2, sizeof(data_onsend[0])*DATA_AMOUNT);
 					memcpy(marker_onsend, window_markers+OVERLAP/2, sizeof(marker_onsend[0])*DATA_AMOUNT);
 					int sum_tmp = 0;

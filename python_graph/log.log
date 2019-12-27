@@ -1,19 +1,282 @@
-2019-12-27 14:49:58,849 info: Starting BlueCardio graph application
-2019-12-27 14:49:58,849 info: BlueCardio started with arguments: Namespace(communication='COM29', length=4096, logging='n', qrs='int')
-2019-12-27 14:49:58,850 info: Trying to open port COM29...
-2019-12-27 14:49:58,875 info: Port entity initialised for COM29
-2019-12-27 14:49:58,876 error: Port is already open. trying to open again...
-2019-12-27 14:49:58,903 info: Port COM29 is opened!
-2019-12-27 14:49:58,904 Program started at 14:49:58.904903
-2019-12-27 14:49:58,918 info: QtWidget initialised!
-2019-12-27 14:49:59,268 Seems like previous packet was lost: 528561 : ['1585N', '1575N', '1580N', '1560N']
-2019-12-27 14:50:03,942 Percentage of received messages: 0.9967532467532467
-2019-12-27 14:50:08,948 Percentage of received messages: 1.0
-2019-12-27 14:50:13,958 Percentage of received messages: 1.0
-2019-12-27 14:50:18,964 Percentage of received messages: 1.0
-2019-12-27 14:50:23,971 Percentage of received messages: 1.0
-2019-12-27 14:50:28,984 Percentage of received messages: 1.0
-2019-12-27 14:50:33,988 Percentage of received messages: 1.0
-2019-12-27 14:50:38,993 Percentage of received messages: 1.0
-2019-12-27 14:50:44,002 Percentage of received messages: 1.0
-2019-12-27 14:50:49,009 Percentage of received messages: 1.0
+2019-12-27 18:55:59,882 info: Starting BlueCardio graph application
+2019-12-27 18:55:59,882 info: BlueCardio started with arguments: Namespace(communication='COM29', length=4096, logging='n', qrs='int')
+2019-12-27 18:55:59,883 info: Trying to open port COM29...
+2019-12-27 18:55:59,908 info: Port entity initialised for COM29
+2019-12-27 18:55:59,909 error: Port is already open. trying to open again...
+2019-12-27 18:55:59,936 info: Port COM29 is opened!
+2019-12-27 18:55:59,937 Program started at 18:55:59.937186
+2019-12-27 18:55:59,950 info: QtWidget initialised!
+2019-12-27 18:56:00,190 Seems like previous packet was lost: 177 : ['1630N', '1635N', '1625N', '1625N']
+2019-12-27 18:56:00,193 Unable to parse mean data: END
+2019-12-27 18:56:00,211 Seems like previous packet was lost: 193 : ['1590N', '1610N', '1630N', '1635N']
+2019-12-27 18:56:04,973 Percentage of received messages: 0.9935064935064936
+2019-12-27 18:56:09,723 Unable to parse mean data: END
+2019-12-27 18:56:09,738 Seems like previous packet was lost: 774 : ['1565N', '1560N', '1555N', '1550N']
+2019-12-27 18:56:10,062 Percentage of received messages: 0.9935483870967742
+2019-12-27 18:56:15,016 Percentage of received messages: 1.0
+2019-12-27 18:56:20,043 Percentage of received messages: 1.0
+2019-12-27 18:56:25,005 Percentage of received messages: 1.0
+2019-12-27 18:56:30,016 Percentage of received messages: 1.0
+2019-12-27 18:56:35,059 Percentage of received messages: 1.0
+2019-12-27 18:56:40,064 Percentage of received messages: 1.0
+2019-12-27 18:56:44,783 Seems like previous packet was lost: 2914 : ['1725N', '1725N', '1745N', '1740N']
+2019-12-27 18:56:45,037 Percentage of received messages: 0.9934426229508196
+2019-12-27 18:56:47,185 Seems like previous packet was lost: 3061 : ['1610N', '1610N', '1605N', '1610N']
+2019-12-27 18:56:47,642 Unable to parse mean data: END
+2019-12-27 18:56:47,658 Seems like previous packet was lost: 3089 : ['1575N', '1585N', '1560N', '1560N']
+2019-12-27 18:56:50,143 Percentage of received messages: 0.9872611464968153
+2019-12-27 18:56:53,829 Unable to parse mean data: END
+2019-12-27 18:56:53,840 Seems like previous packet was lost: 3467 : ['1570N', '1570N', '1555N', '1555N']
+2019-12-27 18:56:55,181 Percentage of received messages: 0.9935064935064936
+2019-12-27 18:57:00,098 Percentage of received messages: 1.0
+2019-12-27 18:57:05,130 Percentage of received messages: 1.0
+2019-12-27 18:57:10,081 Percentage of received messages: 1.0
+2019-12-27 18:57:11,466 Seems like previous packet was lost: 4543 : ['1680N', '1690N', '1690N', '1685N']
+2019-12-27 18:57:15,201 Percentage of received messages: 0.9936102236421726
+2019-12-27 18:57:19,183 Unable to parse mean data: END
+2019-12-27 18:57:19,205 Seems like previous packet was lost: 5015 : ['1685N', '1695N', '1695N', '1700N']
+2019-12-27 18:57:20,212 Percentage of received messages: 0.993485342019544
+2019-12-27 18:57:20,395 Unable to parse mean data: END
+2019-12-27 18:57:20,421 Seems like previous packet was lost: 5089 : ['1690N', '1685N', '1680N', '1675N']
+2019-12-27 18:57:21,475 Unable to parse mean data: END
+2019-12-27 18:57:21,483 Seems like previous packet was lost: 5154 : ['1720N', '1715N', '1720N', '1720N']
+2019-12-27 18:57:25,137 Percentage of received messages: 0.9867109634551495
+2019-12-27 18:57:29,953 Seems like previous packet was lost: 5671 : ['1780SR', '1765N', '1745N', '1700N']
+2019-12-27 18:57:30,144 Percentage of received messages: 0.9902597402597403
+2019-12-27 18:57:33,896 Unable to parse mean data: END
+2019-12-27 18:57:33,920 Seems like previous packet was lost: 5912 : ['1705N', '1705N', '1720N', '1720N']
+2019-12-27 18:57:35,175 Percentage of received messages: 0.9903225806451613
+2019-12-27 18:57:36,503 Seems like previous packet was lost: 6071 : ['1705N', '1725N', '1725N', '1740N']
+2019-12-27 18:57:40,182 Percentage of received messages: 0.990228013029316
+2019-12-27 18:57:45,014 Seems like previous packet was lost: 6591 : ['1660N', '1665N', '1665N', '1665N']
+2019-12-27 18:57:45,197 Percentage of received messages: 0.9902597402597403
+2019-12-27 18:57:48,311 Seems like previous packet was lost: 6792 : ['1790N', '1790N', '1790N', '1790N']
+2019-12-27 18:57:48,750 Unable to parse mean data: END
+2019-12-27 18:57:48,776 Seems like previous packet was lost: 6820 : ['1575N', '1570N', '1565N', '1560N']
+2019-12-27 18:57:49,559 Unable to parse mean data: END
+2019-12-27 18:57:49,567 Seems like previous packet was lost: 6869 : ['1580N', '1575N', '1570N', '1580N']
+2019-12-27 18:57:50,075 Seems like previous packet was lost: 6900 : ['1520N', '1485N', '1450N', '1430N']
+2019-12-27 18:57:50,211 Percentage of received messages: 0.9741935483870968
+2019-12-27 18:57:51,720 Seems like previous packet was lost: 7000 : ['1645N', '1635N', '1635N', '1630N']
+2019-12-27 18:57:51,987 Unable to parse mean data: END
+2019-12-27 18:57:51,997 Seems like previous packet was lost: 7017 : ['1535N', '1535N', '1540N', '1535N']
+2019-12-27 18:57:53,282 Unable to parse mean data: END
+2019-12-27 18:57:53,288 Seems like previous packet was lost: 7096 : ['1770RO', '1760S', '1720N', '1670N']
+2019-12-27 18:57:53,523 Seems like previous packet was lost: 7110 : ['1565N', '1560N', '1575N', '1575N']
+2019-12-27 18:57:54,781 Unable to parse mean data: END
+2019-12-27 18:57:54,796 Seems like previous packet was lost: 7187 : ['1770N', '1765N', '1740N', '1745N']
+2019-12-27 18:57:55,238 Percentage of received messages: 0.9678456591639871
+2019-12-27 18:57:57,109 Seems like previous packet was lost: 7329 : ['1585N', '1585N', '1600N', '1610N']
+2019-12-27 18:57:59,399 Seems like previous packet was lost: 7468 : ['1580N', '1585N', '1585N', '1585N']
+2019-12-27 18:58:00,261 Percentage of received messages: 0.987012987012987
+2019-12-27 18:58:04,321 Unable to parse mean data: END
+2019-12-27 18:58:04,333 Seems like previous packet was lost: 7770 : ['1545N', '1545N', '1565N', '1560N']
+2019-12-27 18:58:05,327 Percentage of received messages: 0.9935483870967742
+2019-12-27 18:58:10,217 Percentage of received messages: 0.9966666666666667
+2019-12-27 18:58:15,185 Percentage of received messages: 1.0
+2019-12-27 18:58:17,815 Unable to parse mean data: END
+2019-12-27 18:58:17,829 Seems like previous packet was lost: 8594 : ['1630N', '1625N', '1625N', '1615N']
+2019-12-27 18:58:18,031 Seems like previous packet was lost: 8606 : ['1640N', '1630N', '1630N', '1615N']
+2019-12-27 18:58:20,199 Percentage of received messages: 0.9837662337662337
+2019-12-27 18:58:20,717 Unable to parse mean data: END
+2019-12-27 18:58:20,723 Seems like previous packet was lost: 8770 : ['1640N', '1625N', '1625N', '1625N']
+2019-12-27 18:58:21,780 Seems like previous packet was lost: 8835 : ['1660N', '1645N', '1640N', '1620N']
+2019-12-27 18:58:24,977 Seems like previous packet was lost: 9030 : ['1625N', '1610N', '1595N', '1595N']
+2019-12-27 18:58:25,254 Percentage of received messages: 0.9775641025641025
+2019-12-27 18:58:30,290 Percentage of received messages: 1.0
+2019-12-27 18:58:35,252 Percentage of received messages: 0.9934426229508196
+2019-12-27 18:58:37,183 Unable to parse mean data: END
+2019-12-27 18:58:37,203 Seems like previous packet was lost: 9776 : ['1555N', '1565N', '1555N', '1560N']
+2019-12-27 18:58:37,792 Unable to parse mean data: END
+2019-12-27 18:58:37,820 Seems like previous packet was lost: 9813 : ['1660N', '1655N', '1655N', '1650N']
+2019-12-27 18:58:40,297 Percentage of received messages: 0.9839228295819936
+2019-12-27 18:58:44,982 Seems like previous packet was lost: 10251 : ['1835SR', '1830N', '1780N', '1705N']
+2019-12-27 18:58:45,254 Percentage of received messages: 0.9868852459016394
+2019-12-27 18:58:47,178 Seems like previous packet was lost: 10385 : ['1635N', '1625N', '1605N', '1595N']
+2019-12-27 18:58:50,271 Percentage of received messages: 0.993485342019544
+2019-12-27 18:58:51,012 Seems like previous packet was lost: 10619 : ['1565N', '1565N', '1565N', '1580N']
+2019-12-27 18:58:52,035 Unable to parse mean data: END
+2019-12-27 18:58:52,048 Seems like previous packet was lost: 10683 : ['1575N', '1585N', '1595N', '1590N']
+2019-12-27 18:58:55,312 Percentage of received messages: 0.9838709677419355
+2019-12-27 18:58:59,774 Unable to parse mean data: END
+2019-12-27 18:58:59,787 Seems like previous packet was lost: 11155 : ['1565N', '1565N', '1560N', '1555N']
+2019-12-27 18:59:00,277 Seems like previous packet was lost: 11185 : ['1585N', '1585N', '1575N', '1575N']
+2019-12-27 18:59:00,279 Percentage of received messages: 0.9868852459016394
+2019-12-27 18:59:00,866 Unable to parse mean data: END
+2019-12-27 18:59:00,892 Seems like previous packet was lost: 11222 : ['1560N', '1550N', '1550N', '1550N']
+2019-12-27 18:59:04,082 Unable to parse mean data: END
+2019-12-27 18:59:04,099 Seems like previous packet was lost: 11418 : ['1510N', '1520N', '1525N', '1530N']
+2019-12-27 18:59:05,315 Percentage of received messages: 0.9870550161812298
+2019-12-27 18:59:08,953 Unable to parse mean data: END
+2019-12-27 18:59:08,958 Seems like previous packet was lost: 11715 : ['1535N', '1545N', '1545N', '1555N']
+2019-12-27 18:59:10,282 Percentage of received messages: 0.9933993399339934
+2019-12-27 18:59:12,569 Unable to parse mean data: END
+2019-12-27 18:59:12,590 Seems like previous packet was lost: 11936 : ['1625N', '1605N', '1585N', '1595N']
+2019-12-27 18:59:13,222 Unable to parse mean data: END
+2019-12-27 18:59:13,242 Seems like previous packet was lost: 11976 : ['1405N', '1410N', '1455N', '1520N']
+2019-12-27 18:59:15,311 Percentage of received messages: 0.9838709677419355
+2019-12-27 18:59:20,368 Percentage of received messages: 0.9967637540453075
+2019-12-27 18:59:24,145 Unable to parse mean data: END
+2019-12-27 18:59:24,159 Seems like previous packet was lost: 12642 : ['1645N', '1645N', '1645N', '1660N']
+2019-12-27 18:59:25,360 Percentage of received messages: 0.9901960784313726
+2019-12-27 18:59:28,310 Seems like previous packet was lost: 12895 : ['1620N', '1630N', '1640N', '1650N']
+2019-12-27 18:59:30,293 Percentage of received messages: 0.9933774834437086
+2019-12-27 18:59:30,484 Unable to parse mean data: END
+2019-12-27 18:59:30,492 Seems like previous packet was lost: 13029 : ['1695N', '1690N', '1700N', '1695N']
+2019-12-27 18:59:35,371 Percentage of received messages: 0.9935483870967742
+2019-12-27 18:59:37,252 Unable to parse mean data: END
+2019-12-27 18:59:37,266 Seems like previous packet was lost: 13442 : ['1905R', '1885N', '1840N', '1785N']
+2019-12-27 18:59:40,409 Percentage of received messages: 0.9935275080906149
+2019-12-27 18:59:41,283 Seems like previous packet was lost: 13687 : ['1675N', '1670N', '1670N', '1685N']
+2019-12-27 18:59:45,341 Unable to parse mean data: END
+2019-12-27 18:59:45,348 Seems like previous packet was lost: 13935 : ['1705N', '1700N', '1685N', '1685N']
+2019-12-27 18:59:45,366 Percentage of received messages: 0.9868421052631579
+2019-12-27 18:59:50,340 Percentage of received messages: 1.0
+2019-12-27 18:59:55,400 Percentage of received messages: 1.0
+2019-12-27 19:00:00,444 Percentage of received messages: 0.9967532467532467
+2019-12-27 19:00:02,142 Unable to parse mean data: END
+2019-12-27 19:00:02,163 Seems like previous packet was lost: 14961 : ['1680N', '1665N', '1695N', '1720N']
+2019-12-27 19:00:04,672 Seems like previous packet was lost: 15114 : ['1660N', '1665N', '1650N', '1650N']
+2019-12-27 19:00:05,377 Percentage of received messages: 0.9867986798679867
+2019-12-27 19:00:06,069 Unable to parse mean data: END
+2019-12-27 19:00:06,076 Seems like previous packet was lost: 15200 : ['1605N', '1605N', '1615N', '1625N']
+2019-12-27 19:00:06,895 Seems like previous packet was lost: 15250 : ['1700N', '1690N', '1705N', '1695N']
+2019-12-27 19:00:07,815 Seems like previous packet was lost: 15306 : ['1680N', '1685N', '1690N', '1695N']
+2019-12-27 19:00:10,216 Unable to parse mean data: END
+2019-12-27 19:00:10,222 Seems like previous packet was lost: 15453 : ['1640N', '1635N', '1635N', '1620N']
+2019-12-27 19:00:10,370 Percentage of received messages: 0.974025974025974
+2019-12-27 19:00:15,413 Percentage of received messages: 1.0
+2019-12-27 19:00:18,101 Unable to parse mean data: END
+2019-12-27 19:00:18,116 Seems like previous packet was lost: 15934 : ['1515N', '1515N', '1505N', '1495N']
+2019-12-27 19:00:20,393 Percentage of received messages: 0.9901960784313726
+2019-12-27 19:00:20,907 Seems like previous packet was lost: 16105 : ['1645N', '1650N', '1635N', '1635N']
+2019-12-27 19:00:24,948 Unable to parse mean data: END
+2019-12-27 19:00:24,962 Seems like previous packet was lost: 16353 : ['1550N', '1550N', '1545N', '1545N']
+2019-12-27 19:00:25,395 Percentage of received messages: 0.9869706840390879
+2019-12-27 19:00:25,556 Unable to parse mean data: END
+2019-12-27 19:00:25,575 Seems like previous packet was lost: 16389 : ['1580N', '1590N', '1595N', '1590N']
+2019-12-27 19:00:26,540 Unable to parse mean data: END
+2019-12-27 19:00:26,556 Seems like previous packet was lost: 16449 : ['1705N', '1705N', '1710N', '1710N']
+2019-12-27 19:00:30,219 Seems like previous packet was lost: 16673 : ['1525N', '1525N', '1515N', '1525N']
+2019-12-27 19:00:30,422 Percentage of received messages: 0.9805825242718447
+2019-12-27 19:00:35,103 Seems like previous packet was lost: 16971 : ['1535N', '1535N', '1540N', '1555N']
+2019-12-27 19:00:35,421 Percentage of received messages: 0.987012987012987
+2019-12-27 19:00:36,650 Seems like previous packet was lost: 17066 : ['1525N', '1515N', '1510N', '1500N']
+2019-12-27 19:00:40,483 Percentage of received messages: 0.9935483870967742
+2019-12-27 19:00:41,209 Seems like previous packet was lost: 17344 : ['1495W', '1495N', '1500N', '1490N']
+2019-12-27 19:00:43,414 Unable to parse mean data: END
+2019-12-27 19:00:43,427 Seems like previous packet was lost: 17479 : ['1500N', '1500N', '1505N', '1490N']
+2019-12-27 19:00:45,494 Percentage of received messages: 0.9838187702265372
+2019-12-27 19:00:47,293 Seems like previous packet was lost: 17715 : ['1450N', '1455N', '1455N', '1465N']
+2019-12-27 19:00:47,557 Unable to parse mean data: END
+2019-12-27 19:00:47,579 Seems like previous packet was lost: 17732 : ['1460N', '1460N', '1440N', '1435N']
+2019-12-27 19:00:48,684 Seems like previous packet was lost: 17800 : ['1495N', '1515N', '1535N', '1550N']
+2019-12-27 19:00:50,442 Percentage of received messages: 0.9707792207792207
+2019-12-27 19:00:55,527 Percentage of received messages: 0.9967845659163987
+2019-12-27 19:00:57,093 Seems like previous packet was lost: 18313 : ['1575N', '1570N', '1585N', '1580N']
+2019-12-27 19:01:00,447 Percentage of received messages: 0.9933554817275747
+2019-12-27 19:01:02,598 Unable to parse mean data: END
+2019-12-27 19:01:02,607 Seems like previous packet was lost: 18650 : ['1620N', '1625N', '1615N', '1610N']
+2019-12-27 19:01:05,100 Seems like previous packet was lost: 18802 : ['1565N', '1575N', '1575N', '1580N']
+2019-12-27 19:01:05,480 Percentage of received messages: 0.9870967741935484
+2019-12-27 19:01:06,123 Unable to parse mean data: END
+2019-12-27 19:01:06,144 Seems like previous packet was lost: 18865 : ['1645N', '1645N', '1650N', '1660N']
+2019-12-27 19:01:10,466 Percentage of received messages: 0.9934426229508196
+2019-12-27 19:01:11,391 Seems like previous packet was lost: 0 : ['0N', '0N', '0N', '0N']
+2019-12-27 19:01:12,914 Unable to parse mean data: END
+2019-12-27 19:01:12,926 Seems like previous packet was lost: 94 : ['1705N', '1695N', '1710N', '1720N']
+2019-12-27 19:01:15,452 Percentage of received messages: 0.98989898989899
+2019-12-27 19:01:19,092 Seems like previous packet was lost: 471 : ['1720N', '1655N', '1585N', '1535N']
+2019-12-27 19:01:20,485 Percentage of received messages: 0.993485342019544
+2019-12-27 19:01:23,579 Unable to parse mean data: END
+2019-12-27 19:01:23,599 Seems like previous packet was lost: 746 : ['1530N', '1550N', '1550N', '1560N']
+2019-12-27 19:01:25,367 Unable to parse mean data: END
+2019-12-27 19:01:25,381 Seems like previous packet was lost: 854 : ['1535N', '1535N', '1545N', '1550N']
+2019-12-27 19:01:25,538 Percentage of received messages: 0.9839228295819936
+2019-12-27 19:01:25,999 Unable to parse mean data: END
+2019-12-27 19:01:26,011 Seems like previous packet was lost: 893 : ['1600N', '1595N', '1615N', '1620N']
+2019-12-27 19:01:28,018 Seems like previous packet was lost: 1016 : ['1620N', '1625N', '1630N', '1620N']
+2019-12-27 19:01:30,495 Percentage of received messages: 0.9868421052631579
+2019-12-27 19:01:32,123 Unable to parse mean data: END
+2019-12-27 19:01:32,130 Seems like previous packet was lost: 1267 : ['1600N', '1585N', '1570N', '1570N']
+2019-12-27 19:01:35,632 Percentage of received messages: 0.9936507936507937
+2019-12-27 19:01:40,095 Unable to parse mean data: END
+2019-12-27 19:01:40,109 Seems like previous packet was lost: 1754 : ['1610N', '1615N', '1615N', '1620N']
+2019-12-27 19:01:40,492 Percentage of received messages: 0.9932885906040269
+2019-12-27 19:01:40,682 Seems like previous packet was lost: 1789 : ['1605N', '1600N', '1590N', '1575N']
+2019-12-27 19:01:45,621 Percentage of received messages: 0.9936102236421726
+2019-12-27 19:01:48,286 Unable to parse mean data: END
+2019-12-27 19:01:48,308 Seems like previous packet was lost: 2254 : ['1615N', '1595N', '1605N', '1585N']
+2019-12-27 19:01:49,361 Unable to parse mean data: END
+2019-12-27 19:01:49,383 Seems like previous packet was lost: 2319 : ['1610N', '1620N', '1615N', '1615N']
+2019-12-27 19:01:49,515 Seems like previous packet was lost: 2327 : ['1600N', '1590N', '1585N', '1610N']
+2019-12-27 19:01:50,474 Unable to parse mean data: END
+2019-12-27 19:01:50,486 Seems like previous packet was lost: 2387 : ['1595N', '1590N', '1580N', '1595N']
+2019-12-27 19:01:50,580 Percentage of received messages: 0.9739413680781759
+2019-12-27 19:01:55,057 Seems like previous packet was lost: 2666 : ['1565N', '1565N', '1545N', '1555N']
+2019-12-27 19:01:55,616 Percentage of received messages: 0.9935275080906149
+2019-12-27 19:02:00,638 Percentage of received messages: 0.9967532467532467
+2019-12-27 19:02:00,973 Unable to parse mean data: END
+2019-12-27 19:02:00,980 Seems like previous packet was lost: 3028 : ['1715N', '1725N', '1730R', '1710N']
+2019-12-27 19:02:01,161 Unable to parse mean data: END
+2019-12-27 19:02:01,175 Seems like previous packet was lost: 3040 : ['1880N', '1885N', '1890N', '1870N']
+2019-12-27 19:02:02,190 Unable to parse mean data: END
+2019-12-27 19:02:02,206 Seems like previous packet was lost: 3102 : ['1585N', '1585N', '1590N', '1600N']
+2019-12-27 19:02:03,040 Seems like previous packet was lost: 3153 : ['1585N', '1585N', '1595N', '1600N']
+2019-12-27 19:02:05,475 Seems like previous packet was lost: 3302 : ['1615N', '1610N', '1605N', '1600N']
+2019-12-27 19:02:05,544 Percentage of received messages: 0.9639344262295082
+2019-12-27 19:02:05,614 Unable to parse mean data: END
+2019-12-27 19:02:05,630 Seems like previous packet was lost: 3312 : ['1615N', '1620N', '1615N', '1625N']
+2019-12-27 19:02:06,617 Seems like previous packet was lost: 3371 : ['1760N', '1805S', '1835RO', '1835N']
+2019-12-27 19:02:07,773 Unable to parse mean data: END
+2019-12-27 19:02:07,788 Seems like previous packet was lost: 3443 : ['1550N', '1550N', '1545N', '1540N']
+2019-12-27 19:02:08,613 Unable to parse mean data: END
+2019-12-27 19:02:08,619 Seems like previous packet was lost: 3494 : ['1585N', '1580N', '1570N', '1570N']
+2019-12-27 19:02:10,588 Percentage of received messages: 0.9742765273311897
+2019-12-27 19:02:15,605 Percentage of received messages: 0.9967532467532467
+2019-12-27 19:02:16,245 Seems like previous packet was lost: 3959 : ['1645N', '1660N', '1650N', '1645N']
+2019-12-27 19:02:17,355 Seems like previous packet was lost: 4027 : ['1610N', '1620N', '1620N', '1635N']
+2019-12-27 19:02:18,070 Seems like previous packet was lost: 4071 : ['1575N', '1585N', '1580N', '1580N']
+2019-12-27 19:02:20,580 Percentage of received messages: 0.9771986970684039
+2019-12-27 19:02:24,779 Seems like previous packet was lost: 4480 : ['1660W', '1705N', '1750N', '1810S']
+2019-12-27 19:02:25,627 Percentage of received messages: 0.9935275080906149
+2019-12-27 19:02:25,661 Unable to parse mean data: END
+2019-12-27 19:02:25,677 Seems like previous packet was lost: 4535 : ['1705N', '1715N', '1715N', '1730N']
+2019-12-27 19:02:27,732 Seems like previous packet was lost: 4660 : ['1640N', '1640N', '1640N', '1640N']
+2019-12-27 19:02:30,565 Percentage of received messages: 0.9867986798679867
+2019-12-27 19:02:34,748 Seems like previous packet was lost: 5089 : ['1690N', '1685N', '1680N', '1675N']
+2019-12-27 19:02:35,664 Percentage of received messages: 0.9904153354632588
+2019-12-27 19:02:37,865 Seems like previous packet was lost: 5279 : ['1600N', '1630N', '1630N', '1645N']
+2019-12-27 19:02:40,663 Percentage of received messages: 0.9934426229508196
+2019-12-27 19:02:45,703 Percentage of received messages: 1.0
+2019-12-27 19:02:47,956 Seems like previous packet was lost: 5894 : ['1825N', '1815N', '1835N', '1855N']
+2019-12-27 19:02:50,738 Percentage of received messages: 0.9935064935064936
+2019-12-27 19:02:55,601 Percentage of received messages: 1.0
+2019-12-27 19:02:57,027 Unable to parse mean data: 1545:
+2019-12-27 19:02:57,044 Seems like previous packet was lost: 6449 : ['1710N', '1725N', '1745N', '1745N']
+2019-12-27 19:03:00,607 Percentage of received messages: 0.9934640522875817
+2019-12-27 19:03:05,614 Percentage of received messages: 1.0
+2019-12-27 19:03:10,625 Percentage of received messages: 1.0
+2019-12-27 19:03:15,633 Percentage of received messages: 1.0
+2019-12-27 19:03:20,638 Percentage of received messages: 1.0
+2019-12-27 19:03:25,644 Percentage of received messages: 1.0
+2019-12-27 19:03:30,653 Percentage of received messages: 1.0
+2019-12-27 19:03:35,708 Percentage of received messages: 1.0
+2019-12-27 19:03:37,472 Unable to parse mean data: END
+2019-12-27 19:03:37,492 Seems like previous packet was lost: 8918 : ['1635N', '1650N', '1640N', '1645N']
+2019-12-27 19:03:38,456 Unable to parse mean data: END
+2019-12-27 19:03:38,469 Seems like previous packet was lost: 8977 : ['1565N', '1555N', '1570N', '1580N']
+2019-12-27 19:03:40,740 Percentage of received messages: 0.987012987012987
+2019-12-27 19:03:45,780 Percentage of received messages: 0.9967637540453075
+2019-12-27 19:03:50,738 Percentage of received messages: 1.0
+2019-12-27 19:03:52,107 Unable to parse mean data: END
+2019-12-27 19:03:52,114 Seems like previous packet was lost: 9810 : ['1640N', '1635N', '1625N', '1630N']
+2019-12-27 19:03:55,753 Percentage of received messages: 0.9934640522875817
+2019-12-27 19:04:00,783 Percentage of received messages: 0.9967637540453075
+2019-12-27 19:04:05,786 Percentage of received messages: 1.0
+2019-12-27 19:04:10,820 Percentage of received messages: 1.0
+2019-12-27 19:04:13,568 Seems like previous packet was lost: 11119 : ['1570N', '1560N', '1550N', '1555N']
+2019-12-27 19:04:14,728 Seems like previous packet was lost: 11190 : ['1605N', '1625N', '1630N', '1635N']
+2019-12-27 19:04:15,734 Percentage of received messages: 0.9834437086092715
+2019-12-27 19:04:20,809 Percentage of received messages: 0.9967637540453075
+2019-12-27 19:04:25,671 warning: ClearCommError failed (OSError(9, 'Неверный дескриптор.', None, 6))
