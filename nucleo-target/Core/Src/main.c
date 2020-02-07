@@ -20,6 +20,12 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "adc.h"
+#include "dma.h"
+#include "spi.h"
+#include "tim.h"
+#include "usart.h"
+#include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -34,6 +40,8 @@
 #include "fvt_detector.h"
 #include "r_detector.h"
 #include "markers.h"
+#include "queue.h"
+#include "packet.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -52,14 +60,35 @@
 #define MODE_INTERNAL 1
 #define MODE_EXTERNAL 0
 
-#define USE_MEMORY 1
-#if USE_MEMORY
+#define OVER_USART (1u)
+#define OVER_BLE	(0u)
+
+#define USE_PACKETS (1u)
+
+#ifndef UPLOAD
 const short* ECG_SAMPLES = (const short*)0x08019000;
 #else
 extern const short ECG_SAMPLES[];
 #endif
+//
 
-const int PRESET_LENGTH = 172800;
+#if SEND_WAY == OVER_USART
+#define SEND_DATA(data, len) HAL_UART_Transmit_DMA(&huart2, data, len)
+#endif
+//
+
+#if SEND_WAY == OVER_BLE
+uint8_t spi_receive_buff[MAX_STRING_LENGTH];
+bool exchanged = true;
+#define SEND_DATA(data, len) HAL_SPI_TransmitReceive_DMA(&hspi3, data, spi_receive_buff, len)
+#endif
+//
+
+#ifndef SEND_WAY
+#error "Way to send data was not defined!"
+#endif
+
+const int PRESET_LENGTH = 208800;
 extern const int RpeakSamples[];
 extern const int RPEAK_LENGTH;
 //Predefined settings of Threshold algorithm
@@ -73,17 +102,6 @@ extern const int RPEAK_LENGTH;
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
-ADC_HandleTypeDef hadc1;
-DMA_HandleTypeDef hdma_adc1;
-
-SPI_HandleTypeDef hspi3;
-DMA_HandleTypeDef hdma_spi3_rx;
-DMA_HandleTypeDef hdma_spi3_tx;
-
-TIM_HandleTypeDef htim3;
-
-UART_HandleTypeDef huart2;
-DMA_HandleTypeDef hdma_usart2_tx;
 
 /* USER CODE BEGIN PV */
 typedef union {
@@ -106,6 +124,7 @@ volatile int adjusted_data = 0;
 volatile int preset_counter = 0;
 
 volatile int data_from_mode = MODE_INTERNAL;
+
 volatile bool OnDataReady = true;
 volatile bool OnHaltWork = false;
 volatile bool Transmission = false;
@@ -140,12 +159,6 @@ HAL_StatusTypeDef ret;
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
-static void MX_GPIO_Init(void);
-static void MX_DMA_Init(void);
-static void MX_ADC1_Init(void);
-static void MX_USART2_UART_Init(void);
-static void MX_TIM3_Init(void);
-static void MX_SPI3_Init(void);
 /* USER CODE BEGIN PFP */
 void Thresholding(int* data, int* peak_holder, int threshold, int size);
 void ClearBuffers(void);
@@ -180,6 +193,7 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* AdcHandle)
 }
 //
 
+#if SEND_WAY == OVER_USART
 /**
   * @brief  Tx Transfer completed callback
   * @param  UartHandle: UART handle. 
@@ -192,7 +206,24 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef *UartHandle)
 	__nop();
 }
 //
+#endif
+//
 
+#if SEND_WAY == OVER_BLE
+
+void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi)
+{
+	if(hspi->Instance == hspi3.Instance)
+	{
+		//queue_push(&q_from_spirx, spi_receive_buff, MAX_STRING_LENGTH);
+		HAL_GPIO_WritePin(SPI_EN_GPIO_Port, SPI_EN_Pin, GPIO_PIN_SET);
+		exchanged = true;
+	}
+}
+//
+
+#endif
+//
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
 	if(GPIO_Pin == GPIO_PIN_13)
@@ -267,7 +298,8 @@ void t_Converter_callback(void)
 					sample_index = 0;
 					ClearBuffers();
 				}
-				adjusted_data = abs(ECG_SAMPLES[preset_counter%PRESET_LENGTH] - 1200);
+				//adjusted_data = abs(ECG_SAMPLES[preset_counter%PRESET_LENGTH] - 1200);
+				adjusted_data = ECG_SAMPLES[preset_counter%PRESET_LENGTH];
 				data_insert[preset_buffer_counter] = adjusted_data;
 				
 				// SSB 
@@ -319,6 +351,12 @@ void t_Sender_callback(void)
 			
 			for(int i = 0; i < CONVERSION_NUM; i++)
 				ParseMarkers(markers[i], parsed_markers[i], CONVERSION_NUM);
+			
+			#if USE_PACKETS
+			
+			MakePacket(IKM_ECG_TX, send_str, uv.update_buff_u8, CONVERSION_NUM*4);
+			
+			#else
 			sprintf(send_str, "%s %d%s%d%s %d%s %d%s %d%s %s%d%s%s", 
 				packet_begin,	msg_counter,	packet_delimiter, 
 											uv.update_buff_u32[0], parsed_markers[0],
@@ -327,10 +365,14 @@ void t_Sender_callback(void)
 											uv.update_buff_u32[3], parsed_markers[3],
 																		packet_delimiter, window_mean, 
 																		packet_delimiter, packet_end);
+			#endif
 											
 			onsend_counter+=CONVERSION_NUM;
 			msg_counter++;
-			ret = HAL_UART_Transmit_DMA(&huart2, (uint8_t*)send_str, strlen(send_str));
+			#if SEND_WAY == OVER_BLE
+			HAL_GPIO_WritePin(SPI_EN_GPIO_Port, SPI_EN_Pin, GPIO_PIN_RESET);
+			#endif
+			ret = SEND_DATA((uint8_t*)send_str, MAX_STRING_LENGTH);
 			if(ret == HAL_OK)
 			{
 				HAL_GPIO_TogglePin(LD4_GPIO_Port, LD4_Pin);
@@ -407,11 +449,9 @@ int main(void)
 	arm_fir_init_q31(&S, NUM_TAPS, &firCoeffs32[0], &firStateF32[0], BLOCK_SIZE);
 	
 	HAL_GPIO_WritePin(Enable_Indicator_GPIO_Port, Enable_Indicator_Pin, GPIO_PIN_SET);
-	
-	BYTE id[7];
-	//slld_ReadCmd(0xAB, id, 4);
-	slld_RDIDCmd(id, 1);
   /* USER CODE END 2 */
+ 
+ 
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
@@ -429,40 +469,40 @@ int main(void)
 			if (preset_buffer_counter >= DATA_AMOUNT && data_from_mode == MODE_INTERNAL)
 				preset_buffer_counter = 0;
 			
-				if(HAL_GPIO_ReadPin(Filter_Switch_GPIO_Port, Filter_Switch_Pin) == GPIO_PIN_RESET)
+			if(HAL_GPIO_ReadPin(Filter_Switch_GPIO_Port, Filter_Switch_Pin) == GPIO_PIN_RESET)
+			{
+				//AdaptiveThresholding(window, window_markers+OVERLAP/2, DATA_AMOUNT);
+				AdaptiveThresholding_high(window, window_markers+OVERLAP/2, DATA_AMOUNT,
+					FREQ, 0.2, 0.3, 0.2);
+				memcpy(data_onsend, window+OVERLAP/2, sizeof(data_onsend[0])*DATA_AMOUNT);
+				memcpy(marker_onsend, window_markers+OVERLAP/2, sizeof(marker_onsend[0])*DATA_AMOUNT);
+				int sum_tmp = 0;
+				for(int i = 0; i < DATA_AMOUNT; i++)
 				{
-					//AdaptiveThresholding(window, window_markers+OVERLAP/2, DATA_AMOUNT);
-					AdaptiveThresholding_high(window, window_markers+OVERLAP/2, DATA_AMOUNT,
-						FREQ, 0.2, 0.3, 0.2);
-					memcpy(data_onsend, window+OVERLAP/2, sizeof(data_onsend[0])*DATA_AMOUNT);
-					memcpy(marker_onsend, window_markers+OVERLAP/2, sizeof(marker_onsend[0])*DATA_AMOUNT);
-					int sum_tmp = 0;
-					for(int i = 0; i < DATA_AMOUNT; i++)
-					{
-						sum_tmp += data_onsend[i];
-					}
-					window_mean = sum_tmp/DATA_AMOUNT;
-					fvt_result = fvt_SeekForFVT();
-					if(fvt_result.found == FVT_BEGIN)
-						AppendMarker(&marker_onsend[fvt_result.index], MARK_FVT_START);
-					else if(fvt_result.found == FVT_FINISH)
-						AppendMarker(&marker_onsend[fvt_result.index], MARK_FVT_FINISH);
-					else if(fvt_result.found == FVT_ONGOING)
-						AppendMarker(&marker_onsend[fvt_result.index], MARK_FVT_ONGOING);
+					sum_tmp += data_onsend[i];
 				}
-				else
+				window_mean = sum_tmp/DATA_AMOUNT;
+				fvt_result = fvt_SeekForFVT();
+				if(fvt_result.found == FVT_BEGIN)
+					AppendMarker(&marker_onsend[fvt_result.index], MARK_FVT_START);
+				else if(fvt_result.found == FVT_FINISH)
+					AppendMarker(&marker_onsend[fvt_result.index], MARK_FVT_FINISH);
+				else if(fvt_result.found == FVT_ONGOING)
+					AppendMarker(&marker_onsend[fvt_result.index], MARK_FVT_ONGOING);
+			}
+			else
+			{
+				for(counter = 0; counter < NUM_BLOCKS; counter++)
 				{
-					for(counter = 0; counter < NUM_BLOCKS; counter++)
-					{
-						arm_fir_q31(&S, window + (counter * BLOCK_SIZE), data_filter + (counter * BLOCK_SIZE), BLOCK_SIZE);
-					}
-					AdaptiveThresholding(data_filter, window_markers+OVERLAP/2, DATA_AMOUNT);
-					memcpy(data_onsend, data_filter+OVERLAP/2, sizeof(data_onsend[0])*DATA_AMOUNT);
-					memcpy(marker_onsend, window_markers+OVERLAP/2, sizeof(marker_onsend[0])*DATA_AMOUNT);
+					arm_fir_q31(&S, window + (counter * BLOCK_SIZE), data_filter + (counter * BLOCK_SIZE), BLOCK_SIZE);
 				}
-				AppendMarker(&marker_onsend[0], MARK_WINDOW);
-				onsend_counter = 0;
-				OnDataReady = true;
+				AdaptiveThresholding(data_filter, window_markers+OVERLAP/2, DATA_AMOUNT);
+				memcpy(data_onsend, data_filter+OVERLAP/2, sizeof(data_onsend[0])*DATA_AMOUNT);
+				memcpy(marker_onsend, window_markers+OVERLAP/2, sizeof(marker_onsend[0])*DATA_AMOUNT);
+			}
+			AppendMarker(&marker_onsend[0], MARK_WINDOW);
+			onsend_counter = 0;
+			OnDataReady = true;
 		}
     /* USER CODE END WHILE */
 
@@ -530,270 +570,6 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
-}
-
-/**
-  * @brief ADC1 Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_ADC1_Init(void)
-{
-
-  /* USER CODE BEGIN ADC1_Init 0 */
-
-  /* USER CODE END ADC1_Init 0 */
-
-  ADC_ChannelConfTypeDef sConfig = {0};
-
-  /* USER CODE BEGIN ADC1_Init 1 */
-
-  /* USER CODE END ADC1_Init 1 */
-  /** Common config 
-  */
-  hadc1.Instance = ADC1;
-  hadc1.Init.ClockPrescaler = ADC_CLOCK_ASYNC_DIV1;
-  hadc1.Init.Resolution = ADC_RESOLUTION_12B;
-  hadc1.Init.DataAlign = ADC_DATAALIGN_RIGHT;
-  hadc1.Init.ScanConvMode = ADC_SCAN_DISABLE;
-  hadc1.Init.EOCSelection = ADC_EOC_SINGLE_CONV;
-  hadc1.Init.LowPowerAutoWait = DISABLE;
-  hadc1.Init.ContinuousConvMode = DISABLE;
-  hadc1.Init.NbrOfConversion = 1;
-  hadc1.Init.DiscontinuousConvMode = DISABLE;
-  hadc1.Init.ExternalTrigConv = ADC_SOFTWARE_START;
-  hadc1.Init.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_NONE;
-  hadc1.Init.DMAContinuousRequests = DISABLE;
-  hadc1.Init.Overrun = ADC_OVR_DATA_PRESERVED;
-  hadc1.Init.OversamplingMode = DISABLE;
-  if (HAL_ADC_Init(&hadc1) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /** Configure Regular Channel 
-  */
-  sConfig.Channel = ADC_CHANNEL_1;
-  sConfig.Rank = ADC_REGULAR_RANK_1;
-  sConfig.SamplingTime = ADC_SAMPLETIME_12CYCLES_5;
-  sConfig.SingleDiff = ADC_DIFFERENTIAL_ENDED;
-  sConfig.OffsetNumber = ADC_OFFSET_NONE;
-  sConfig.Offset = 0;
-  if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN ADC1_Init 2 */
-  if (HAL_ADCEx_Calibration_Start(&hadc1, ADC_DIFFERENTIAL_ENDED) !=  HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE END ADC1_Init 2 */
-
-}
-
-/**
-  * @brief SPI3 Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_SPI3_Init(void)
-{
-
-  /* USER CODE BEGIN SPI3_Init 0 */
-
-  /* USER CODE END SPI3_Init 0 */
-
-  /* USER CODE BEGIN SPI3_Init 1 */
-
-  /* USER CODE END SPI3_Init 1 */
-  /* SPI3 parameter configuration*/
-  hspi3.Instance = SPI3;
-  hspi3.Init.Mode = SPI_MODE_MASTER;
-  hspi3.Init.Direction = SPI_DIRECTION_2LINES;
-  hspi3.Init.DataSize = SPI_DATASIZE_8BIT;
-  hspi3.Init.CLKPolarity = SPI_POLARITY_HIGH;
-  hspi3.Init.CLKPhase = SPI_PHASE_2EDGE;
-  hspi3.Init.NSS = SPI_NSS_SOFT;
-  hspi3.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_2;
-  hspi3.Init.FirstBit = SPI_FIRSTBIT_MSB;
-  hspi3.Init.TIMode = SPI_TIMODE_DISABLE;
-  hspi3.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
-  hspi3.Init.CRCPolynomial = 7;
-  hspi3.Init.CRCLength = SPI_CRC_LENGTH_DATASIZE;
-  hspi3.Init.NSSPMode = SPI_NSS_PULSE_DISABLE;
-  if (HAL_SPI_Init(&hspi3) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN SPI3_Init 2 */
-
-  /* USER CODE END SPI3_Init 2 */
-
-}
-
-/**
-  * @brief TIM3 Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_TIM3_Init(void)
-{
-
-  /* USER CODE BEGIN TIM3_Init 0 */
-
-  /* USER CODE END TIM3_Init 0 */
-
-  TIM_ClockConfigTypeDef sClockSourceConfig = {0};
-  TIM_MasterConfigTypeDef sMasterConfig = {0};
-
-  /* USER CODE BEGIN TIM3_Init 1 */
-
-  /* USER CODE END TIM3_Init 1 */
-  htim3.Instance = TIM3;
-  htim3.Init.Prescaler = 80;
-  htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim3.Init.Period = 100;
-  htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
-  htim3.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
-  if (HAL_TIM_Base_Init(&htim3) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
-  if (HAL_TIM_ConfigClockSource(&htim3, &sClockSourceConfig) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  sMasterConfig.MasterOutputTrigger = TIM_TRGO_UPDATE;
-  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
-  if (HAL_TIMEx_MasterConfigSynchronization(&htim3, &sMasterConfig) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN TIM3_Init 2 */
-
-  /* USER CODE END TIM3_Init 2 */
-
-}
-
-/**
-  * @brief USART2 Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_USART2_UART_Init(void)
-{
-
-  /* USER CODE BEGIN USART2_Init 0 */
-
-  /* USER CODE END USART2_Init 0 */
-
-  /* USER CODE BEGIN USART2_Init 1 */
-
-  /* USER CODE END USART2_Init 1 */
-  huart2.Instance = USART2;
-  huart2.Init.BaudRate = 115200;
-  huart2.Init.WordLength = UART_WORDLENGTH_8B;
-  huart2.Init.StopBits = UART_STOPBITS_1;
-  huart2.Init.Parity = UART_PARITY_NONE;
-  huart2.Init.Mode = UART_MODE_TX_RX;
-  huart2.Init.HwFlowCtl = UART_HWCONTROL_NONE;
-  huart2.Init.OverSampling = UART_OVERSAMPLING_16;
-  huart2.Init.OneBitSampling = UART_ONE_BIT_SAMPLE_DISABLE;
-  huart2.AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_NO_INIT;
-  if (HAL_UART_Init(&huart2) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN USART2_Init 2 */
-
-  /* USER CODE END USART2_Init 2 */
-
-}
-
-/** 
-  * Enable DMA controller clock
-  */
-static void MX_DMA_Init(void) 
-{
-
-  /* DMA controller clock enable */
-  __HAL_RCC_DMA1_CLK_ENABLE();
-  __HAL_RCC_DMA2_CLK_ENABLE();
-
-  /* DMA interrupt init */
-  /* DMA1_Channel1_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(DMA1_Channel1_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(DMA1_Channel1_IRQn);
-  /* DMA1_Channel7_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(DMA1_Channel7_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(DMA1_Channel7_IRQn);
-  /* DMA2_Channel1_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(DMA2_Channel1_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(DMA2_Channel1_IRQn);
-  /* DMA2_Channel2_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(DMA2_Channel2_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(DMA2_Channel2_IRQn);
-
-}
-
-/**
-  * @brief GPIO Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_GPIO_Init(void)
-{
-  GPIO_InitTypeDef GPIO_InitStruct = {0};
-
-  /* GPIO Ports Clock Enable */
-  __HAL_RCC_GPIOC_CLK_ENABLE();
-  __HAL_RCC_GPIOH_CLK_ENABLE();
-  __HAL_RCC_GPIOA_CLK_ENABLE();
-  __HAL_RCC_GPIOB_CLK_ENABLE();
-
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, SMPS_EN_Pin|SMPS_V1_Pin|SMPS_SW_Pin, GPIO_PIN_RESET);
-
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, SPI_EN_Pin|LD4_Pin|Enable_Indicator_Pin, GPIO_PIN_RESET);
-
-  /*Configure GPIO pin : B1_Pin */
-  GPIO_InitStruct.Pin = B1_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(B1_GPIO_Port, &GPIO_InitStruct);
-
-  /*Configure GPIO pins : SMPS_EN_Pin SMPS_V1_Pin SMPS_SW_Pin */
-  GPIO_InitStruct.Pin = SMPS_EN_Pin|SMPS_V1_Pin|SMPS_SW_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-
-  /*Configure GPIO pin : SMPS_PG_Pin */
-  GPIO_InitStruct.Pin = SMPS_PG_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_PULLUP;
-  HAL_GPIO_Init(SMPS_PG_GPIO_Port, &GPIO_InitStruct);
-
-  /*Configure GPIO pins : SPI_EN_Pin LD4_Pin Enable_Indicator_Pin */
-  GPIO_InitStruct.Pin = SPI_EN_Pin|LD4_Pin|Enable_Indicator_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-
-  /*Configure GPIO pin : Filter_Switch_Pin */
-  GPIO_InitStruct.Pin = Filter_Switch_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(Filter_Switch_GPIO_Port, &GPIO_InitStruct);
-
-  /* EXTI interrupt init*/
-  HAL_NVIC_SetPriority(EXTI15_10_IRQn, 3, 0);
-  HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
-
 }
 
 /* USER CODE BEGIN 4 */

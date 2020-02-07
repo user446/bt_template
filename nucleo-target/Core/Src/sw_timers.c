@@ -1,11 +1,9 @@
-#include "stm32l4xx.h"
-#include "stm32l4xx_hal.h"
 #include "sw_timers.h"
 
-static volatile uint64_t sys_tick_count;
+static volatile unsigned long long sys_tick_count; ///счетчик срабатываний материнского таймера
 
-static volatile uint8_t t_counter = 0;
-static struct timer* timer_stack[128];
+static volatile unsigned char t_counter = 0;	///общий счетчик таймеров
+static struct timer* timer_stack[128];				///общий массив таймеров
 
 /**
 	*	@brief	Проверка таймера на окончание счетчика, сброс и выполнение колбека
@@ -20,7 +18,8 @@ static void CheckTimer(struct timer* t)
 	{ 
 		if(t->autorestart)
 			Timer_restart(t);
-		t->callback();
+		if(t->callback != 0x00)
+			t->callback();
 	}
 }
 //
@@ -28,13 +27,15 @@ static void CheckTimer(struct timer* t)
 
 /**
 	*	@brief	Проверка всех существующих таймеров на истечение периода работы
-	*	@note		Необходимо вставить в callback по окончанию прерывания основного таймера
+	*	@note		Необходимо вставить в callback по окончанию прерывания родительского таймера
+	*	@note		Обновляет счетчик срабатываний sys_tick_count
+	*	@note		Без включения функции в callback программные таймеры не будут обновляться
 	*	@note		Проверка производится только для таймеров имеющих атрибут in_interrupt = true
 	*	@param	нет
 	*	@retval	нет
 **/
 //
-volatile uint8_t timer_counter_int = 0;
+volatile unsigned char timer_counter_int = 0;
 void t_OnDigitCompleteInterrupt(void)
 {
 	sys_tick_count++;
@@ -56,7 +57,7 @@ void t_OnDigitCompleteInterrupt(void)
 	*	@retval	нет
 **/
 //
-volatile uint8_t timer_counter_cont = 0;
+volatile unsigned char timer_counter_cont = 0;
 void t_OnDigitCompleteContinuous(void)
 {
 	timer_counter_cont = 0;
@@ -76,14 +77,16 @@ void t_OnDigitCompleteContinuous(void)
 	*	@param	frequency частота срабатываний таймера в секунду
 	*	@param	time_base позволяет выбрать базу для отсчета, в секундах или в милисекундах
 	*	@param	callback указатель на функцию, которую следует исполнить по окончанию периода таймера
-	* @param	on_interrupt вызывать callback таймера только по прерыванию
+	* @param	on_interrupt вызывать callback таймера только по прерывани
+	* @param	autorestart включение автоматической перезагрузки таймера
+	* @param	is_set включение таймера в проверку
 	*	@retval	нет
 **/
 //
 void Timer_set(struct timer* t, float frequency, void (*callback)(void), bool on_interrupt, bool autorestart, bool is_set)
 {
 	t->set = is_set;
-	t->interval = (uint32_t)(sw_timer_100us_insec/frequency * sw_timer_base_100us);
+	t->interval = (unsigned long long)(sw_timer_100us_insec/frequency * sw_timer_base_100us);
 	t->start = sys_tick_count;
 	t->callback = callback;
 	timer_stack[t_counter] = t;
@@ -128,7 +131,7 @@ void Timer_restart(struct timer* t)
 //
 bool Timer_expired(struct timer* t)
 {
-	volatile uint32_t diff = (sys_tick_count - t->start) + 1;
+	volatile unsigned long long diff = (sys_tick_count - t->start) + 1;
 	return t->interval < diff;
 }
 //
@@ -140,7 +143,7 @@ bool Timer_expired(struct timer* t)
 	*	@retval	оставшееся количество тиков таймера до перезагрузки
 **/
 //
-uint32_t Timer_remaining(struct timer* t)
+unsigned long long Timer_remaining(struct timer* t)
 {
 	return t->start + t->interval - sys_tick_count;
 }
@@ -183,6 +186,6 @@ void Timer_disable(struct timer* t)
 //
 void Timer_frequency(struct timer* t, float frequency)
 {
-	t->interval = (uint32_t)(sw_timer_100us_insec/frequency * sw_timer_base_100us);
+	t->interval = (unsigned long long)(sw_timer_100us_insec/frequency * sw_timer_base_100us);
 }
 //

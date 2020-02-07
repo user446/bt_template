@@ -187,14 +187,6 @@ void APP_Tick(void)
     Make_Connection();
     APP_FLAG_CLEAR(SET_CONNECTABLE);
   }
-
-#if REQUEST_CONN_PARAM_UPDATE    
-  if(APP_FLAG(CONNECTED) && !APP_FLAG(L2CAP_PARAM_UPD_SENT) && Timer_Expired(&l2cap_req_timer))
-  {
-    aci_l2cap_connection_parameter_update_req(connection_handle, 8, 16, 0, 600);
-    APP_FLAG_SET(L2CAP_PARAM_UPD_SENT);
-  }
-#endif
 	
   /* Start TX handle Characteristic discovery if not yet done */
   if (APP_FLAG(CONNECTED) && !APP_FLAG(END_READ_TX_CHAR_HANDLE))
@@ -273,11 +265,6 @@ void hci_le_connection_complete_event(uint8_t Status,
   connection_handle = Connection_Handle;
   
   APP_FLAG_SET(CONNECTED);
-  
-#if REQUEST_CONN_PARAM_UPDATE
-  APP_FLAG_CLEAR(L2CAP_PARAM_UPD_SENT);
-  Timer_Set(&l2cap_req_timer, CLOCK_SECOND*2);
-#endif
 }/* end hci_le_connection_complete_event() */
 
 /*******************************************************************************

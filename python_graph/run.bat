@@ -11,11 +11,11 @@ set /p qrs="Enter qrs parameter [y/n]:":
 if %default%==n (
 echo Running python script with custom parameters!
 echo =============================================
-run.py -comm %com% -qrs %qrs% -len %len% -log %log%
+python run.py -comm %com% -qrs %qrs% -len %len% -log %log%
 pause
 ) else (
 echo Running python script with default parameters
 echo =============================================
-run.py
+python run.py
 pause
 )

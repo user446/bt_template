@@ -123,6 +123,9 @@ class SerialPort(QtCore.QThread):
     def ResetError(self):
         self.total_messages = 0
         self.received = 0
+        
+    def GetPaketData(self, ser_data):
+        self.data = struct.unpack('4d', bytearray(ser_data[7:22]))
 
     def GetParsedData(self, ser_data):
         

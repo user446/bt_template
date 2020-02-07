@@ -1,282 +1,608 @@
-2019-12-27 18:55:59,882 info: Starting BlueCardio graph application
-2019-12-27 18:55:59,882 info: BlueCardio started with arguments: Namespace(communication='COM29', length=4096, logging='n', qrs='int')
-2019-12-27 18:55:59,883 info: Trying to open port COM29...
-2019-12-27 18:55:59,908 info: Port entity initialised for COM29
-2019-12-27 18:55:59,909 error: Port is already open. trying to open again...
-2019-12-27 18:55:59,936 info: Port COM29 is opened!
-2019-12-27 18:55:59,937 Program started at 18:55:59.937186
-2019-12-27 18:55:59,950 info: QtWidget initialised!
-2019-12-27 18:56:00,190 Seems like previous packet was lost: 177 : ['1630N', '1635N', '1625N', '1625N']
-2019-12-27 18:56:00,193 Unable to parse mean data: END
-2019-12-27 18:56:00,211 Seems like previous packet was lost: 193 : ['1590N', '1610N', '1630N', '1635N']
-2019-12-27 18:56:04,973 Percentage of received messages: 0.9935064935064936
-2019-12-27 18:56:09,723 Unable to parse mean data: END
-2019-12-27 18:56:09,738 Seems like previous packet was lost: 774 : ['1565N', '1560N', '1555N', '1550N']
-2019-12-27 18:56:10,062 Percentage of received messages: 0.9935483870967742
-2019-12-27 18:56:15,016 Percentage of received messages: 1.0
-2019-12-27 18:56:20,043 Percentage of received messages: 1.0
-2019-12-27 18:56:25,005 Percentage of received messages: 1.0
-2019-12-27 18:56:30,016 Percentage of received messages: 1.0
-2019-12-27 18:56:35,059 Percentage of received messages: 1.0
-2019-12-27 18:56:40,064 Percentage of received messages: 1.0
-2019-12-27 18:56:44,783 Seems like previous packet was lost: 2914 : ['1725N', '1725N', '1745N', '1740N']
-2019-12-27 18:56:45,037 Percentage of received messages: 0.9934426229508196
-2019-12-27 18:56:47,185 Seems like previous packet was lost: 3061 : ['1610N', '1610N', '1605N', '1610N']
-2019-12-27 18:56:47,642 Unable to parse mean data: END
-2019-12-27 18:56:47,658 Seems like previous packet was lost: 3089 : ['1575N', '1585N', '1560N', '1560N']
-2019-12-27 18:56:50,143 Percentage of received messages: 0.9872611464968153
-2019-12-27 18:56:53,829 Unable to parse mean data: END
-2019-12-27 18:56:53,840 Seems like previous packet was lost: 3467 : ['1570N', '1570N', '1555N', '1555N']
-2019-12-27 18:56:55,181 Percentage of received messages: 0.9935064935064936
-2019-12-27 18:57:00,098 Percentage of received messages: 1.0
-2019-12-27 18:57:05,130 Percentage of received messages: 1.0
-2019-12-27 18:57:10,081 Percentage of received messages: 1.0
-2019-12-27 18:57:11,466 Seems like previous packet was lost: 4543 : ['1680N', '1690N', '1690N', '1685N']
-2019-12-27 18:57:15,201 Percentage of received messages: 0.9936102236421726
-2019-12-27 18:57:19,183 Unable to parse mean data: END
-2019-12-27 18:57:19,205 Seems like previous packet was lost: 5015 : ['1685N', '1695N', '1695N', '1700N']
-2019-12-27 18:57:20,212 Percentage of received messages: 0.993485342019544
-2019-12-27 18:57:20,395 Unable to parse mean data: END
-2019-12-27 18:57:20,421 Seems like previous packet was lost: 5089 : ['1690N', '1685N', '1680N', '1675N']
-2019-12-27 18:57:21,475 Unable to parse mean data: END
-2019-12-27 18:57:21,483 Seems like previous packet was lost: 5154 : ['1720N', '1715N', '1720N', '1720N']
-2019-12-27 18:57:25,137 Percentage of received messages: 0.9867109634551495
-2019-12-27 18:57:29,953 Seems like previous packet was lost: 5671 : ['1780SR', '1765N', '1745N', '1700N']
-2019-12-27 18:57:30,144 Percentage of received messages: 0.9902597402597403
-2019-12-27 18:57:33,896 Unable to parse mean data: END
-2019-12-27 18:57:33,920 Seems like previous packet was lost: 5912 : ['1705N', '1705N', '1720N', '1720N']
-2019-12-27 18:57:35,175 Percentage of received messages: 0.9903225806451613
-2019-12-27 18:57:36,503 Seems like previous packet was lost: 6071 : ['1705N', '1725N', '1725N', '1740N']
-2019-12-27 18:57:40,182 Percentage of received messages: 0.990228013029316
-2019-12-27 18:57:45,014 Seems like previous packet was lost: 6591 : ['1660N', '1665N', '1665N', '1665N']
-2019-12-27 18:57:45,197 Percentage of received messages: 0.9902597402597403
-2019-12-27 18:57:48,311 Seems like previous packet was lost: 6792 : ['1790N', '1790N', '1790N', '1790N']
-2019-12-27 18:57:48,750 Unable to parse mean data: END
-2019-12-27 18:57:48,776 Seems like previous packet was lost: 6820 : ['1575N', '1570N', '1565N', '1560N']
-2019-12-27 18:57:49,559 Unable to parse mean data: END
-2019-12-27 18:57:49,567 Seems like previous packet was lost: 6869 : ['1580N', '1575N', '1570N', '1580N']
-2019-12-27 18:57:50,075 Seems like previous packet was lost: 6900 : ['1520N', '1485N', '1450N', '1430N']
-2019-12-27 18:57:50,211 Percentage of received messages: 0.9741935483870968
-2019-12-27 18:57:51,720 Seems like previous packet was lost: 7000 : ['1645N', '1635N', '1635N', '1630N']
-2019-12-27 18:57:51,987 Unable to parse mean data: END
-2019-12-27 18:57:51,997 Seems like previous packet was lost: 7017 : ['1535N', '1535N', '1540N', '1535N']
-2019-12-27 18:57:53,282 Unable to parse mean data: END
-2019-12-27 18:57:53,288 Seems like previous packet was lost: 7096 : ['1770RO', '1760S', '1720N', '1670N']
-2019-12-27 18:57:53,523 Seems like previous packet was lost: 7110 : ['1565N', '1560N', '1575N', '1575N']
-2019-12-27 18:57:54,781 Unable to parse mean data: END
-2019-12-27 18:57:54,796 Seems like previous packet was lost: 7187 : ['1770N', '1765N', '1740N', '1745N']
-2019-12-27 18:57:55,238 Percentage of received messages: 0.9678456591639871
-2019-12-27 18:57:57,109 Seems like previous packet was lost: 7329 : ['1585N', '1585N', '1600N', '1610N']
-2019-12-27 18:57:59,399 Seems like previous packet was lost: 7468 : ['1580N', '1585N', '1585N', '1585N']
-2019-12-27 18:58:00,261 Percentage of received messages: 0.987012987012987
-2019-12-27 18:58:04,321 Unable to parse mean data: END
-2019-12-27 18:58:04,333 Seems like previous packet was lost: 7770 : ['1545N', '1545N', '1565N', '1560N']
-2019-12-27 18:58:05,327 Percentage of received messages: 0.9935483870967742
-2019-12-27 18:58:10,217 Percentage of received messages: 0.9966666666666667
-2019-12-27 18:58:15,185 Percentage of received messages: 1.0
-2019-12-27 18:58:17,815 Unable to parse mean data: END
-2019-12-27 18:58:17,829 Seems like previous packet was lost: 8594 : ['1630N', '1625N', '1625N', '1615N']
-2019-12-27 18:58:18,031 Seems like previous packet was lost: 8606 : ['1640N', '1630N', '1630N', '1615N']
-2019-12-27 18:58:20,199 Percentage of received messages: 0.9837662337662337
-2019-12-27 18:58:20,717 Unable to parse mean data: END
-2019-12-27 18:58:20,723 Seems like previous packet was lost: 8770 : ['1640N', '1625N', '1625N', '1625N']
-2019-12-27 18:58:21,780 Seems like previous packet was lost: 8835 : ['1660N', '1645N', '1640N', '1620N']
-2019-12-27 18:58:24,977 Seems like previous packet was lost: 9030 : ['1625N', '1610N', '1595N', '1595N']
-2019-12-27 18:58:25,254 Percentage of received messages: 0.9775641025641025
-2019-12-27 18:58:30,290 Percentage of received messages: 1.0
-2019-12-27 18:58:35,252 Percentage of received messages: 0.9934426229508196
-2019-12-27 18:58:37,183 Unable to parse mean data: END
-2019-12-27 18:58:37,203 Seems like previous packet was lost: 9776 : ['1555N', '1565N', '1555N', '1560N']
-2019-12-27 18:58:37,792 Unable to parse mean data: END
-2019-12-27 18:58:37,820 Seems like previous packet was lost: 9813 : ['1660N', '1655N', '1655N', '1650N']
-2019-12-27 18:58:40,297 Percentage of received messages: 0.9839228295819936
-2019-12-27 18:58:44,982 Seems like previous packet was lost: 10251 : ['1835SR', '1830N', '1780N', '1705N']
-2019-12-27 18:58:45,254 Percentage of received messages: 0.9868852459016394
-2019-12-27 18:58:47,178 Seems like previous packet was lost: 10385 : ['1635N', '1625N', '1605N', '1595N']
-2019-12-27 18:58:50,271 Percentage of received messages: 0.993485342019544
-2019-12-27 18:58:51,012 Seems like previous packet was lost: 10619 : ['1565N', '1565N', '1565N', '1580N']
-2019-12-27 18:58:52,035 Unable to parse mean data: END
-2019-12-27 18:58:52,048 Seems like previous packet was lost: 10683 : ['1575N', '1585N', '1595N', '1590N']
-2019-12-27 18:58:55,312 Percentage of received messages: 0.9838709677419355
-2019-12-27 18:58:59,774 Unable to parse mean data: END
-2019-12-27 18:58:59,787 Seems like previous packet was lost: 11155 : ['1565N', '1565N', '1560N', '1555N']
-2019-12-27 18:59:00,277 Seems like previous packet was lost: 11185 : ['1585N', '1585N', '1575N', '1575N']
-2019-12-27 18:59:00,279 Percentage of received messages: 0.9868852459016394
-2019-12-27 18:59:00,866 Unable to parse mean data: END
-2019-12-27 18:59:00,892 Seems like previous packet was lost: 11222 : ['1560N', '1550N', '1550N', '1550N']
-2019-12-27 18:59:04,082 Unable to parse mean data: END
-2019-12-27 18:59:04,099 Seems like previous packet was lost: 11418 : ['1510N', '1520N', '1525N', '1530N']
-2019-12-27 18:59:05,315 Percentage of received messages: 0.9870550161812298
-2019-12-27 18:59:08,953 Unable to parse mean data: END
-2019-12-27 18:59:08,958 Seems like previous packet was lost: 11715 : ['1535N', '1545N', '1545N', '1555N']
-2019-12-27 18:59:10,282 Percentage of received messages: 0.9933993399339934
-2019-12-27 18:59:12,569 Unable to parse mean data: END
-2019-12-27 18:59:12,590 Seems like previous packet was lost: 11936 : ['1625N', '1605N', '1585N', '1595N']
-2019-12-27 18:59:13,222 Unable to parse mean data: END
-2019-12-27 18:59:13,242 Seems like previous packet was lost: 11976 : ['1405N', '1410N', '1455N', '1520N']
-2019-12-27 18:59:15,311 Percentage of received messages: 0.9838709677419355
-2019-12-27 18:59:20,368 Percentage of received messages: 0.9967637540453075
-2019-12-27 18:59:24,145 Unable to parse mean data: END
-2019-12-27 18:59:24,159 Seems like previous packet was lost: 12642 : ['1645N', '1645N', '1645N', '1660N']
-2019-12-27 18:59:25,360 Percentage of received messages: 0.9901960784313726
-2019-12-27 18:59:28,310 Seems like previous packet was lost: 12895 : ['1620N', '1630N', '1640N', '1650N']
-2019-12-27 18:59:30,293 Percentage of received messages: 0.9933774834437086
-2019-12-27 18:59:30,484 Unable to parse mean data: END
-2019-12-27 18:59:30,492 Seems like previous packet was lost: 13029 : ['1695N', '1690N', '1700N', '1695N']
-2019-12-27 18:59:35,371 Percentage of received messages: 0.9935483870967742
-2019-12-27 18:59:37,252 Unable to parse mean data: END
-2019-12-27 18:59:37,266 Seems like previous packet was lost: 13442 : ['1905R', '1885N', '1840N', '1785N']
-2019-12-27 18:59:40,409 Percentage of received messages: 0.9935275080906149
-2019-12-27 18:59:41,283 Seems like previous packet was lost: 13687 : ['1675N', '1670N', '1670N', '1685N']
-2019-12-27 18:59:45,341 Unable to parse mean data: END
-2019-12-27 18:59:45,348 Seems like previous packet was lost: 13935 : ['1705N', '1700N', '1685N', '1685N']
-2019-12-27 18:59:45,366 Percentage of received messages: 0.9868421052631579
-2019-12-27 18:59:50,340 Percentage of received messages: 1.0
-2019-12-27 18:59:55,400 Percentage of received messages: 1.0
-2019-12-27 19:00:00,444 Percentage of received messages: 0.9967532467532467
-2019-12-27 19:00:02,142 Unable to parse mean data: END
-2019-12-27 19:00:02,163 Seems like previous packet was lost: 14961 : ['1680N', '1665N', '1695N', '1720N']
-2019-12-27 19:00:04,672 Seems like previous packet was lost: 15114 : ['1660N', '1665N', '1650N', '1650N']
-2019-12-27 19:00:05,377 Percentage of received messages: 0.9867986798679867
-2019-12-27 19:00:06,069 Unable to parse mean data: END
-2019-12-27 19:00:06,076 Seems like previous packet was lost: 15200 : ['1605N', '1605N', '1615N', '1625N']
-2019-12-27 19:00:06,895 Seems like previous packet was lost: 15250 : ['1700N', '1690N', '1705N', '1695N']
-2019-12-27 19:00:07,815 Seems like previous packet was lost: 15306 : ['1680N', '1685N', '1690N', '1695N']
-2019-12-27 19:00:10,216 Unable to parse mean data: END
-2019-12-27 19:00:10,222 Seems like previous packet was lost: 15453 : ['1640N', '1635N', '1635N', '1620N']
-2019-12-27 19:00:10,370 Percentage of received messages: 0.974025974025974
-2019-12-27 19:00:15,413 Percentage of received messages: 1.0
-2019-12-27 19:00:18,101 Unable to parse mean data: END
-2019-12-27 19:00:18,116 Seems like previous packet was lost: 15934 : ['1515N', '1515N', '1505N', '1495N']
-2019-12-27 19:00:20,393 Percentage of received messages: 0.9901960784313726
-2019-12-27 19:00:20,907 Seems like previous packet was lost: 16105 : ['1645N', '1650N', '1635N', '1635N']
-2019-12-27 19:00:24,948 Unable to parse mean data: END
-2019-12-27 19:00:24,962 Seems like previous packet was lost: 16353 : ['1550N', '1550N', '1545N', '1545N']
-2019-12-27 19:00:25,395 Percentage of received messages: 0.9869706840390879
-2019-12-27 19:00:25,556 Unable to parse mean data: END
-2019-12-27 19:00:25,575 Seems like previous packet was lost: 16389 : ['1580N', '1590N', '1595N', '1590N']
-2019-12-27 19:00:26,540 Unable to parse mean data: END
-2019-12-27 19:00:26,556 Seems like previous packet was lost: 16449 : ['1705N', '1705N', '1710N', '1710N']
-2019-12-27 19:00:30,219 Seems like previous packet was lost: 16673 : ['1525N', '1525N', '1515N', '1525N']
-2019-12-27 19:00:30,422 Percentage of received messages: 0.9805825242718447
-2019-12-27 19:00:35,103 Seems like previous packet was lost: 16971 : ['1535N', '1535N', '1540N', '1555N']
-2019-12-27 19:00:35,421 Percentage of received messages: 0.987012987012987
-2019-12-27 19:00:36,650 Seems like previous packet was lost: 17066 : ['1525N', '1515N', '1510N', '1500N']
-2019-12-27 19:00:40,483 Percentage of received messages: 0.9935483870967742
-2019-12-27 19:00:41,209 Seems like previous packet was lost: 17344 : ['1495W', '1495N', '1500N', '1490N']
-2019-12-27 19:00:43,414 Unable to parse mean data: END
-2019-12-27 19:00:43,427 Seems like previous packet was lost: 17479 : ['1500N', '1500N', '1505N', '1490N']
-2019-12-27 19:00:45,494 Percentage of received messages: 0.9838187702265372
-2019-12-27 19:00:47,293 Seems like previous packet was lost: 17715 : ['1450N', '1455N', '1455N', '1465N']
-2019-12-27 19:00:47,557 Unable to parse mean data: END
-2019-12-27 19:00:47,579 Seems like previous packet was lost: 17732 : ['1460N', '1460N', '1440N', '1435N']
-2019-12-27 19:00:48,684 Seems like previous packet was lost: 17800 : ['1495N', '1515N', '1535N', '1550N']
-2019-12-27 19:00:50,442 Percentage of received messages: 0.9707792207792207
-2019-12-27 19:00:55,527 Percentage of received messages: 0.9967845659163987
-2019-12-27 19:00:57,093 Seems like previous packet was lost: 18313 : ['1575N', '1570N', '1585N', '1580N']
-2019-12-27 19:01:00,447 Percentage of received messages: 0.9933554817275747
-2019-12-27 19:01:02,598 Unable to parse mean data: END
-2019-12-27 19:01:02,607 Seems like previous packet was lost: 18650 : ['1620N', '1625N', '1615N', '1610N']
-2019-12-27 19:01:05,100 Seems like previous packet was lost: 18802 : ['1565N', '1575N', '1575N', '1580N']
-2019-12-27 19:01:05,480 Percentage of received messages: 0.9870967741935484
-2019-12-27 19:01:06,123 Unable to parse mean data: END
-2019-12-27 19:01:06,144 Seems like previous packet was lost: 18865 : ['1645N', '1645N', '1650N', '1660N']
-2019-12-27 19:01:10,466 Percentage of received messages: 0.9934426229508196
-2019-12-27 19:01:11,391 Seems like previous packet was lost: 0 : ['0N', '0N', '0N', '0N']
-2019-12-27 19:01:12,914 Unable to parse mean data: END
-2019-12-27 19:01:12,926 Seems like previous packet was lost: 94 : ['1705N', '1695N', '1710N', '1720N']
-2019-12-27 19:01:15,452 Percentage of received messages: 0.98989898989899
-2019-12-27 19:01:19,092 Seems like previous packet was lost: 471 : ['1720N', '1655N', '1585N', '1535N']
-2019-12-27 19:01:20,485 Percentage of received messages: 0.993485342019544
-2019-12-27 19:01:23,579 Unable to parse mean data: END
-2019-12-27 19:01:23,599 Seems like previous packet was lost: 746 : ['1530N', '1550N', '1550N', '1560N']
-2019-12-27 19:01:25,367 Unable to parse mean data: END
-2019-12-27 19:01:25,381 Seems like previous packet was lost: 854 : ['1535N', '1535N', '1545N', '1550N']
-2019-12-27 19:01:25,538 Percentage of received messages: 0.9839228295819936
-2019-12-27 19:01:25,999 Unable to parse mean data: END
-2019-12-27 19:01:26,011 Seems like previous packet was lost: 893 : ['1600N', '1595N', '1615N', '1620N']
-2019-12-27 19:01:28,018 Seems like previous packet was lost: 1016 : ['1620N', '1625N', '1630N', '1620N']
-2019-12-27 19:01:30,495 Percentage of received messages: 0.9868421052631579
-2019-12-27 19:01:32,123 Unable to parse mean data: END
-2019-12-27 19:01:32,130 Seems like previous packet was lost: 1267 : ['1600N', '1585N', '1570N', '1570N']
-2019-12-27 19:01:35,632 Percentage of received messages: 0.9936507936507937
-2019-12-27 19:01:40,095 Unable to parse mean data: END
-2019-12-27 19:01:40,109 Seems like previous packet was lost: 1754 : ['1610N', '1615N', '1615N', '1620N']
-2019-12-27 19:01:40,492 Percentage of received messages: 0.9932885906040269
-2019-12-27 19:01:40,682 Seems like previous packet was lost: 1789 : ['1605N', '1600N', '1590N', '1575N']
-2019-12-27 19:01:45,621 Percentage of received messages: 0.9936102236421726
-2019-12-27 19:01:48,286 Unable to parse mean data: END
-2019-12-27 19:01:48,308 Seems like previous packet was lost: 2254 : ['1615N', '1595N', '1605N', '1585N']
-2019-12-27 19:01:49,361 Unable to parse mean data: END
-2019-12-27 19:01:49,383 Seems like previous packet was lost: 2319 : ['1610N', '1620N', '1615N', '1615N']
-2019-12-27 19:01:49,515 Seems like previous packet was lost: 2327 : ['1600N', '1590N', '1585N', '1610N']
-2019-12-27 19:01:50,474 Unable to parse mean data: END
-2019-12-27 19:01:50,486 Seems like previous packet was lost: 2387 : ['1595N', '1590N', '1580N', '1595N']
-2019-12-27 19:01:50,580 Percentage of received messages: 0.9739413680781759
-2019-12-27 19:01:55,057 Seems like previous packet was lost: 2666 : ['1565N', '1565N', '1545N', '1555N']
-2019-12-27 19:01:55,616 Percentage of received messages: 0.9935275080906149
-2019-12-27 19:02:00,638 Percentage of received messages: 0.9967532467532467
-2019-12-27 19:02:00,973 Unable to parse mean data: END
-2019-12-27 19:02:00,980 Seems like previous packet was lost: 3028 : ['1715N', '1725N', '1730R', '1710N']
-2019-12-27 19:02:01,161 Unable to parse mean data: END
-2019-12-27 19:02:01,175 Seems like previous packet was lost: 3040 : ['1880N', '1885N', '1890N', '1870N']
-2019-12-27 19:02:02,190 Unable to parse mean data: END
-2019-12-27 19:02:02,206 Seems like previous packet was lost: 3102 : ['1585N', '1585N', '1590N', '1600N']
-2019-12-27 19:02:03,040 Seems like previous packet was lost: 3153 : ['1585N', '1585N', '1595N', '1600N']
-2019-12-27 19:02:05,475 Seems like previous packet was lost: 3302 : ['1615N', '1610N', '1605N', '1600N']
-2019-12-27 19:02:05,544 Percentage of received messages: 0.9639344262295082
-2019-12-27 19:02:05,614 Unable to parse mean data: END
-2019-12-27 19:02:05,630 Seems like previous packet was lost: 3312 : ['1615N', '1620N', '1615N', '1625N']
-2019-12-27 19:02:06,617 Seems like previous packet was lost: 3371 : ['1760N', '1805S', '1835RO', '1835N']
-2019-12-27 19:02:07,773 Unable to parse mean data: END
-2019-12-27 19:02:07,788 Seems like previous packet was lost: 3443 : ['1550N', '1550N', '1545N', '1540N']
-2019-12-27 19:02:08,613 Unable to parse mean data: END
-2019-12-27 19:02:08,619 Seems like previous packet was lost: 3494 : ['1585N', '1580N', '1570N', '1570N']
-2019-12-27 19:02:10,588 Percentage of received messages: 0.9742765273311897
-2019-12-27 19:02:15,605 Percentage of received messages: 0.9967532467532467
-2019-12-27 19:02:16,245 Seems like previous packet was lost: 3959 : ['1645N', '1660N', '1650N', '1645N']
-2019-12-27 19:02:17,355 Seems like previous packet was lost: 4027 : ['1610N', '1620N', '1620N', '1635N']
-2019-12-27 19:02:18,070 Seems like previous packet was lost: 4071 : ['1575N', '1585N', '1580N', '1580N']
-2019-12-27 19:02:20,580 Percentage of received messages: 0.9771986970684039
-2019-12-27 19:02:24,779 Seems like previous packet was lost: 4480 : ['1660W', '1705N', '1750N', '1810S']
-2019-12-27 19:02:25,627 Percentage of received messages: 0.9935275080906149
-2019-12-27 19:02:25,661 Unable to parse mean data: END
-2019-12-27 19:02:25,677 Seems like previous packet was lost: 4535 : ['1705N', '1715N', '1715N', '1730N']
-2019-12-27 19:02:27,732 Seems like previous packet was lost: 4660 : ['1640N', '1640N', '1640N', '1640N']
-2019-12-27 19:02:30,565 Percentage of received messages: 0.9867986798679867
-2019-12-27 19:02:34,748 Seems like previous packet was lost: 5089 : ['1690N', '1685N', '1680N', '1675N']
-2019-12-27 19:02:35,664 Percentage of received messages: 0.9904153354632588
-2019-12-27 19:02:37,865 Seems like previous packet was lost: 5279 : ['1600N', '1630N', '1630N', '1645N']
-2019-12-27 19:02:40,663 Percentage of received messages: 0.9934426229508196
-2019-12-27 19:02:45,703 Percentage of received messages: 1.0
-2019-12-27 19:02:47,956 Seems like previous packet was lost: 5894 : ['1825N', '1815N', '1835N', '1855N']
-2019-12-27 19:02:50,738 Percentage of received messages: 0.9935064935064936
-2019-12-27 19:02:55,601 Percentage of received messages: 1.0
-2019-12-27 19:02:57,027 Unable to parse mean data: 1545:
-2019-12-27 19:02:57,044 Seems like previous packet was lost: 6449 : ['1710N', '1725N', '1745N', '1745N']
-2019-12-27 19:03:00,607 Percentage of received messages: 0.9934640522875817
-2019-12-27 19:03:05,614 Percentage of received messages: 1.0
-2019-12-27 19:03:10,625 Percentage of received messages: 1.0
-2019-12-27 19:03:15,633 Percentage of received messages: 1.0
-2019-12-27 19:03:20,638 Percentage of received messages: 1.0
-2019-12-27 19:03:25,644 Percentage of received messages: 1.0
-2019-12-27 19:03:30,653 Percentage of received messages: 1.0
-2019-12-27 19:03:35,708 Percentage of received messages: 1.0
-2019-12-27 19:03:37,472 Unable to parse mean data: END
-2019-12-27 19:03:37,492 Seems like previous packet was lost: 8918 : ['1635N', '1650N', '1640N', '1645N']
-2019-12-27 19:03:38,456 Unable to parse mean data: END
-2019-12-27 19:03:38,469 Seems like previous packet was lost: 8977 : ['1565N', '1555N', '1570N', '1580N']
-2019-12-27 19:03:40,740 Percentage of received messages: 0.987012987012987
-2019-12-27 19:03:45,780 Percentage of received messages: 0.9967637540453075
-2019-12-27 19:03:50,738 Percentage of received messages: 1.0
-2019-12-27 19:03:52,107 Unable to parse mean data: END
-2019-12-27 19:03:52,114 Seems like previous packet was lost: 9810 : ['1640N', '1635N', '1625N', '1630N']
-2019-12-27 19:03:55,753 Percentage of received messages: 0.9934640522875817
-2019-12-27 19:04:00,783 Percentage of received messages: 0.9967637540453075
-2019-12-27 19:04:05,786 Percentage of received messages: 1.0
-2019-12-27 19:04:10,820 Percentage of received messages: 1.0
-2019-12-27 19:04:13,568 Seems like previous packet was lost: 11119 : ['1570N', '1560N', '1550N', '1555N']
-2019-12-27 19:04:14,728 Seems like previous packet was lost: 11190 : ['1605N', '1625N', '1630N', '1635N']
-2019-12-27 19:04:15,734 Percentage of received messages: 0.9834437086092715
-2019-12-27 19:04:20,809 Percentage of received messages: 0.9967637540453075
-2019-12-27 19:04:25,671 warning: ClearCommError failed (OSError(9, 'Неверный дескриптор.', None, 6))
+2020-01-30 11:13:58,933 info: Starting BlueCardio graph application
+2020-01-30 11:13:58,933 info: BlueCardio started with arguments: Namespace(communication='COM9', length=4096, logging='n', qrs='int')
+2020-01-30 11:13:58,934 info: Trying to open port COM9...
+2020-01-30 11:13:59,016 info: Port entity initialised for COM9
+2020-01-30 11:13:59,016 error: Port is already open. trying to open again...
+2020-01-30 11:13:59,022 info: Port COM9 is opened!
+2020-01-30 11:13:59,023 Program started at 11:13:59.023162
+2020-01-30 11:13:59,037 info: QtWidget initialised!
+2020-01-30 11:13:59,275 Seems like previous packet was lost: 202527 : ['-210N', '-210N', '-225N', '-245N']
+2020-01-30 11:14:04,159 Percentage of received messages: 1.0
+2020-01-30 11:14:09,141 Percentage of received messages: 1.0
+2020-01-30 11:14:14,174 Percentage of received messages: 1.0
+2020-01-30 11:14:19,151 Percentage of received messages: 1.0
+2020-01-30 11:14:24,114 Percentage of received messages: 1.0
+2020-01-30 11:14:29,168 Percentage of received messages: 1.0
+2020-01-30 11:14:34,178 Percentage of received messages: 1.0
+2020-01-30 11:14:39,170 Percentage of received messages: 1.0
+2020-01-30 11:14:44,141 Percentage of received messages: 1.0
+2020-01-30 11:14:49,162 Percentage of received messages: 1.0
+2020-01-30 11:14:54,154 Percentage of received messages: 1.0
+2020-01-30 11:14:59,177 Percentage of received messages: 1.0
+2020-01-30 11:15:04,204 Percentage of received messages: 1.0
+2020-01-30 11:15:09,208 Percentage of received messages: 1.0
+2020-01-30 11:15:14,263 Percentage of received messages: 1.0
+2020-01-30 11:15:19,241 Percentage of received messages: 1.0
+2020-01-30 11:15:24,202 Percentage of received messages: 1.0
+2020-01-30 11:15:29,228 Percentage of received messages: 1.0
+2020-01-30 11:15:34,281 Percentage of received messages: 1.0
+2020-01-30 11:15:39,223 Percentage of received messages: 1.0
+2020-01-30 11:15:44,297 Percentage of received messages: 1.0
+2020-01-30 11:15:49,244 Percentage of received messages: 1.0
+2020-01-30 11:15:54,305 Percentage of received messages: 1.0
+2020-01-30 11:15:59,329 Percentage of received messages: 1.0
+2020-01-30 11:16:04,300 Percentage of received messages: 1.0
+2020-01-30 11:16:09,341 Percentage of received messages: 1.0
+2020-01-30 11:16:14,349 Percentage of received messages: 1.0
+2020-01-30 11:16:19,285 Percentage of received messages: 1.0
+2020-01-30 11:16:24,307 Percentage of received messages: 1.0
+2020-01-30 11:16:29,315 Percentage of received messages: 1.0
+2020-01-30 11:16:34,389 Percentage of received messages: 1.0
+2020-01-30 11:16:39,380 Percentage of received messages: 1.0
+2020-01-30 11:16:44,371 Percentage of received messages: 1.0
+2020-01-30 11:16:49,375 Percentage of received messages: 1.0
+2020-01-30 11:16:54,382 Percentage of received messages: 1.0
+2020-01-30 11:16:59,403 Percentage of received messages: 1.0
+2020-01-30 11:17:04,398 Percentage of received messages: 1.0
+2020-01-30 11:17:09,412 Percentage of received messages: 1.0
+2020-01-30 11:17:14,425 Percentage of received messages: 1.0
+2020-01-30 11:17:19,397 Percentage of received messages: 1.0
+2020-01-30 11:17:24,421 Percentage of received messages: 1.0
+2020-01-30 11:17:29,410 Percentage of received messages: 1.0
+2020-01-30 11:17:34,419 Percentage of received messages: 1.0
+2020-01-30 11:17:39,479 Percentage of received messages: 1.0
+2020-01-30 11:17:44,484 Percentage of received messages: 1.0
+2020-01-30 11:17:49,459 Percentage of received messages: 1.0
+2020-01-30 11:17:54,507 Percentage of received messages: 1.0
+2020-01-30 11:17:59,506 Percentage of received messages: 1.0
+2020-01-30 11:18:04,478 Percentage of received messages: 1.0
+2020-01-30 11:18:09,452 Percentage of received messages: 1.0
+2020-01-30 11:18:14,474 Percentage of received messages: 1.0
+2020-01-30 11:18:19,531 Percentage of received messages: 1.0
+2020-01-30 11:18:24,519 Percentage of received messages: 1.0
+2020-01-30 11:18:29,493 Percentage of received messages: 1.0
+2020-01-30 11:18:34,531 Percentage of received messages: 1.0
+2020-01-30 11:18:39,503 Percentage of received messages: 1.0
+2020-01-30 11:18:44,577 Percentage of received messages: 1.0
+2020-01-30 11:18:49,550 Percentage of received messages: 1.0
+2020-01-30 11:18:54,542 Percentage of received messages: 1.0
+2020-01-30 11:18:59,565 Percentage of received messages: 1.0
+2020-01-30 11:19:04,602 Percentage of received messages: 1.0
+2020-01-30 11:19:09,558 Percentage of received messages: 1.0
+2020-01-30 11:19:14,555 Percentage of received messages: 1.0
+2020-01-30 11:19:19,586 Percentage of received messages: 1.0
+2020-01-30 11:19:24,629 Percentage of received messages: 1.0
+2020-01-30 11:19:29,602 Percentage of received messages: 1.0
+2020-01-30 11:19:34,593 Percentage of received messages: 1.0
+2020-01-30 11:19:39,647 Percentage of received messages: 1.0
+2020-01-30 11:19:44,653 Percentage of received messages: 1.0
+2020-01-30 11:19:49,661 Percentage of received messages: 1.0
+2020-01-30 11:19:54,665 Percentage of received messages: 1.0
+2020-01-30 11:19:59,640 Percentage of received messages: 1.0
+2020-01-30 11:20:04,682 Percentage of received messages: 1.0
+2020-01-30 11:20:09,687 Percentage of received messages: 1.0
+2020-01-30 11:20:14,646 Percentage of received messages: 1.0
+2020-01-30 11:20:19,669 Percentage of received messages: 1.0
+2020-01-30 11:20:24,674 Percentage of received messages: 1.0
+2020-01-30 11:20:29,748 Percentage of received messages: 1.0
+2020-01-30 11:20:34,747 Percentage of received messages: 1.0
+2020-01-30 11:20:39,713 Percentage of received messages: 1.0
+2020-01-30 11:20:44,724 Percentage of received messages: 1.0
+2020-01-30 11:20:49,761 Percentage of received messages: 1.0
+2020-01-30 11:20:54,741 Percentage of received messages: 1.0
+2020-01-30 11:20:59,771 Percentage of received messages: 1.0
+2020-01-30 11:21:04,755 Percentage of received messages: 1.0
+2020-01-30 11:21:09,782 Percentage of received messages: 1.0
+2020-01-30 11:21:14,741 Percentage of received messages: 1.0
+2020-01-30 11:21:19,799 Percentage of received messages: 1.0
+2020-01-30 11:21:24,784 Percentage of received messages: 1.0
+2020-01-30 11:21:29,808 Percentage of received messages: 1.0
+2020-01-30 11:21:34,829 Percentage of received messages: 1.0
+2020-01-30 11:21:39,828 Percentage of received messages: 1.0
+2020-01-30 11:21:44,802 Percentage of received messages: 1.0
+2020-01-30 11:21:49,860 Percentage of received messages: 1.0
+2020-01-30 11:21:54,847 Percentage of received messages: 1.0
+2020-01-30 11:21:59,865 Percentage of received messages: 1.0
+2020-01-30 11:22:04,869 Percentage of received messages: 1.0
+2020-01-30 11:22:09,828 Percentage of received messages: 1.0
+2020-01-30 11:22:14,899 Percentage of received messages: 1.0
+2020-01-30 11:22:19,899 Percentage of received messages: 1.0
+2020-01-30 11:22:24,923 Percentage of received messages: 1.0
+2020-01-30 11:22:29,897 Percentage of received messages: 1.0
+2020-01-30 11:22:34,889 Percentage of received messages: 1.0
+2020-01-30 11:22:39,920 Percentage of received messages: 1.0
+2020-01-30 11:22:44,918 Percentage of received messages: 1.0
+2020-01-30 11:22:49,908 Percentage of received messages: 1.0
+2020-01-30 11:22:54,930 Percentage of received messages: 1.0
+2020-01-30 11:22:59,940 Percentage of received messages: 1.0
+2020-01-30 11:23:04,982 Percentage of received messages: 1.0
+2020-01-30 11:23:09,977 Percentage of received messages: 1.0
+2020-01-30 11:23:14,978 Percentage of received messages: 1.0
+2020-01-30 11:23:19,948 Percentage of received messages: 1.0
+2020-01-30 11:23:24,985 Percentage of received messages: 1.0
+2020-01-30 11:23:29,951 Percentage of received messages: 1.0
+2020-01-30 11:23:34,976 Percentage of received messages: 1.0
+2020-01-30 11:23:40,003 Percentage of received messages: 1.0
+2020-01-30 11:23:45,010 Percentage of received messages: 1.0
+2020-01-30 11:23:50,028 Percentage of received messages: 1.0
+2020-01-30 11:23:54,998 Percentage of received messages: 1.0
+2020-01-30 11:23:59,998 Percentage of received messages: 1.0
+2020-01-30 11:24:05,037 Percentage of received messages: 1.0
+2020-01-30 11:24:10,040 Percentage of received messages: 1.0
+2020-01-30 11:24:15,074 Percentage of received messages: 1.0
+2020-01-30 11:24:20,095 Percentage of received messages: 1.0
+2020-01-30 11:24:25,082 Percentage of received messages: 1.0
+2020-01-30 11:24:30,104 Percentage of received messages: 1.0
+2020-01-30 11:24:35,093 Percentage of received messages: 1.0
+2020-01-30 11:24:40,127 Percentage of received messages: 1.0
+2020-01-30 11:24:45,131 Percentage of received messages: 1.0
+2020-01-30 11:24:50,069 Percentage of received messages: 1.0
+2020-01-30 11:24:55,118 Percentage of received messages: 1.0
+2020-01-30 11:25:00,147 Percentage of received messages: 1.0
+2020-01-30 11:25:05,136 Percentage of received messages: 1.0
+2020-01-30 11:25:10,127 Percentage of received messages: 1.0
+2020-01-30 11:25:15,111 Percentage of received messages: 1.0
+2020-01-30 11:25:20,133 Percentage of received messages: 1.0
+2020-01-30 11:25:25,196 Percentage of received messages: 1.0
+2020-01-30 11:25:30,155 Percentage of received messages: 1.0
+2020-01-30 11:25:35,178 Percentage of received messages: 1.0
+2020-01-30 11:25:40,160 Percentage of received messages: 1.0
+2020-01-30 11:25:45,209 Percentage of received messages: 1.0
+2020-01-30 11:25:50,175 Percentage of received messages: 1.0
+2020-01-30 11:25:55,228 Percentage of received messages: 1.0
+2020-01-30 11:26:00,238 Percentage of received messages: 1.0
+2020-01-30 11:26:05,215 Percentage of received messages: 1.0
+2020-01-30 11:26:10,214 Percentage of received messages: 1.0
+2020-01-30 11:26:15,217 Percentage of received messages: 1.0
+2020-01-30 11:26:20,227 Percentage of received messages: 1.0
+2020-01-30 11:26:25,219 Percentage of received messages: 1.0
+2020-01-30 11:26:30,221 Percentage of received messages: 1.0
+2020-01-30 11:26:35,236 Percentage of received messages: 1.0
+2020-01-30 11:26:40,237 Percentage of received messages: 1.0
+2020-01-30 11:26:45,299 Percentage of received messages: 1.0
+2020-01-30 11:26:50,270 Percentage of received messages: 1.0
+2020-01-30 11:26:55,335 Percentage of received messages: 1.0
+2020-01-30 11:27:00,319 Percentage of received messages: 1.0
+2020-01-30 11:27:05,315 Percentage of received messages: 1.0
+2020-01-30 11:27:10,287 Percentage of received messages: 1.0
+2020-01-30 11:27:15,333 Percentage of received messages: 1.0
+2020-01-30 11:27:20,347 Percentage of received messages: 1.0
+2020-01-30 11:27:25,364 Percentage of received messages: 1.0
+2020-01-30 11:27:30,332 Percentage of received messages: 1.0
+2020-01-30 11:27:35,337 Percentage of received messages: 1.0
+2020-01-30 11:27:40,380 Percentage of received messages: 1.0
+2020-01-30 11:27:45,339 Percentage of received messages: 1.0
+2020-01-30 11:27:50,397 Percentage of received messages: 1.0
+2020-01-30 11:27:55,396 Percentage of received messages: 1.0
+2020-01-30 11:28:00,432 Percentage of received messages: 1.0
+2020-01-30 11:28:05,438 Percentage of received messages: 1.0
+2020-01-30 11:28:10,380 Percentage of received messages: 1.0
+2020-01-30 11:28:15,404 Percentage of received messages: 1.0
+2020-01-30 11:28:20,428 Percentage of received messages: 1.0
+2020-01-30 11:28:25,391 Percentage of received messages: 1.0
+2020-01-30 11:28:30,445 Percentage of received messages: 1.0
+2020-01-30 11:28:35,442 Percentage of received messages: 1.0
+2020-01-30 11:28:40,493 Percentage of received messages: 1.0
+2020-01-30 11:28:45,434 Percentage of received messages: 1.0
+2020-01-30 11:28:50,442 Percentage of received messages: 1.0
+2020-01-30 11:28:55,459 Percentage of received messages: 1.0
+2020-01-30 11:29:00,510 Percentage of received messages: 1.0
+2020-01-30 11:29:05,507 Percentage of received messages: 1.0
+2020-01-30 11:29:10,529 Percentage of received messages: 1.0
+2020-01-30 11:29:15,470 Percentage of received messages: 1.0
+2020-01-30 11:29:20,542 Percentage of received messages: 1.0
+2020-01-30 11:29:25,483 Percentage of received messages: 1.0
+2020-01-30 11:29:30,513 Percentage of received messages: 1.0
+2020-01-30 11:29:35,574 Percentage of received messages: 1.0
+2020-01-30 11:29:40,604 Percentage of received messages: 1.0
+2020-01-30 11:29:45,518 Percentage of received messages: 1.0
+2020-01-30 11:29:50,600 Percentage of received messages: 1.0
+2020-01-30 11:29:55,572 Percentage of received messages: 1.0
+2020-01-30 11:30:00,575 Percentage of received messages: 1.0
+2020-01-30 11:30:05,591 Percentage of received messages: 1.0
+2020-01-30 11:30:10,587 Percentage of received messages: 1.0
+2020-01-30 11:30:15,575 Percentage of received messages: 1.0
+2020-01-30 11:30:20,627 Percentage of received messages: 1.0
+2020-01-30 11:30:25,622 Percentage of received messages: 1.0
+2020-01-30 11:30:30,638 Percentage of received messages: 1.0
+2020-01-30 11:30:35,627 Percentage of received messages: 1.0
+2020-01-30 11:30:40,678 Percentage of received messages: 1.0
+2020-01-30 11:30:45,624 Percentage of received messages: 1.0
+2020-01-30 11:30:50,638 Percentage of received messages: 1.0
+2020-01-30 11:30:55,631 Percentage of received messages: 1.0
+2020-01-30 11:31:00,819 Percentage of received messages: 1.0
+2020-01-30 11:31:05,680 Percentage of received messages: 1.0
+2020-01-30 11:31:10,764 Percentage of received messages: 1.0
+2020-01-30 11:31:15,737 Percentage of received messages: 1.0
+2020-01-30 11:31:20,670 Percentage of received messages: 1.0
+2020-01-30 11:31:25,687 Percentage of received messages: 1.0
+2020-01-30 11:31:30,711 Percentage of received messages: 1.0
+2020-01-30 11:31:35,794 Percentage of received messages: 1.0
+2020-01-30 11:31:40,813 Percentage of received messages: 1.0
+2020-01-30 11:31:45,824 Percentage of received messages: 1.0
+2020-01-30 11:31:50,764 Percentage of received messages: 1.0
+2020-01-30 11:31:55,731 Percentage of received messages: 1.0
+2020-01-30 11:32:00,737 Percentage of received messages: 1.0
+2020-01-30 11:32:05,746 Percentage of received messages: 1.0
+2020-01-30 11:32:10,810 Percentage of received messages: 1.0
+2020-01-30 11:32:15,761 Percentage of received messages: 1.0
+2020-01-30 11:32:20,822 Percentage of received messages: 1.0
+2020-01-30 11:32:25,777 Percentage of received messages: 1.0
+2020-01-30 11:32:30,809 Percentage of received messages: 1.0
+2020-01-30 11:32:35,805 Percentage of received messages: 1.0
+2020-01-30 11:32:40,823 Percentage of received messages: 1.0
+2020-01-30 11:32:45,844 Percentage of received messages: 1.0
+2020-01-30 11:32:50,877 Percentage of received messages: 1.0
+2020-01-30 11:32:55,822 Percentage of received messages: 1.0
+2020-01-30 11:33:00,857 Percentage of received messages: 1.0
+2020-01-30 11:33:05,868 Percentage of received messages: 1.0
+2020-01-30 11:33:10,855 Percentage of received messages: 1.0
+2020-01-30 11:33:15,888 Percentage of received messages: 1.0
+2020-01-30 11:33:20,908 Percentage of received messages: 1.0
+2020-01-30 11:33:25,889 Percentage of received messages: 1.0
+2020-01-30 11:33:30,938 Percentage of received messages: 1.0
+2020-01-30 11:33:35,917 Percentage of received messages: 1.0
+2020-01-30 11:33:40,939 Percentage of received messages: 1.0
+2020-01-30 11:33:45,921 Percentage of received messages: 1.0
+2020-01-30 11:33:50,966 Percentage of received messages: 1.0
+2020-01-30 11:33:55,918 Percentage of received messages: 1.0
+2020-01-30 11:34:00,965 Percentage of received messages: 1.0
+2020-01-30 11:34:05,966 Percentage of received messages: 1.0
+2020-01-30 11:34:10,966 Percentage of received messages: 1.0
+2020-01-30 11:34:15,985 Percentage of received messages: 1.0
+2020-01-30 11:34:20,996 Percentage of received messages: 1.0
+2020-01-30 11:34:26,006 Percentage of received messages: 1.0
+2020-01-30 11:34:31,011 Percentage of received messages: 1.0
+2020-01-30 11:34:35,960 Percentage of received messages: 1.0
+2020-01-30 11:34:41,042 Percentage of received messages: 1.0
+2020-01-30 11:34:46,024 Percentage of received messages: 1.0
+2020-01-30 11:34:51,034 Percentage of received messages: 1.0
+2020-01-30 11:34:56,057 Percentage of received messages: 1.0
+2020-01-30 11:35:01,020 Percentage of received messages: 1.0
+2020-01-30 11:35:06,076 Percentage of received messages: 1.0
+2020-01-30 11:35:11,083 Percentage of received messages: 1.0
+2020-01-30 11:35:16,074 Percentage of received messages: 1.0
+2020-01-30 11:35:21,030 Percentage of received messages: 1.0
+2020-01-30 11:35:26,032 Percentage of received messages: 1.0
+2020-01-30 11:35:31,117 Percentage of received messages: 1.0
+2020-01-30 11:35:36,094 Percentage of received messages: 1.0
+2020-01-30 11:35:41,063 Percentage of received messages: 1.0
+2020-01-30 11:35:46,066 Percentage of received messages: 1.0
+2020-01-30 11:35:51,124 Percentage of received messages: 1.0
+2020-01-30 11:35:56,096 Percentage of received messages: 1.0
+2020-01-30 11:36:01,125 Percentage of received messages: 1.0
+2020-01-30 11:36:06,107 Percentage of received messages: 1.0
+2020-01-30 11:36:11,120 Percentage of received messages: 1.0
+2020-01-30 11:36:16,121 Percentage of received messages: 1.0
+2020-01-30 11:36:21,167 Percentage of received messages: 1.0
+2020-01-30 11:36:26,156 Percentage of received messages: 1.0
+2020-01-30 11:36:31,239 Percentage of received messages: 1.0
+2020-01-30 11:36:36,385 Percentage of received messages: 1.0
+2020-01-30 11:36:41,335 Percentage of received messages: 1.0
+2020-01-30 11:36:46,171 Percentage of received messages: 1.0
+2020-01-30 11:36:51,180 Percentage of received messages: 1.0
+2020-01-30 11:36:56,233 Percentage of received messages: 1.0
+2020-01-30 11:37:01,352 Percentage of received messages: 1.0
+2020-01-30 11:37:06,275 Percentage of received messages: 1.0
+2020-01-30 11:37:11,226 Percentage of received messages: 1.0
+2020-01-30 11:37:16,272 Percentage of received messages: 1.0
+2020-01-30 11:37:21,261 Percentage of received messages: 1.0
+2020-01-30 11:37:26,260 Percentage of received messages: 1.0
+2020-01-30 11:37:31,275 Percentage of received messages: 1.0
+2020-01-30 11:37:36,276 Percentage of received messages: 1.0
+2020-01-30 11:37:41,313 Percentage of received messages: 1.0
+2020-01-30 11:37:46,342 Percentage of received messages: 1.0
+2020-01-30 11:37:51,289 Percentage of received messages: 1.0
+2020-01-30 11:37:56,332 Percentage of received messages: 1.0
+2020-01-30 11:38:01,284 Percentage of received messages: 1.0
+2020-01-30 11:38:06,313 Percentage of received messages: 1.0
+2020-01-30 11:38:11,329 Percentage of received messages: 1.0
+2020-01-30 11:38:16,361 Percentage of received messages: 1.0
+2020-01-30 11:38:21,305 Percentage of received messages: 1.0
+2020-01-30 11:38:26,344 Percentage of received messages: 1.0
+2020-01-30 11:38:31,358 Percentage of received messages: 1.0
+2020-01-30 11:38:36,351 Percentage of received messages: 1.0
+2020-01-30 11:38:41,349 Percentage of received messages: 1.0
+2020-01-30 11:38:46,355 Percentage of received messages: 1.0
+2020-01-30 11:38:51,387 Percentage of received messages: 1.0
+2020-01-30 11:38:56,383 Percentage of received messages: 1.0
+2020-01-30 11:39:01,418 Percentage of received messages: 1.0
+2020-01-30 11:39:06,432 Percentage of received messages: 1.0
+2020-01-30 11:39:11,432 Percentage of received messages: 1.0
+2020-01-30 11:39:16,387 Percentage of received messages: 1.0
+2020-01-30 11:39:21,399 Percentage of received messages: 1.0
+2020-01-30 11:39:26,477 Percentage of received messages: 1.0
+2020-01-30 11:39:31,424 Percentage of received messages: 1.0
+2020-01-30 11:39:36,492 Percentage of received messages: 1.0
+2020-01-30 11:39:41,503 Percentage of received messages: 1.0
+2020-01-30 11:39:46,465 Percentage of received messages: 1.0
+2020-01-30 11:39:51,465 Percentage of received messages: 1.0
+2020-01-30 11:39:56,513 Percentage of received messages: 1.0
+2020-01-30 11:40:01,519 Percentage of received messages: 1.0
+2020-01-30 11:40:06,503 Percentage of received messages: 1.0
+2020-01-30 11:40:11,503 Percentage of received messages: 1.0
+2020-01-30 11:40:16,560 Percentage of received messages: 1.0
+2020-01-30 11:40:21,496 Percentage of received messages: 1.0
+2020-01-30 11:40:26,556 Percentage of received messages: 1.0
+2020-01-30 11:40:31,540 Percentage of received messages: 1.0
+2020-01-30 11:40:36,509 Percentage of received messages: 1.0
+2020-01-30 11:40:41,572 Percentage of received messages: 1.0
+2020-01-30 11:40:46,603 Percentage of received messages: 1.0
+2020-01-30 11:40:51,600 Percentage of received messages: 1.0
+2020-01-30 11:40:56,597 Percentage of received messages: 1.0
+2020-01-30 11:41:01,577 Percentage of received messages: 1.0
+2020-01-30 11:41:06,581 Percentage of received messages: 1.0
+2020-01-30 11:41:11,594 Percentage of received messages: 1.0
+2020-01-30 11:41:16,575 Percentage of received messages: 1.0
+2020-01-30 11:41:21,643 Percentage of received messages: 1.0
+2020-01-30 11:41:26,587 Percentage of received messages: 1.0
+2020-01-30 11:41:31,628 Percentage of received messages: 1.0
+2020-01-30 11:41:36,609 Percentage of received messages: 1.0
+2020-01-30 11:41:41,607 Percentage of received messages: 1.0
+2020-01-30 11:41:46,686 Percentage of received messages: 1.0
+2020-01-30 11:41:51,657 Percentage of received messages: 1.0
+2020-01-30 11:41:56,686 Percentage of received messages: 1.0
+2020-01-30 11:42:01,709 Percentage of received messages: 1.0
+2020-01-30 11:42:06,690 Percentage of received messages: 1.0
+2020-01-30 11:42:11,685 Percentage of received messages: 1.0
+2020-01-30 11:42:16,659 Percentage of received messages: 1.0
+2020-01-30 11:42:21,673 Percentage of received messages: 1.0
+2020-01-30 11:42:26,680 Percentage of received messages: 1.0
+2020-01-30 11:42:31,724 Percentage of received messages: 1.0
+2020-01-30 11:42:36,704 Percentage of received messages: 1.0
+2020-01-30 11:42:41,737 Percentage of received messages: 1.0
+2020-01-30 11:42:46,718 Percentage of received messages: 1.0
+2020-01-30 11:42:51,712 Percentage of received messages: 1.0
+2020-01-30 11:42:56,749 Percentage of received messages: 1.0
+2020-01-30 11:43:01,790 Percentage of received messages: 1.0
+2020-01-30 11:43:06,811 Percentage of received messages: 1.0
+2020-01-30 11:43:11,817 Percentage of received messages: 1.0
+2020-01-30 11:43:16,804 Percentage of received messages: 1.0
+2020-01-30 11:43:21,760 Percentage of received messages: 1.0
+2020-01-30 11:43:26,811 Percentage of received messages: 1.0
+2020-01-30 11:43:31,819 Percentage of received messages: 1.0
+2020-01-30 11:43:36,782 Percentage of received messages: 1.0
+2020-01-30 11:43:41,795 Percentage of received messages: 1.0
+2020-01-30 11:43:46,806 Percentage of received messages: 1.0
+2020-01-30 11:43:51,811 Percentage of received messages: 1.0
+2020-01-30 11:43:56,888 Percentage of received messages: 1.0
+2020-01-30 11:44:01,892 Percentage of received messages: 1.0
+2020-01-30 11:44:06,839 Percentage of received messages: 1.0
+2020-01-30 11:44:11,917 Percentage of received messages: 1.0
+2020-01-30 11:44:16,907 Percentage of received messages: 1.0
+2020-01-30 11:44:21,899 Percentage of received messages: 1.0
+2020-01-30 11:44:26,930 Percentage of received messages: 1.0
+2020-01-30 11:44:31,938 Percentage of received messages: 1.0
+2020-01-30 11:44:36,917 Percentage of received messages: 1.0
+2020-01-30 11:44:41,944 Percentage of received messages: 1.0
+2020-01-30 11:44:46,891 Percentage of received messages: 1.0
+2020-01-30 11:44:51,935 Percentage of received messages: 1.0
+2020-01-30 11:44:56,981 Percentage of received messages: 1.0
+2020-01-30 11:45:01,925 Percentage of received messages: 1.0
+2020-01-30 11:45:06,944 Percentage of received messages: 1.0
+2020-01-30 11:45:11,971 Percentage of received messages: 1.0
+2020-01-30 11:45:16,932 Percentage of received messages: 1.0
+2020-01-30 11:45:21,966 Percentage of received messages: 1.0
+2020-01-30 11:45:27,014 Percentage of received messages: 1.0
+2020-01-30 11:45:32,030 Percentage of received messages: 1.0
+2020-01-30 11:45:37,019 Percentage of received messages: 1.0
+2020-01-30 11:45:42,035 Percentage of received messages: 1.0
+2020-01-30 11:45:47,012 Percentage of received messages: 1.0
+2020-01-30 11:45:52,026 Percentage of received messages: 1.0
+2020-01-30 11:45:57,020 Percentage of received messages: 1.0
+2020-01-30 11:46:02,004 Percentage of received messages: 1.0
+2020-01-30 11:46:07,028 Percentage of received messages: 1.0
+2020-01-30 11:46:12,100 Percentage of received messages: 1.0
+2020-01-30 11:46:17,085 Percentage of received messages: 1.0
+2020-01-30 11:46:22,080 Percentage of received messages: 1.0
+2020-01-30 11:46:27,043 Percentage of received messages: 1.0
+2020-01-30 11:46:32,061 Percentage of received messages: 1.0
+2020-01-30 11:46:37,070 Percentage of received messages: 1.0
+2020-01-30 11:46:42,132 Percentage of received messages: 1.0
+2020-01-30 11:46:47,094 Percentage of received messages: 1.0
+2020-01-30 11:46:52,162 Percentage of received messages: 1.0
+2020-01-30 11:46:57,086 Percentage of received messages: 1.0
+2020-01-30 11:47:02,118 Percentage of received messages: 1.0
+2020-01-30 11:47:07,114 Percentage of received messages: 1.0
+2020-01-30 11:47:12,126 Percentage of received messages: 1.0
+2020-01-30 11:47:17,189 Percentage of received messages: 1.0
+2020-01-30 11:47:22,149 Percentage of received messages: 1.0
+2020-01-30 11:47:27,199 Percentage of received messages: 1.0
+2020-01-30 11:47:32,146 Percentage of received messages: 1.0
+2020-01-30 11:47:37,150 Percentage of received messages: 1.0
+2020-01-30 11:47:42,219 Percentage of received messages: 1.0
+2020-01-30 11:47:47,236 Percentage of received messages: 1.0
+2020-01-30 11:47:52,197 Percentage of received messages: 1.0
+2020-01-30 11:47:57,244 Percentage of received messages: 1.0
+2020-01-30 11:48:02,192 Percentage of received messages: 1.0
+2020-01-30 11:48:07,206 Percentage of received messages: 1.0
+2020-01-30 11:48:12,200 Percentage of received messages: 1.0
+2020-01-30 11:48:17,230 Percentage of received messages: 1.0
+2020-01-30 11:48:22,280 Percentage of received messages: 1.0
+2020-01-30 11:48:27,263 Percentage of received messages: 1.0
+2020-01-30 11:48:32,293 Percentage of received messages: 1.0
+2020-01-30 11:48:37,246 Percentage of received messages: 1.0
+2020-01-30 11:48:42,269 Percentage of received messages: 1.0
+2020-01-30 11:48:47,318 Percentage of received messages: 1.0
+2020-01-30 11:48:52,320 Percentage of received messages: 1.0
+2020-01-30 11:48:57,272 Percentage of received messages: 1.0
+2020-01-30 11:49:02,343 Percentage of received messages: 1.0
+2020-01-30 11:49:07,341 Percentage of received messages: 1.0
+2020-01-30 11:49:12,341 Percentage of received messages: 1.0
+2020-01-30 11:49:17,369 Percentage of received messages: 1.0
+2020-01-30 11:49:22,331 Percentage of received messages: 1.0
+2020-01-30 11:49:27,363 Percentage of received messages: 1.0
+2020-01-30 11:49:32,342 Percentage of received messages: 1.0
+2020-01-30 11:49:37,407 Percentage of received messages: 1.0
+2020-01-30 11:49:42,356 Percentage of received messages: 1.0
+2020-01-30 11:49:47,371 Percentage of received messages: 1.0
+2020-01-30 11:49:52,385 Percentage of received messages: 1.0
+2020-01-30 11:49:57,431 Percentage of received messages: 1.0
+2020-01-30 11:50:02,442 Percentage of received messages: 1.0
+2020-01-30 11:50:07,426 Percentage of received messages: 1.0
+2020-01-30 11:50:12,452 Percentage of received messages: 1.0
+2020-01-30 11:50:17,428 Percentage of received messages: 1.0
+2020-01-30 11:50:22,399 Percentage of received messages: 1.0
+2020-01-30 11:50:27,477 Percentage of received messages: 1.0
+2020-01-30 11:50:32,432 Percentage of received messages: 1.0
+2020-01-30 11:50:37,455 Percentage of received messages: 1.0
+2020-01-30 11:50:42,500 Percentage of received messages: 1.0
+2020-01-30 11:50:47,449 Percentage of received messages: 1.0
+2020-01-30 11:50:52,495 Percentage of received messages: 1.0
+2020-01-30 11:50:57,492 Percentage of received messages: 1.0
+2020-01-30 11:51:02,525 Percentage of received messages: 1.0
+2020-01-30 11:51:07,474 Percentage of received messages: 1.0
+2020-01-30 11:51:12,486 Percentage of received messages: 1.0
+2020-01-30 11:51:17,501 Percentage of received messages: 1.0
+2020-01-30 11:51:22,533 Percentage of received messages: 1.0
+2020-01-30 11:51:27,525 Percentage of received messages: 1.0
+2020-01-30 11:51:32,578 Percentage of received messages: 1.0
+2020-01-30 11:51:37,538 Percentage of received messages: 1.0
+2020-01-30 11:51:42,588 Percentage of received messages: 1.0
+2020-01-30 11:51:47,602 Percentage of received messages: 1.0
+2020-01-30 11:51:52,581 Percentage of received messages: 1.0
+2020-01-30 11:51:57,628 Percentage of received messages: 1.0
+2020-01-30 11:52:02,633 Percentage of received messages: 1.0
+2020-01-30 11:52:07,585 Percentage of received messages: 1.0
+2020-01-30 11:52:12,614 Percentage of received messages: 1.0
+2020-01-30 11:52:17,578 Percentage of received messages: 1.0
+2020-01-30 11:52:22,654 Percentage of received messages: 1.0
+2020-01-30 11:52:27,651 Percentage of received messages: 1.0
+2020-01-30 11:52:32,602 Percentage of received messages: 1.0
+2020-01-30 11:52:37,689 Percentage of received messages: 1.0
+2020-01-30 11:52:42,621 Percentage of received messages: 1.0
+2020-01-30 11:52:47,700 Percentage of received messages: 1.0
+2020-01-30 11:52:52,681 Percentage of received messages: 1.0
+2020-01-30 11:52:57,649 Percentage of received messages: 1.0
+2020-01-30 11:53:02,712 Percentage of received messages: 1.0
+2020-01-30 11:53:07,654 Percentage of received messages: 1.0
+2020-01-30 11:53:12,719 Percentage of received messages: 1.0
+2020-01-30 11:53:17,685 Percentage of received messages: 1.0
+2020-01-30 11:53:22,678 Percentage of received messages: 1.0
+2020-01-30 11:53:27,695 Percentage of received messages: 1.0
+2020-01-30 11:53:32,740 Percentage of received messages: 1.0
+2020-01-30 11:53:37,706 Percentage of received messages: 1.0
+2020-01-30 11:53:42,766 Percentage of received messages: 1.0
+2020-01-30 11:53:47,747 Percentage of received messages: 1.0
+2020-01-30 11:53:52,766 Percentage of received messages: 1.0
+2020-01-30 11:53:57,797 Percentage of received messages: 1.0
+2020-01-30 11:54:02,767 Percentage of received messages: 1.0
+2020-01-30 11:54:07,769 Percentage of received messages: 1.0
+2020-01-30 11:54:12,771 Percentage of received messages: 1.0
+2020-01-30 11:54:17,762 Percentage of received messages: 1.0
+2020-01-30 11:54:22,813 Percentage of received messages: 1.0
+2020-01-30 11:54:27,809 Percentage of received messages: 1.0
+2020-01-30 11:54:32,792 Percentage of received messages: 1.0
+2020-01-30 11:54:37,854 Percentage of received messages: 1.0
+2020-01-30 11:54:42,855 Percentage of received messages: 1.0
+2020-01-30 11:54:47,885 Percentage of received messages: 1.0
+2020-01-30 11:54:52,881 Percentage of received messages: 1.0
+2020-01-30 11:54:57,861 Percentage of received messages: 1.0
+2020-01-30 11:55:02,894 Percentage of received messages: 1.0
+2020-01-30 11:55:07,888 Percentage of received messages: 1.0
+2020-01-30 11:55:12,918 Percentage of received messages: 1.0
+2020-01-30 11:55:17,899 Percentage of received messages: 1.0
+2020-01-30 11:55:22,879 Percentage of received messages: 1.0
+2020-01-30 11:55:27,943 Percentage of received messages: 1.0
+2020-01-30 11:55:32,891 Percentage of received messages: 1.0
+2020-01-30 11:55:37,891 Percentage of received messages: 1.0
+2020-01-30 11:55:42,905 Percentage of received messages: 1.0
+2020-01-30 11:55:47,900 Percentage of received messages: 1.0
+2020-01-30 11:55:52,913 Percentage of received messages: 1.0
+2020-01-30 11:55:57,930 Percentage of received messages: 1.0
+2020-01-30 11:56:02,991 Percentage of received messages: 1.0
+2020-01-30 11:56:07,972 Percentage of received messages: 1.0
+2020-01-30 11:56:12,955 Percentage of received messages: 1.0
+2020-01-30 11:56:18,018 Percentage of received messages: 1.0
+2020-01-30 11:56:22,999 Percentage of received messages: 1.0
+2020-01-30 11:56:28,012 Percentage of received messages: 1.0
+2020-01-30 11:56:33,008 Percentage of received messages: 1.0
+2020-01-30 11:56:38,006 Percentage of received messages: 1.0
+2020-01-30 11:56:43,038 Percentage of received messages: 1.0
+2020-01-30 11:56:48,049 Percentage of received messages: 1.0
+2020-01-30 11:56:52,999 Percentage of received messages: 1.0
+2020-01-30 11:56:58,002 Percentage of received messages: 1.0
+2020-01-30 11:57:03,052 Percentage of received messages: 1.0
+2020-01-30 11:57:08,104 Percentage of received messages: 1.0
+2020-01-30 11:57:13,078 Percentage of received messages: 1.0
+2020-01-30 11:57:18,077 Percentage of received messages: 1.0
+2020-01-30 11:57:23,058 Percentage of received messages: 1.0
+2020-01-30 11:57:28,052 Percentage of received messages: 1.0
+2020-01-30 11:57:33,063 Percentage of received messages: 1.0
+2020-01-30 11:57:38,102 Percentage of received messages: 1.0
+2020-01-30 11:57:43,148 Percentage of received messages: 1.0
+2020-01-30 11:57:48,113 Percentage of received messages: 1.0
+2020-01-30 11:57:53,156 Percentage of received messages: 1.0
+2020-01-30 11:57:58,109 Percentage of received messages: 1.0
+2020-01-30 11:58:03,172 Percentage of received messages: 1.0
+2020-01-30 11:58:08,183 Percentage of received messages: 1.0
+2020-01-30 11:58:13,137 Percentage of received messages: 1.0
+2020-01-30 11:58:18,128 Percentage of received messages: 1.0
+2020-01-30 11:58:23,188 Percentage of received messages: 1.0
+2020-01-30 11:58:28,337 Percentage of received messages: 1.0
+2020-01-30 11:58:33,216 Percentage of received messages: 1.0
+2020-01-30 11:58:38,208 Percentage of received messages: 1.0
+2020-01-30 11:58:43,235 Percentage of received messages: 1.0
+2020-01-30 11:58:48,216 Percentage of received messages: 1.0
+2020-01-30 11:58:53,186 Percentage of received messages: 1.0
+2020-01-30 11:58:58,258 Percentage of received messages: 1.0
+2020-01-30 11:59:03,254 Percentage of received messages: 1.0
+2020-01-30 11:59:08,202 Percentage of received messages: 1.0
+2020-01-30 11:59:13,215 Percentage of received messages: 1.0
+2020-01-30 11:59:18,231 Percentage of received messages: 1.0
+2020-01-30 11:59:23,271 Percentage of received messages: 1.0
+2020-01-30 11:59:28,278 Percentage of received messages: 1.0
+2020-01-30 11:59:33,310 Percentage of received messages: 1.0
+2020-01-30 11:59:38,310 Percentage of received messages: 1.0
+2020-01-30 11:59:43,310 Percentage of received messages: 1.0
+2020-01-30 11:59:48,328 Percentage of received messages: 1.0
+2020-01-30 11:59:53,274 Percentage of received messages: 1.0
+2020-01-30 11:59:58,320 Percentage of received messages: 1.0
+2020-01-30 12:00:03,351 Percentage of received messages: 1.0
+2020-01-30 12:00:08,320 Percentage of received messages: 1.0
+2020-01-30 12:00:13,354 Percentage of received messages: 1.0
+2020-01-30 12:00:18,310 Percentage of received messages: 1.0
+2020-01-30 12:00:23,386 Percentage of received messages: 1.0
+2020-01-30 12:00:28,351 Percentage of received messages: 1.0
+2020-01-30 12:00:33,376 Percentage of received messages: 1.0
+2020-01-30 12:00:38,356 Percentage of received messages: 1.0
+2020-01-30 12:00:43,355 Percentage of received messages: 1.0
+2020-01-30 12:00:48,370 Percentage of received messages: 1.0
+2020-01-30 12:00:53,435 Percentage of received messages: 1.0
+2020-01-30 12:00:58,368 Percentage of received messages: 1.0
+2020-01-30 12:01:03,387 Percentage of received messages: 1.0
+2020-01-30 12:01:08,390 Percentage of received messages: 1.0
+2020-01-30 12:01:13,462 Percentage of received messages: 1.0
+2020-01-30 12:01:18,408 Percentage of received messages: 1.0
+2020-01-30 12:01:23,454 Percentage of received messages: 1.0
+2020-01-30 12:01:28,439 Percentage of received messages: 1.0
+2020-01-30 12:01:33,449 Percentage of received messages: 1.0
+2020-01-30 12:01:38,435 Percentage of received messages: 1.0
+2020-01-30 12:01:43,514 Percentage of received messages: 1.0
+2020-01-30 12:01:48,462 Percentage of received messages: 1.0
+2020-01-30 12:01:53,491 Percentage of received messages: 1.0
+2020-01-30 12:01:58,497 Percentage of received messages: 1.0
+2020-01-30 12:02:03,485 Percentage of received messages: 1.0
+2020-01-30 12:02:08,520 Percentage of received messages: 1.0
+2020-01-30 12:02:13,513 Percentage of received messages: 1.0
+2020-01-30 12:02:18,564 Percentage of received messages: 1.0
+2020-01-30 12:02:23,533 Percentage of received messages: 1.0
+2020-01-30 12:02:28,537 Percentage of received messages: 1.0
+2020-01-30 12:02:33,596 Percentage of received messages: 1.0
+2020-01-30 12:02:38,593 Percentage of received messages: 1.0
+2020-01-30 12:02:43,556 Percentage of received messages: 1.0
+2020-01-30 12:02:48,574 Percentage of received messages: 1.0
+2020-01-30 12:02:53,597 Percentage of received messages: 1.0
+2020-01-30 12:02:58,630 Percentage of received messages: 1.0
+2020-01-30 12:03:03,564 Percentage of received messages: 1.0
+2020-01-30 12:03:08,619 Percentage of received messages: 1.0
+2020-01-30 12:03:13,608 Percentage of received messages: 1.0
+2020-01-30 12:03:18,655 Percentage of received messages: 1.0
+2020-01-30 12:03:23,658 Percentage of received messages: 1.0
+2020-01-30 12:03:28,650 Percentage of received messages: 1.0
+2020-01-30 12:03:33,653 Percentage of received messages: 1.0
+2020-01-30 12:03:38,682 Percentage of received messages: 1.0
+2020-01-30 12:03:43,688 Percentage of received messages: 1.0
+2020-01-30 12:03:48,643 Percentage of received messages: 1.0
+2020-01-30 12:03:53,648 Percentage of received messages: 1.0
+2020-01-30 12:03:58,702 Percentage of received messages: 1.0

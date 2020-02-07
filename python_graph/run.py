@@ -141,7 +141,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description='Script to show BlueCardio realtime output')
     parser.add_argument('-comm', action='store', dest='communication',
-                        default='COM29', help='Enter the name of your COM%N% port, enter BLE or TCP:%IP%:%PORT%')
+                        default='COM9', help='Enter the name of your COM%N% port, enter BLE or TCP:%IP%:%PORT%')
     parser.add_argument('-qrs', action='store', dest='qrs',
                         default='int', help='Activate QRS computation [y/n]')
     parser.add_argument('-len', action='store', dest='length', type=int, default=4096,
