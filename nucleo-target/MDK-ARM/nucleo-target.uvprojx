@@ -335,7 +335,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32L452xx,SEND_WAY=OVER_BLE,ARM_MATH_CM4</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc; ../Drivers/STM32L4xx_HAL_Driver/Inc; ../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy; ../Drivers/CMSIS/Device/ST/STM32L4xx/Include; ../Drivers/CMSIS/Include; ../Drivers/CMSIS/DSP/Include; ..\Core\slld</IncludePath>
+              <IncludePath>../Core/Inc;    ../Drivers/STM32L4xx_HAL_Driver/Inc;    ../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy;    ../Drivers/CMSIS/Device/ST/STM32L4xx/Include;    ../Drivers/CMSIS/Include;    ../Drivers/CMSIS/DSP/Include;    ..\Core\slld</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -480,6 +480,31 @@
               <FilePath>..\Core\Src\r_detector.c</FilePath>
             </File>
             <File>
+              <FileName>packet.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\packet.c</FilePath>
+            </File>
+            <File>
+              <FileName>packet.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Core\Inc\packet.h</FilePath>
+            </File>
+            <File>
+              <FileName>queue.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\queue.c</FilePath>
+            </File>
+            <File>
+              <FileName>app_state.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Core\Inc\app_state.h</FilePath>
+            </File>
+            <File>
+              <FileName>app_state.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\app_state.c</FilePath>
+            </File>
+            <File>
               <FileName>main.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Core/Src/main.c</FilePath>
@@ -523,16 +548,6 @@
               <FileName>stm32l4xx_hal_msp.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Core/Src/stm32l4xx_hal_msp.c</FilePath>
-            </File>
-            <File>
-              <FileName>packet.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Core\Src\packet.c</FilePath>
-            </File>
-            <File>
-              <FileName>packet.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\Core\Inc\packet.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1095,6 +1110,31 @@
               <FilePath>..\Core\Src\r_detector.c</FilePath>
             </File>
             <File>
+              <FileName>packet.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\packet.c</FilePath>
+            </File>
+            <File>
+              <FileName>packet.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Core\Inc\packet.h</FilePath>
+            </File>
+            <File>
+              <FileName>queue.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\queue.c</FilePath>
+            </File>
+            <File>
+              <FileName>app_state.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Core\Inc\app_state.h</FilePath>
+            </File>
+            <File>
+              <FileName>app_state.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\app_state.c</FilePath>
+            </File>
+            <File>
               <FileName>main.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Core/Src/main.c</FilePath>
@@ -1138,16 +1178,6 @@
               <FileName>stm32l4xx_hal_msp.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Core/Src/stm32l4xx_hal_msp.c</FilePath>
-            </File>
-            <File>
-              <FileName>packet.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Core\Src\packet.c</FilePath>
-            </File>
-            <File>
-              <FileName>packet.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\Core\Inc\packet.h</FilePath>
             </File>
           </Files>
         </Group>

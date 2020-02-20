@@ -16,39 +16,47 @@ static void SplitWord(short word, unsigned char container[2], bool invert)
 }
 //
 
-bool MakePacket(struct Command cmd, unsigned char result[128], unsigned char* data, unsigned short len)
+int MakePacket(struct Command cmd, unsigned char result[128], unsigned char* data, unsigned char len)
 {
-	bool ret = true;
+	int ret = 0;
 	
-	if(len > cmd.len)
-		ret = false;
+	if(len + MIN_PACKET_LEN > cmd.len)
+		ret = 0;
 	else
 	{
 		unsigned char counter = 0;
 		
+		//префикс
 		result[counter] = cmd.prefix;
 		counter++;
 		
+		//id
 		unsigned char id_container[2] = {0};
 		SplitWord(cmd.id, id_container, false);
 		memcpy(result+counter, id_container, 2);
 		counter+=2;
 		
+		//длинна
 		result[counter++] = cmd.len;
+		//тип
 		result[counter++] = cmd.type;
 		
+		//код сообщения
 		unsigned char code_container[2] = {0};
 		SplitWord(cmd.code, code_container, false);
 		
 		memcpy(result+counter, code_container, 2);
 		counter+=2;
 		
+		//сообщение
 		memcpy(result+counter, data, len*sizeof(data[0]));
 		counter+=len*sizeof(data[0]);
 		
 		unsigned char crc_container[2] = {0};
 		SplitWord(ComputeCRC16(result, counter), crc_container, false);
 		memcpy(result+counter, crc_container, 2);
+		
+		ret = len + MIN_PACKET_LEN;
 	}
 	return ret;
 }
@@ -71,5 +79,49 @@ unsigned short ComputeCRC16(unsigned char* data, unsigned short len)
 		}
 	}
 	return reg_crc;
+}
+//
+
+bool CheckIfPacket(unsigned char* input)
+{
+	bool ret = false;
+	if(input[0] != 0xAE)
+		return ret;
+	else
+	{
+		if(input[1] != 0x20)
+			return ret;
+		else
+		{
+			int i = 0;
+			for(i = 0; i < COMMANDS_AMOUNT; i++)
+			{
+				if(input[2] == (COMMAND_IDs[i]&0x00FF))
+				{
+					ret = true;
+					break;
+				}
+			}
+			if(i == COMMANDS_AMOUNT && ret == false)
+				return ret;
+			else
+			{
+				i = 0;
+				for(int i = 0; i < TYPES_AMOUNT; i++)
+				{
+					if(TYPEs[i] == input[4])
+					{
+						ret = true;
+						break;
+					}
+				}
+				if(i == TYPES_AMOUNT && ret == false)
+				{
+					return ret;
+				}
+			}
+		}
+	}
+	return ret;
 }
 //

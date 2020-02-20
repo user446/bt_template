@@ -67,7 +67,7 @@ int      Number_Of_Read_Bytes            /* number of bytes to be read */
     // Select the device
 		//	PISMOLED &= 0xFE; // LED1 ON
 		//	SPICS = 0x00;
-		HAL_GPIO_WritePin(SPI_EN_GPIO_Port, SPI_EN_Pin, GPIO_PIN_RESET);
+		HAL_GPIO_WritePin(SPI_CS_GPIO_Port, SPI_CS_Pin, GPIO_PIN_RESET);
     
     // Write the command
     SPIDATA = command;
@@ -227,7 +227,7 @@ int      Number_Of_Read_Bytes            /* number of bytes to be read */
     // Deselect the device
     //PISMOLED |= 0x01; // LED1 OFF
     //SPICS = 0x08;
-		HAL_GPIO_WritePin(SPI_EN_GPIO_Port, SPI_EN_Pin, GPIO_PIN_SET);
+		HAL_GPIO_WritePin(SPI_CS_GPIO_Port, SPI_CS_Pin, GPIO_PIN_SET);
 		
     return(status);
 }
@@ -262,7 +262,7 @@ int      Number_Of_Written_Bytes         /* number of bytes to be written */
     // Select the device
 		//PISMOLED &= 0xFE; // LED1 ON
 		//SPICS = 0x00;
-    HAL_GPIO_WritePin(SPI_EN_GPIO_Port, SPI_EN_Pin, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(SPI_CS_GPIO_Port, SPI_CS_Pin, GPIO_PIN_RESET);
 		
     // Write the command
     SPIDATA = command;
@@ -313,7 +313,7 @@ int      Number_Of_Written_Bytes         /* number of bytes to be written */
     // Deselect the device
     //PISMOLED |= 0x01; // LED1 OFF
     //SPICS = 0x08;
-		HAL_GPIO_WritePin(SPI_EN_GPIO_Port, SPI_EN_Pin, GPIO_PIN_SET);
+		HAL_GPIO_WritePin(SPI_CS_GPIO_Port, SPI_CS_Pin, GPIO_PIN_SET);
 
     return(status);
 }

@@ -16,5 +16,6 @@
 void AppendMarker(int* dest, int marker);
 void ParseMarkers(int marker_signs, char* markers,	int size);
 bool SearchFor(uint8_t marker, int marker_signs);
+int ParseMarker_toInt(int marker_signs, uint8_t* int_markers, int size);
 
 #endif

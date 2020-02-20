@@ -38,6 +38,23 @@ void ParseMarkers(int marker_signs, char* markers,	int size)
 }
 //
 
+int ParseMarker_toInt(int marker_signs, uint8_t* int_markers, int size)
+{
+	int tmp = 0;
+	int n = 1;
+	memset(int_markers, 0, sizeof(int_markers[0])*size);
+	int_markers[0] = MARK_NO_CHAR;
+	tmp = marker_signs;
+	for(int i = 0; i < size && tmp; i++)
+	{
+		int_markers[i] = (uint8_t)(tmp&0x0FF);
+		tmp = tmp >> 8;
+		n++;
+	}
+	return n;
+}
+//
+
 bool SearchFor(uint8_t marker, int marker_signs)
 {
 	int tmp = 0;

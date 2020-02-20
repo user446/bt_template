@@ -114,11 +114,12 @@ class SerialPort(QtCore.QThread):
         self.total_messages = 0
         self.received = 0
         self.error_percent = 0
+        self.count_error = 0
         self.previous_lost = []
         self.previous_lost_count = 0
         
     def GetError(self):
-        return self.error_percent
+        return (self.received, self.total_messages)
     
     def ResetError(self):
         self.total_messages = 0
@@ -130,16 +131,21 @@ class SerialPort(QtCore.QThread):
     def GetParsedData(self, ser_data):
         
         self.logger.info("Serial data: %s", ser_data)
-        self.total_messages = self.total_messages + 1
+        if(len(ser_data) < 10):
+            self.logger.error("Length of a message is too small to try: %d", len(ser_data))
+            raise RuntimeError
+        else:
+            self.total_messages = self.total_messages + 1
         
         if not ser_data:
             self.logger.error("Empty line received: %s", ser_data)
             raise RuntimeError
-        
+            
         data = ser_data.split('::')  # разделяем на составляющие
         #3 поля - без среднего по окну
         # if len(data) != 4:   # если сообщение не было принято целиком или имеет слишком много полей, то
         #     self.logger.warning("Message wasn't completely received: %s", data)
+        #     self.unparsed = self.unparsed + 1
         #     raise RuntimeError              # сбрасываем
         
         try:

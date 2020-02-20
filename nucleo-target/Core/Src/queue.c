@@ -49,10 +49,13 @@ void queue_clear(struct Queue* q)
 //
 void queue_pop(struct Queue* q)
 {
-	q->size--;
-	struct Node* tmp = q->front;
-	q->front = q->front->next;
-	free(tmp);
+	if(q->size>0)
+	{
+		q->size--;
+		struct Node* tmp = q->front;
+		q->front = q->front->next;
+		free(tmp);
+	}
 }
 //
 
@@ -80,29 +83,29 @@ bool queue_isempty(struct Queue* q)
 //
 void queue_push(struct Queue* q, unsigned char* string, unsigned short len)
 {
-	q->size++;
-	if(q->front == NULL)
+	if(q->size + 1 > q->max_len)
 	{
-		q->front = (struct Node*) malloc(sizeof(struct Node));
-		//q->front->string = (unsigned short*)malloc(len);
-		//q->front->string = (unsigned char*)malloc(sizeof(unsigned char)*MAX_QLENGTH);
-		memset(q->front->string, 0x00, MAX_STRING_LENGTH);
-		memcpy(q->front->string, string, len);
-		q->front->len = len;
-		q->front->next = NULL;
-		q->last = q->front;
+		queue_pop(q);
 	}
-	else
-	{
-		q->last->next = (struct Node*) malloc(sizeof(struct Node));
-		//q->last->next->string = (unsigned short*)malloc(len);
-		//q->last->next->string = (unsigned char*)malloc(sizeof(unsigned char)*len);
-		memset(q->last->next->string, 0x00, MAX_STRING_LENGTH);
-		memcpy(q->last->next->string, string, len);
-		q->last->next->len = len;
-		q->last->next->next = NULL;
-		q->last = q->last->next;
-	}
+		q->size++;
+		if(q->front == NULL)
+		{
+			q->front = (struct Node*) malloc(sizeof(struct Node));
+			memset(q->front->string, 0x00, MAX_STRING_LENGTH);
+			memcpy(q->front->string, string, len);
+			q->front->len = len;
+			q->front->next = NULL;
+			q->last = q->front;
+		}
+		else
+		{
+			q->last->next = (struct Node*) malloc(sizeof(struct Node));
+			memset(q->last->next->string, 0x00, MAX_STRING_LENGTH);
+			memcpy(q->last->next->string, string, len);
+			q->last->next->len = len;
+			q->last->next->next = NULL;
+			q->last = q->last->next;
+		}
 }
 //
 
@@ -118,10 +121,7 @@ void queue_push(struct Queue* q, unsigned char* string, unsigned short len)
 //
 void queue_get_front(struct Queue* q, unsigned char* string, unsigned short from, unsigned short num)
 {
-	if(from + num <= q->front->len)
-		memcpy(string, q->front->string+from, num);
-	else
-		memcpy(string, q->front->string+from, q->front->len - from);
+	memcpy(string, q->front->string+from, num);
 }
 //
 

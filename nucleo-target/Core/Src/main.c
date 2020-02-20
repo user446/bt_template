@@ -42,6 +42,7 @@
 #include "markers.h"
 #include "queue.h"
 #include "packet.h"
+#include "app_state.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -63,7 +64,8 @@
 #define OVER_USART (1u)
 #define OVER_BLE	(0u)
 
-#define USE_PACKETS (1u)
+#define USE_PACKETS 			(1u)
+#define USE_STATE_MACHINE	(0u)
 
 #ifndef UPLOAD
 const short* ECG_SAMPLES = (const short*)0x08019000;
@@ -73,20 +75,29 @@ extern const short ECG_SAMPLES[];
 //
 
 #if SEND_WAY == OVER_USART
-#define SEND_DATA(data, len) HAL_UART_Transmit_DMA(&huart2, data, len)
+
 #endif
 //
 
 #if SEND_WAY == OVER_BLE
-uint8_t spi_receive_buff[MAX_STRING_LENGTH];
-bool exchanged = true;
-#define SEND_DATA(data, len) HAL_SPI_TransmitReceive_DMA(&hspi3, data, spi_receive_buff, len)
+volatile uint8_t expected_message_len = MAX_STRING_LENGTH;
+volatile bool exchanged = true;
 #endif
 //
 
 #ifndef SEND_WAY
 #error "Way to send data was not defined!"
 #endif
+//
+
+#if USE_STATE_MACHINE == 1
+#define INIT_RECEIVE_LEN 5
+#define DEFAULT_CRC_LEN 2
+volatile bool on_process = false;
+uint8_t initial_receive_buff[INIT_RECEIVE_LEN] = {0};
+#endif
+//
+
 
 const int PRESET_LENGTH = 208800;
 extern const int RpeakSamples[];
@@ -111,6 +122,10 @@ typedef union {
 }update_value;
 //
 update_value uv; //simple conversion variable
+Queue q_from_spirx;
+Queue q_transmission;
+uint8_t spi_receive_buff[MAX_STRING_LENGTH];
+uint8_t spi_transmit_buff[MAX_STRING_LENGTH];
 
 struct timer t_converter;
 struct timer t_sender;
@@ -206,24 +221,98 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef *UartHandle)
 	__nop();
 }
 //
+
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *UartHandle)
+{
+	if(UartHandle->Instance == huart2.Instance)
+	{
+		#if USE_STATE_MACHINE == 0 && SEND_WAY == OVER_BLE
+		queue_push(&q_from_spirx, spi_receive_buff, MAX_STRING_LENGTH);
+		switch(Check_AppState())
+		{
+			case STATE_REC_COMMAND:
+				if(CheckIfPacket(initial_receive_buff))
+				{
+					expected_message_len = initial_receive_buff[4] + DEFAULT_CRC_LEN;
+					//HAL_GPIO_WritePin(SPI_CS_GPIO_Port, SPI_CS_Pin, GPIO_PIN_SET);
+					if(initial_receive_buff[5] == TYPE_READ)
+						Set_AppState(STATE_READ_DATA);
+					else if(initial_receive_buff[5] == TYPE_WRITE)
+						Set_AppState(STATE_SEND_DATA);
+				}
+				break;
+			case STATE_READ_DATA:
+				queue_push(&q_from_spirx, spi_receive_buff, expected_message_len);
+				Set_AppState(STATE_REC_COMMAND);
+				break;
+		}
+		#endif
+	}
+}
+//
 #endif
 //
 
 #if SEND_WAY == OVER_BLE
-
 void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi)
+{
+		exchanged = true;
+		queue_push(&q_from_spirx, spi_receive_buff, MAX_STRING_LENGTH);
+		HAL_GPIO_WritePin(SPI_CS_GPIO_Port, SPI_CS_Pin, GPIO_PIN_SET);
+}
+//
+
+void HAL_SPI_ErrorCallback(SPI_HandleTypeDef *hspi)
 {
 	if(hspi->Instance == hspi3.Instance)
 	{
-		//queue_push(&q_from_spirx, spi_receive_buff, MAX_STRING_LENGTH);
-		HAL_GPIO_WritePin(SPI_EN_GPIO_Port, SPI_EN_Pin, GPIO_PIN_SET);
 		exchanged = true;
+		HAL_GPIO_WritePin(SPI_CS_GPIO_Port, SPI_CS_Pin, GPIO_PIN_SET);
 	}
 }
 //
 
+void HAL_SPI_RxCpltCallback(SPI_HandleTypeDef *hspi)
+{
+	if(hspi->Instance == hspi3.Instance)
+	{
+		#if USE_STATE_MACHINE == 0
+		queue_push(&q_from_spirx, spi_receive_buff, MAX_STRING_LENGTH);
+		HAL_GPIO_WritePin(SPI_CS_GPIO_Port, SPI_CS_Pin, GPIO_PIN_SET);
+		#else
+		switch(Check_AppState())
+		{
+			case STATE_REC_COMMAND:
+				if(CheckIfPacket(initial_receive_buff))
+				{
+					expected_message_len = initial_receive_buff[3] + DEFAULT_CRC_LEN;
+					//HAL_GPIO_WritePin(SPI_CS_GPIO_Port, SPI_CS_Pin, GPIO_PIN_SET);
+					if(initial_receive_buff[4] == TYPE_READ)
+						Set_AppState(STATE_READ_DATA);
+					else if(initial_receive_buff[4] == TYPE_WRITE)
+						Set_AppState(STATE_SEND_DATA);
+					else
+						on_process = true;
+				}
+				else
+				{
+					on_process = false;
+					HAL_GPIO_WritePin(SPI_CS_GPIO_Port, SPI_CS_Pin, GPIO_PIN_SET);
+				}
+				break;
+			case STATE_READ_DATA:
+				queue_push(&q_from_spirx, spi_receive_buff, expected_message_len);
+				HAL_GPIO_WritePin(SPI_CS_GPIO_Port, SPI_CS_Pin, GPIO_PIN_SET);
+				Set_AppState(STATE_REC_COMMAND);
+				break;
+		}
+		#endif
+	}
+}
+//
 #endif
 //
+
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
 	if(GPIO_Pin == GPIO_PIN_13)
@@ -239,6 +328,32 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 		}
 		OnHaltWork ? (OnHaltWork = false) : (OnHaltWork = true);
 	}
+	
+	#if SEND_WAY == OVER_BLE
+	if(GPIO_Pin == BLE_IRQ_Pin)
+	{
+		if(HAL_GPIO_ReadPin(BLE_IRQ_GPIO_Port, BLE_IRQ_Pin) == GPIO_PIN_SET)
+		{
+			if(queue_isempty(&q_transmission))
+			{
+				HAL_GPIO_WritePin(SPI_CS_GPIO_Port, SPI_CS_Pin, GPIO_PIN_RESET);
+				HAL_SPI_Receive_DMA(&hspi3, spi_receive_buff, MAX_STRING_LENGTH);
+			}
+			else
+			{
+				memset(spi_transmit_buff, 0, sizeof(spi_transmit_buff[0])*MAX_STRING_LENGTH);
+				queue_get_front(&q_transmission, spi_transmit_buff, 0,  queue_get_frontl(&q_transmission));
+				HAL_GPIO_WritePin(SPI_CS_GPIO_Port, SPI_CS_Pin, GPIO_PIN_RESET);
+				if(HAL_SPI_TransmitReceive_DMA(&hspi3, spi_transmit_buff, spi_receive_buff, MAX_STRING_LENGTH) != HAL_OK)
+					{
+						Error_Handler();
+					}
+				exchanged = false;
+				queue_pop(&q_transmission);
+			}
+		}
+	}
+	#endif
 }
 //
 
@@ -352,10 +467,30 @@ void t_Sender_callback(void)
 			for(int i = 0; i < CONVERSION_NUM; i++)
 				ParseMarkers(markers[i], parsed_markers[i], CONVERSION_NUM);
 			
+			memset(send_str, 0, DATA_AMOUNT);
+			uint8_t send_length = 0;
 			#if USE_PACKETS
+			uint8_t data_wmarks[CONVERSION_NUM*4+CONVERSION_NUM*4] = {0};
+			uint8_t p_markers[CONVERSION_NUM] = {0};
+			uint8_t packet_len = 0;
+			uint8_t m_len = 0;
 			
-			MakePacket(IKM_ECG_TX, send_str, uv.update_buff_u8, CONVERSION_NUM*4);
+			for(int i = CONVERSION_NUM, j = 0; i < CONVERSION_NUM*5; i+=CONVERSION_NUM, j++)
+			{
+				uint8_t len = ParseMarker_toInt(markers[j], p_markers, CONVERSION_NUM);
+				for(int m = 0; m < CONVERSION_NUM; m++)
+				{
+					data_wmarks[m_len+i+m-4] = uv.update_buff_u8[i+m-4];
+				}
+				for(int y = 0; y < len; y++)
+				{
+					data_wmarks[m_len+i+y] = p_markers[y];
+				}
+				m_len += len;
+			}
+			packet_len = CONVERSION_NUM*4+m_len;
 			
+			send_length = MakePacket(IKM_ECG_TX, (uint8_t*)send_str, data_wmarks, packet_len);
 			#else
 			sprintf(send_str, "%s %d%s%d%s %d%s %d%s %d%s %s%d%s%s", 
 				packet_begin,	msg_counter,	packet_delimiter, 
@@ -365,22 +500,52 @@ void t_Sender_callback(void)
 											uv.update_buff_u32[3], parsed_markers[3],
 																		packet_delimiter, window_mean, 
 																		packet_delimiter, packet_end);
+			send_length = strlen(send_str);
 			#endif
 											
 			onsend_counter+=CONVERSION_NUM;
 			msg_counter++;
 			#if SEND_WAY == OVER_BLE
-			HAL_GPIO_WritePin(SPI_EN_GPIO_Port, SPI_EN_Pin, GPIO_PIN_RESET);
-			#endif
-			ret = SEND_DATA((uint8_t*)send_str, MAX_STRING_LENGTH);
+			HAL_GPIO_WritePin(SPI_CS_GPIO_Port, SPI_CS_Pin, GPIO_PIN_RESET);
+			queue_push(&q_transmission, (uint8_t*)send_str, send_length);
+			#elif SEND_WAY == OVER_USART
+			ret = HAL_UART_Transmit_DMA(&huart2, (uint8_t*)send_str, send_length);
 			if(ret == HAL_OK)
 			{
 				HAL_GPIO_TogglePin(LD4_GPIO_Port, LD4_Pin);
 			}
+			#endif
 		}
 }
 //
 
+#if SEND_WAY == OVER_BLE
+void HandleQueues(void)
+{
+	if(exchanged == true)
+		{
+			if(!queue_isempty(&q_transmission))
+				{
+					memset(spi_transmit_buff, 0, sizeof(spi_transmit_buff[0])*MAX_STRING_LENGTH);
+					queue_get_front(&q_transmission, spi_transmit_buff, 0,  queue_get_frontl(&q_transmission));
+					while(HAL_DMA_GetState(hspi3.hdmarx) != HAL_DMA_STATE_READY);
+					HAL_GPIO_WritePin(SPI_CS_GPIO_Port, SPI_CS_Pin, GPIO_PIN_RESET);
+					exchanged = false;
+					if(HAL_SPI_TransmitReceive_DMA(&hspi3, spi_transmit_buff, spi_receive_buff, MAX_STRING_LENGTH) == HAL_OK)
+						{
+							HAL_GPIO_TogglePin(LD4_GPIO_Port, LD4_Pin);
+						}
+					queue_pop(&q_transmission);	
+				}
+		}
+		
+	if(!queue_isempty(&q_from_spirx))
+	{
+		queue_pop(&q_from_spirx);
+	}
+}
+//
+#endif
 
 //void AppendPresetMarkers(void)
 //{
@@ -449,6 +614,9 @@ int main(void)
 	arm_fir_init_q31(&S, NUM_TAPS, &firCoeffs32[0], &firStateF32[0], BLOCK_SIZE);
 	
 	HAL_GPIO_WritePin(Enable_Indicator_GPIO_Port, Enable_Indicator_Pin, GPIO_PIN_SET);
+	
+	queue_init(&q_from_spirx);
+	queue_init(&q_transmission);
   /* USER CODE END 2 */
  
  
@@ -461,7 +629,37 @@ int main(void)
   while (1)
   {
 		t_OnDigitCompleteContinuous();
+		#if SEND_WAY == OVER_BLE
+		if(!OnHaltWork)
+			HandleQueues();
+		#endif
 		
+		#if USE_STATE_MACHINE
+		if(OnHaltWork && on_process == false)
+		{
+			switch(Check_AppState())
+			{
+				case STATE_REC_COMMAND:
+					HAL_GPIO_WritePin(SPI_CS_GPIO_Port, SPI_CS_Pin, GPIO_PIN_RESET);
+					#if SEND_WAY == OVER_BLE
+					while(HAL_DMA_GetState(hspi3.hdmarx) == HAL_DMA_STATE_BUSY);
+					HAL_SPI_Receive_DMA(&hspi3, initial_receive_buff, INIT_RECEIVE_LEN);
+					#elif	SEND_WAY == OVER_USART
+					HAL_UART_Receive_DMA(&hspi3, initial_receive_buff, INIT_RECEIVE_LEN);
+					#endif
+					on_process = true;
+					break;
+				case STATE_READ_DATA:
+					HAL_SPI_Receive_DMA(&hspi3, spi_receive_buff, expected_message_len);
+					on_process = true;
+					break;
+				default:
+					break;
+			}
+		}
+		#endif
+		//
+		 
 		if(!OnDataReady && onsend_counter >= DATA_AMOUNT)
 		{			
 			if (buffer_counter >= DATA_AMOUNT && data_from_mode == MODE_EXTERNAL)

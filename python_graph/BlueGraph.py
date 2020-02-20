@@ -171,7 +171,9 @@ class BlueCardioGraph(pg.GraphicsWindow):
                 self.min_y, self.max_y)
             
     def onPrintError(self):
-        self.logger.warning("Percentage of received messages: %s", self.comm.GetError())
+        (rec, total) = self.comm.GetError()
+        
+        self.logger.warning("Percentage of received messages: %0.2f", rec/total)
         self.comm.ResetError()
 
     def OnNewData(self, result):
