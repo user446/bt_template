@@ -148,11 +148,11 @@ class SerialPort(QtCore.QThread):
         #     self.unparsed = self.unparsed + 1
         #     raise RuntimeError              # сбрасываем
         
-        try:
-            self.mean = int(data[2])
-        except:
-            self.logger.error("Unable to parse mean data: %s", data[2])
-            raise RuntimeError
+        # try:
+        #     self.mean = int(data[2])
+        # except:
+        #     self.logger.error("Unable to parse mean data, got: %s", data[2])
+            #raise RuntimeError
         
         self.logger.info(ser_data)   # записываем сообщение в файл
         # разделяем числа по пробелам, выкидываем пустые элементы листа
